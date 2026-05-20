@@ -1,0 +1,233 @@
+<style>
+  .tl-wrap { padding: 2rem 1.5rem; max-width: 100%; }
+  .tl-title { font-size: 20px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 0.25rem; }
+  .tl-sub { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 2rem; }
+  
+  .tl-outer { display: flex; flex-direction: column; width: 100%; }
+  .tl-row { display: flex; align-items: stretch; width: 100%; margin-bottom: 0; }
+  
+  .tl-year-col { width: 64px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }
+  .tl-year-label { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); padding-top: 3px; white-space: nowrap; }
+  .tl-spine { width: 2px; flex: 1; background: var(--color-border-secondary); min-height: 12px; }
+  .tl-dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--color-border-primary); background: var(--color-background-primary); flex-shrink: 0; margin: 4px 0 0; }
+  .tl-dot.highlight { background: var(--color-text-info); border-color: var(--color-text-info); }
+  
+  .tl-content { flex: 1; min-width: 0; padding: 0 2rem 2rem 1.25rem; }
+  
+  .tl-cards { display: flex; flex-direction: column; gap: 8px; }
+  .tl-card { border: 1px solid var(--color-border-tertiary); border-radius: 10px; padding: 12px 14px; background: var(--color-background-secondary); }
+  .tl-card-tag { font-size: 10px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 4px; }
+  .tl-card-tag.mun { color: var(--color-text-info); }
+  .tl-card-tag.debate { color: #639922; }
+  .tl-card-tag.training { color: #BA7517; }
+  .tl-card-tag.inter { color: #993556; }
+  .tl-card-tag.multi { color: var(--color-text-secondary); }
+  .tl-card-text { font-size: 13px; color: var(--color-text-primary); line-height: 1.55; }
+  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem; }
+  .leg-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--color-text-secondary); }
+  .leg-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* Photo column width increased to 180px for better visibility */
+  .photo-year-block { 
+    width: 180px; 
+    flex-shrink: 0; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    padding-bottom: 2rem; 
+    margin-left: auto; 
+  }
+  
+  .photo-slot { width: 100%; aspect-ratio: 4/3; border-radius: 8px; overflow: hidden; background: var(--color-background-secondary); border: 1px solid var(--color-border-tertiary); }
+  .photo-slot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+</style>
+
+<div class="tl-wrap">
+  <div class="tl-title">DebSoc IIEST Shibpur, A Chronicle</div>
+  <div class="tl-sub">From its first sessions to national delegations, a student society finding its voice.</div>
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--color-text-info)"></div> MUN</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#639922"></div> Debate </div>
+    <div class="leg-item"><div class="leg-dot" style="background:#BA7517"></div> Training Session</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#993556"></div> External Events</div>
+  </div>
+
+  <div class="tl-outer">
+
+      <!-- 2026 -->
+      <div class="tl-row">
+        <div class="tl-year-col"><div class="tl-year-label">2026</div><div class="tl-dot highlight"></div><div class="tl-spine"></div></div>
+        <div class="tl-content"><div class="tl-cards">
+          <div class="tl-card"><div class="tl-card-tag inter">JUMUN 2026</div><div class="tl-card-text">A two-member delegation participated in JUMUN 2026, securing a High Commendation (winning the committee) and a Verbal Mention in ECOSOC and UNODC. Despite the compact delegation, the society recorded another impactful external performance.</div></div>
+          <div class="tl-card"><div class="tl-card-tag inter">BESC AON 2026</div><div class="tl-card-text">DebSoc earned an Honourable Mention and a Verbal Mention (Top 4 finish) at BESCAON 2026. The two-member delegation represented IIEST in NATO and UNCOPS, continuing the society's consistent performances in external debating and MUN circuits.</div></div>
+          <div class="tl-card"><div class="tl-card-tag multi">VicharAgni, TechManthan & REBECA</div><div class="tl-card-text">DebSoc continued its flagship annual events through VicharAgni in collaboration with Instruo, and TechManthan in collaboration with the Mechanical Engineering Department, featuring an Oxford-style debate format. Another Oxford-style debate was organised during REBECA, alongside the Paramesh Ranjan Dhar Memorial Debate and two Mock-MUN training sessions ahead of BECON, further strengthening the society's debating culture.</div></div>
+          <div class="tl-card"><div class="tl-card-tag inter">IITG MUN 2026</div><div class="tl-card-text">Team IIEST Shibpur sent a 12-member delegation to IITGMUN 2026, securing 1 Special Mention and 2 Verbal Mentions across multiple committees. The participation reflected the society's expanding national footprint and sustained involvement in premier collegiate MUN circuits.</div></div>
+        </div></div>
+        <div class="photo-year-block">
+          <div class="photo-slot"><img src="photos/2026_1.jpg" alt="2026 photo 1"></div>
+          <div class="photo-slot"><img src="photos/2026_2.jpeg" alt="2026 photo 2"></div>
+          <div class="photo-slot"><img src="photos/2026_3.jpeg" alt="2026 photo 3"></div>
+          <div class="photo-slot"><img src="photos/2026_4.jpeg" alt="2026 photo 4"></div>
+        </div>
+      </div>
+
+      <!-- 2025 -->
+      <div class="tl-row">
+        <div class="tl-year-col"><div class="tl-year-label">2025</div><div class="tl-dot highlight"></div><div class="tl-spine"></div></div>
+        <div class="tl-content"><div class="tl-cards">
+          <div class="tl-card"><div class="tl-card-tag inter">IITG MUN 2025</div><div class="tl-card-text">Team IIEST Shibpur delivers one of its strongest performances at IITGMUN 2025, securing 1 Best Delegate, 2 Special Mentions, 1 Honourable Mention, and 4 Verbal Mentions across committees including DISEC, ECOFIN, and Lok Sabha. The results mark a major national-level achievement for the society.</div></div>
+        </div></div>
+        <div class="photo-year-block">
+          <div class="photo-slot"><img src="photos/2025_1.jpeg" alt="2025 photo 1"></div>
+          <div class="photo-slot"><img src="photos/2025_2.jpg" alt="2025 photo 2"></div>
+          
+        </div>
+      </div>
+
+      <!-- 2024 -->
+      <div class="tl-row">
+        <div class="tl-year-col"><div class="tl-year-label">2024</div><div class="tl-dot highlight"></div><div class="tl-spine"></div></div>
+        <div class="tl-content"><div class="tl-cards">
+          <div class="tl-card"><div class="tl-card-tag debate">Paramesh Ranjan Dhar Memorial Debate</div><div class="tl-card-text">Another edition of the memorial debate, eminent alumni, guests, and professors in the audience. Three winners recognised across the top spots. The standard of debate made judging difficult, which is always the best sign.</div></div>
+          <div class="tl-card"><div class="tl-card-tag mun">REBECA, Model United Nations</div><div class="tl-card-text">DebSoc presents IIEST MUN through REBECA, two days, 20–21 April, in the SnT Building. Open registration, diplomatic simulation, the whole arc from general debate to resolution-writing. The MUN tradition now large enough to carry its own identity.</div></div>
+        </div></div>
+        <div class="photo-year-block">
+          <div class="photo-slot"><img src="photos/2024_1.jpeg" alt="2024 photo 1"></div>
+          <div class="photo-slot"><img src="photos/2024_2.jpeg" alt="2024 photo 2"></div>
+        </div>
+      </div>
+
+      <!-- 2023 -->
+      <div class="tl-row">
+        <div class="tl-year-col"><div class="tl-year-label">2023</div><div class="tl-dot highlight"></div><div class="tl-spine"></div></div>
+        <div class="tl-content"><div class="tl-cards">
+          <div class="tl-card"><div class="tl-card-tag debate">Paramesh Ranjan Dhar Memorial Debate</div><div class="tl-card-text">Held on 20th February, the tradition holds. Faculty, alumni, and professionals in attendance. The event remembered as a tribute to an alumnus who embodied both technical excellence and the power of reasoned speech.</div></div>
+        </div></div>
+        <div class="photo-year-block">
+          <div class="photo-slot"><img src="photos/2023_1.jpg" alt="2023 photo 1"></div>
+        </div>
+      </div>
+
+      <!-- 2021 -->
+      <div class="tl-row">
+        <div class="tl-year-col"><div class="tl-year-label">2021</div><div class="tl-dot"></div><div class="tl-spine"></div></div>
+        <div class="tl-content"><div class="tl-cards">
+          <div class="tl-card"><div class="tl-card-tag training">Online Induction</div><div class="tl-card-text">January, an online induction session for new members, a sign that the club had adapted fully to the remote format.</div></div>
+          <div class="tl-card"><div class="tl-card-tag debate">Halla Bol</div><div class="tl-card-text">As part of Azadi ka Amrit Mahotsav, DebSoc organises "Halla Bol", a public speaking and debating platform. Open to beginners and veterans alike. The event had a spirit of welcome: everyone's voice counted.</div></div>
+        </div></div>
+        <div class="photo-year-block">
+          <div class="photo-slot"><img src="photos/2021_1.jpg" alt="2021 photo 1"></div>
+        </div>
+      </div>
+
+      <!-- 2020 -->
+      <div class="tl-row">
+        <div class="tl-year-col"><div class="tl-year-label">2020</div><div class="tl-dot"></div><div class="tl-spine"></div></div>
+        <div class="tl-content"><div class="tl-cards">
+          <div class="tl-card"><div class="tl-card-tag training">Sessions, Jan/Feb</div><div class="tl-card-text">The year began actively, a Parliamentary Debate Training Session with a legal advisor from the Parliament of India, followed by practice sessions in Boxing Ring Debate and Rebuttal Tennis formats. A group discussion on legalisation of cannabis. The club was building vocabulary across debate formats.</div></div>
+          <div class="tl-card"><div class="tl-card-tag debate">Paramesh Ranjan Dhar Memorial Debate</div><div class="tl-card-text">Held on 20th February. Topic: "Women should enjoy equal status as men in India's Armed Forces." The memorial debate was now a fixed point in the calendar.</div></div>
+          <div class="tl-card"><div class="tl-card-tag training">Quarantine Debate Series</div><div class="tl-card-text">When the pandemic hit and campuses shut, DebSoc did not go quiet. In April and May, the club ran an online Quarantine Debate Series, Rebuttal Tennis, Boxing Ring Debate, and Oxford-Style formats, now held over the internet. Keeping the flame alive when everything else had paused.</div></div>
+        </div></div>
+        <div class="photo-year-block">
+          <div class="photo-slot"><img src="photos/2020_1.jpg" alt="2020 photo 1"></div>
+          <div class="photo-slot"><img src="photos/2020_2.jpg" alt="2020 photo 2"></div>
+        </div>
+      </div>
+
+      <!-- 2019 -->
+      <div class="tl-row">
+        <div class="tl-year-col"><div class="tl-year-label">2019</div><div class="tl-dot highlight"></div><div class="tl-spine"></div></div>
+        <div class="tl-content"><div class="tl-cards">
+          <div class="tl-card"><div class="tl-card-tag debate">Vox Populi, Freshers' Debate</div><div class="tl-card-text">The freshers' debate gets a name: Vox Populi. A dedicated event exclusively for first-year students, giving newcomers a stage before they face seniors.</div></div>
+          <div class="tl-card"><div class="tl-card-tag training">National Youth Day</div><div class="tl-card-text">DebSoc organises a debate on 12th January to mark National Youth Day, topic: "Education is the manifestation of perfection already present in man." Trophies for winners, food for all. A small, warm event.</div></div>
+          <div class="tl-card"><div class="tl-card-tag debate">Paramesh Ranjan Dhar Memorial Debate</div><div class="tl-card-text">Topic: "Democracy is the best form of government." Held on 16th April. The memorial debate finds its footing as a recurring institutional event.</div></div>
+          <div class="tl-card"><div class="tl-card-tag mun">MUN</div><div class="tl-card-text">IIEST MUN 2019, Committee: UNGA DISEC. Agenda: Territorial Disputes in the South China Sea. Awards given for best delegation (USA), high commendation (UK), special mention (Vietnam), and verbal mention (Russia, China).</div></div>
+          <div class="tl-card"><div class="tl-card-tag debate">Face Off (Instruo)</div><div class="tl-card-text">Face Off 2019, team awards for 1st, 2nd, and a three-way 3rd place. Individual awards: best speaker for, best speaker against, and best interjector. A well-structured and closely fought competition.</div></div>
+          <div class="tl-card"><div class="tl-card-tag inter">IOCL Collaboration</div><div class="tl-card-text">In collaboration with IOCL, DebSoc holds a debate during Vigilance Awareness Week, topic: "Success should not be concerned with integrity." The society's reach extending beyond campus.</div></div>
+        </div></div>
+        <div class="photo-year-block">
+          <div class="photo-slot"><img src="photos/2019_1.jpg" alt="2019 photo 1"></div>
+          <div class="photo-slot"><img src="photos/2019_2.jpg" alt="2019 photo 2"></div>
+        </div>
+      </div>
+
+      <!-- 2018 -->
+      <div class="tl-row">
+        <div class="tl-year-col"><div class="tl-year-label">2018</div><div class="tl-dot highlight"></div><div class="tl-spine"></div></div>
+        <div class="tl-content"><div class="tl-cards">
+          <div class="tl-card"><div class="tl-card-tag mun">MUN</div><div class="tl-card-text">IIEST MUN 2018, Committee: UNHRC. Agenda: International Undocumented Migration and Humanitarian Relief. Awards across best delegation, high commendations, special mentions, and verbal mentions. Multiple countries represented, including USA, Mexico, Sweden, China, Russia, and Syria.</div></div>
+          <div class="tl-card"><div class="tl-card-tag debate">Paramesh Ranjan Dhar Memorial Debate</div><div class="tl-card-text">Topic: "Democracies should not ally with authoritarian regimes." Held in the Alumni Seminar Hall. The first recorded instance of what would become an annual tradition, a tribute to a distinguished civil engineering alumnus who was also a celebrated debater.</div></div>
+          <div class="tl-card"><div class="tl-card-tag debate">Face Off (Instruo)</div><div class="tl-card-text">An IIEST team takes first place, with JU in second, another strong showing in the club's marquee inter-college event. Individual awards for best speaker (for and against) and best interjector.</div></div>
+          <div class="tl-card"><div class="tl-card-tag training">Alumni Interaction Series</div><div class="tl-card-text">The club hosts a session on CAT preparation with an IIEST alumnus who scored 100 percentile and graduated from XLRI. A small but meaningful sign of the community DebSoc was trying to build.</div></div>
+        </div></div>
+        <div class="photo-year-block">
+          <div class="photo-slot"><img src="photos/2018_1.jpg" alt="2018 photo 1"></div>
+          <div class="photo-slot"><img src="photos/2018_2.jpg" alt="2018 photo 2"></div>
+        </div>
+      </div>
+
+      <!-- 2017 -->
+      <div class="tl-row">
+        <div class="tl-year-col"><div class="tl-year-label">2017</div><div class="tl-dot"></div><div class="tl-spine"></div></div>
+        <div class="tl-content"><div class="tl-cards">
+          <div class="tl-card"><div class="tl-card-tag debate">Face Off (Instruo)</div><div class="tl-card-text">Winners came from St. Xavier's, IIEST, and HIT, a competitive inter-college field. Individual awards for best speaker and best interjector went to participants from Xavier's and JU, showing this was a genuinely contested event, not a home win.</div></div>
+          <div class="tl-card"><div class="tl-card-tag debate">Freshers' Debate</div><div class="tl-card-text">Freshers' Debate 2017 held, new members got their first taste of competitive speaking.</div></div>
+          <div class="tl-card"><div class="tl-card-tag training">Sessions</div><div class="tl-card-text">Internal sessions continued through the year, the quiet backbone that keeps a debate society running.</div></div>
+        </div></div>
+        <div class="photo-year-block">
+          <div class="photo-slot"><img src="photos/2017_1.jpg" alt="2017 photo 1"></div>
+        </div>
+      </div>
+
+      <!-- 2016 -->
+      <div class="tl-row">
+        <div class="tl-year-col"><div class="tl-year-label">2016</div><div class="tl-dot highlight"></div><div class="tl-spine"></div></div>
+        <div class="tl-content"><div class="tl-cards">
+          <div class="tl-card"><div class="tl-card-tag mun">MUN</div><div class="tl-card-text">IIEST MUN 2016, Committee: UNGA DISEC. Agenda: State-Sponsored Terrorism in the 21st Century. Awards given for best delegate, high commendations, honourable mentions, and verbal mentions across multiple countries. A full-scale committee with real diplomatic rigour.</div></div>
+          <div class="tl-card"><div class="tl-card-tag debate">Freshers' Debate</div><div class="tl-card-text">Prelims topic: free speech and its limits. Finals topic: government access to citizens' internet data. Heavy topics, the club clearly expected its newest members to think seriously.</div></div>
+          <div class="tl-card"><div class="tl-card-tag debate">Face Off (Instruo)</div><div class="tl-card-text">DebSoc hosts Face Off at Instruo 2016, with cash prizes up to ₹24,000.</div></div>
+        </div></div>
+        <div class="photo-year-block">
+          <div class="photo-slot"><img src="photos/2016_1.jpg" alt="2016 photo 1"></div>
+          <div class="photo-slot"><img src="photos/2016_2.jpg" alt="2016 photo 2"></div>
+        </div>
+      </div>
+
+      <!-- 2015 -->
+      <div class="tl-row">
+        <div class="tl-year-col"><div class="tl-year-label">2015</div><div class="tl-dot highlight"></div><div class="tl-spine"></div></div>
+        <div class="tl-content"><div class="tl-cards">
+          <div class="tl-card"><div class="tl-card-tag inter">External</div><div class="tl-card-text">IIEST wins the open debate at IISER Kolkata, two years in a row.</div></div>
+          <div class="tl-card"><div class="tl-card-tag inter">IMechE Speak Out for Engineering</div><div class="tl-card-text">A first-year student becomes national runners-up at Kshitij, IIT Kharagpur. The previous year's runners-up was also from IIEST, a remarkable back-to-back showing at a nationally certified engineering communication event.</div></div>
+          <div class="tl-card"><div class="tl-card-tag debate">Invitational</div><div class="tl-card-text">DebSoc hosts its own Oxford-style invitational debate, open to all students including alumni, a sign that the club had grown enough to run its own open tournament.</div></div>
+        </div></div>
+        <div class="photo-year-block">
+          <div class="photo-slot"><img src="photos/2015_1.jpg" alt="2015 photo 1"></div>
+        </div>
+      </div>
+
+      <!-- 2014 -->
+      <div class="tl-row">
+        <div class="tl-year-col"><div class="tl-year-label">2014</div><div class="tl-dot"></div><div class="tl-spine"></div></div>
+        <div class="tl-content"><div class="tl-cards">
+          <div class="tl-card"><div class="tl-card-tag training">Training</div><div class="tl-card-text">Regular weekly sessions continued through the year, with parliamentary and group discussion formats. Members debated questions from westernisation of Indian society to matters of national identity.</div></div>
+        </div></div>
+        <div class="photo-year-block">
+          <div class="photo-slot"><img src="photos/2014_1.jpg" alt="2014 photo 1"></div>
+        </div>
+      </div>
+
+      <!-- 2013 -->
+      <div class="tl-row">
+        <div class="tl-year-col"><div class="tl-year-label">2013</div><div class="tl-dot highlight"></div><div class="tl-spine" style="background:transparent"></div></div>
+        <div class="tl-content"><div class="tl-cards">
+          <div class="tl-card"><div class="tl-card-tag training">Training</div><div class="tl-card-text">Weekly group discussion sessions underway. Topics ranged widely, the society was finding its rhythm.</div></div>
+          <div class="tl-card"><div class="tl-card-tag inter">External</div><div class="tl-card-text">Two IIEST freshers win the open debate at IISER Kolkata, an early signal of what was coming.</div></div>
+        </div></div>
+        <div class="photo-year-block">
+          <div class="photo-slot"><img src="photos/2013_1.jpg" alt="2013 photo 1"></div>
+        </div>
+      </div>
+
+  </div><!-- end tl-outer -->
+</div>

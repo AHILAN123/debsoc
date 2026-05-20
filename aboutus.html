@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us DebSoc IIEST Shibpur</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --crimson: #700c0c;
+      --crimson-deep: #700c0c;
+      --crimson-soft: #8c1425;
+      --gold: #C9963A;
+      --gold-light: #e8b84b;
+      --gold-pale: #f5e6c8;
+      --cream: #FAF6EE;
+      --cream-dark: #f0e9db;
+      --ink: #1e0a08;
+      --ink-muted: #5c3a30;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(32, 4, 10, 0.78);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(201, 150, 58, 0.16);
+      transition: transform 0.32s ease, opacity 0.25s ease;
+      will-change: transform;
+    }
+
+    nav.nav-hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    .nav-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      height: 34px;
+      padding: 0 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .nav-btn {
+      height: 18px;
+      padding: 0 10px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: rgba(250, 246, 238, 0.78);
+      background: transparent;
+      border: none;
+      text-decoration: none;
+      transition: all 0.18s ease;
+      cursor: pointer;
+    }
+
+    .nav-btn:hover,
+    .nav-btn.active {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--cream);
+    }
+
+    .nav-contact {
+      height: 30px;
+      padding: 0 14px;
+      background: var(--gold);
+      color: #2a0710 !important;
+      font-weight: 700;
+      border-radius: 999px;
+      text-decoration: none;
+      margin-left: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .events-drop {
+      position: absolute;
+      left: 0;
+      top: 100%;
+      margin-top: 4px;
+      width: 160px;
+      border-radius: 10px;
+      background: var(--cream);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s;
+      z-index: 100;
+    }
+
+    .events-drop a {
+      display: block;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: var(--crimson);
+      text-decoration: none;
+    }
+
+    .events-drop a:hover {
+      opacity: 0.7;
+    }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding-top: 34px;
+      background: var(--crimson-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 440px;
+    }
+
+    .page-hero img {
+      max-width: 400px;
+      width: 42%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    /* ── ORNATE DIVIDER ── */
+    .ornate-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin: 72px auto 56px;
+      max-width: 560px;
+      padding: 0 24px;
+    }
+
+    .ornate-divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    .ornate-divider-center {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .ornate-divider-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--crimson);
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .ornate-diamond {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* ══ WHAT WE DO STAT STRIP ══ */
+    .stat-strip {
+      background: var(--crimson-deep);
+      padding: 48px 32px;
+    }
+
+    .stat-strip-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 12px 24px;
+      border-right: 1px solid rgba(201, 150, 58, 0.22);
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(42px, 5vw, 64px);
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(250, 246, 238, 0.6);
+      font-weight: 500;
+    }
+
+    /* ══ INTRO EDITORIAL SPLIT ══ */
+    .intro-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-bottom: 80px;
+    }
+
+    .intro-text-block {}
+
+    .intro-eyebrow {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .intro-eyebrow::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold-pale), transparent);
+    }
+
+    .intro-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(34px, 4vw, 52px);
+      font-weight: 900;
+      font-style: italic;
+      color: var(--crimson);
+      line-height: 1.12;
+      margin-bottom: 28px;
+      letter-spacing: -1px;
+      margin-top: 28px;
+    }
+
+    .intro-body p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px;
+      line-height: 1.85;
+      color: var(--ink-muted);
+      margin-bottom: 18px;
+    }
+
+    .intro-body p strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+
+
+
+    /* ══ WHAT YOU'LL DO HERE FEATURE CARDS ══ */
+    .features-section {
+      background: linear-gradient(to bottom, var(--cream-dark), var(--cream));
+      padding: 80px 32px;
+    }
+
+    .features-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      border: 1px solid rgba(112, 12, 12, 0.1);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 48px;
+    }
+
+    .feature-card {
+      padding: 44px 36px;
+      background: var(--cream);
+      border-right: 1px solid rgba(112, 12, 12, 0.08);
+      transition: background 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card:last-child {
+      border-right: none;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .feature-card:hover {
+      background: #fdf8f2;
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 24px;
+      color: var(--crimson);
+      opacity: 0.8;
+    }
+
+    .feature-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--crimson);
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .feature-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--ink-muted);
+    }
+
+    .story-section {
+      max-width: 800px;
+      margin: 0 auto 80px;
+      padding: 0 32px;
+    }
+
+    .story-image-stack {
+      position: relative;
+      height: 520px;
+    }
+
+
+
+
+
+
+    .story-text {}
+
+    .story-text p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px;
+      line-height: 1.9;
+      color: var(--ink-muted);
+      margin-bottom: 22px;
+    }
+
+    .story-text p strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* ══ CTA BUTTONS SECTION ══ */
+    .cta-section {
+      padding: 80px 32px;
+      background: linear-gradient(135deg, var(--crimson-deep) 0%, #4a0816 100%);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(201, 150, 58, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 50%, rgba(201, 150, 58, 0.05) 0%, transparent 60%);
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .cta-eyebrow {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .cta-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 900;
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .cta-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      color: rgba(250, 246, 238, 0.65);
+      margin-bottom: 48px;
+      font-style: italic;
+    }
+
+    .cta-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* Primary CTA button */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 36px;
+      border-radius: 4px;
+      background: var(--gold);
+      color: #2a0710;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 24px rgba(201, 150, 58, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.15), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.4s ease;
+    }
+
+    .btn-primary:hover::before {
+      transform: translateX(100%);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(201, 150, 58, 0.45);
+    }
+
+    .btn-primary svg {
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-primary:hover svg {
+      transform: translateX(3px);
+    }
+
+    /* Secondary CTA button */
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 17px 36px;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1.5px solid rgba(250, 246, 238, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(250, 246, 238, 0.7);
+      background: rgba(250, 246, 238, 0.06);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary svg {
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-secondary:hover svg {
+      transform: translateX(3px);
+    }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      position: relative;
+      background: radial-gradient(circle at top right, rgba(201, 150, 58, 0.08), transparent 30%), linear-gradient(180deg, #320812 0%, #180307 100%);
+      padding: 80px 24px 32px;
+      overflow: hidden;
+    }
+
+    .footer-glow {
+      position: absolute;
+      top: -120px;
+      right: -120px;
+      width: 300px;
+      height: 300px;
+      background: rgba(201, 150, 58, 0.08);
+      filter: blur(90px);
+      border-radius: 50%;
+    }
+
+    .footer-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .footer-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .footer-brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1;
+      letter-spacing: 1px;
+    }
+
+    .footer-brand-sub {
+      margin-top: 4px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(250, 246, 238, 0.55);
+    }
+
+    .footer-desc {
+      max-width: 420px;
+      font-size: 14px;
+      line-height: 1.9;
+      color: rgba(250, 246, 238, 0.68);
+    }
+
+    .footer-col-heading {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .footer-links-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links-list li+li {
+      margin-top: 12px;
+    }
+
+    .footer-links-list a {
+      color: rgba(250, 246, 238, 0.65);
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .footer-links-list a:hover {
+      color: var(--cream);
+      padding-left: 4px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 14px;
+    }
+
+    .social-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(201, 150, 58, 0.18);
+      color: var(--gold);
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .social-icon:hover {
+      transform: translateY(-3px);
+      background: rgba(201, 150, 58, 0.12);
+      border-color: rgba(201, 150, 58, 0.4);
+    }
+
+    .footer-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201, 150, 58, 0.25), transparent);
+      margin: 50px 0 24px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: rgba(250, 246, 238, 0.42);
+    }
+
+    .footer-bottom-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(201, 150, 58, 0.4);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fade-up {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fade-up 0.8s ease both;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .stat-strip-inner {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat-item:nth-child(2) {
+        border-right: none;
+      }
+
+      .intro-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-card {
+        border-right: none;
+        border-bottom: 1px solid rgba(112, 12, 12, 0.08);
+      }
+
+      .story-section {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .story-image-stack {
+        height: 340px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 42px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .stat-strip-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-item {
+        padding: 10px 12px;
+      }
+
+      .intro-collage {
+        grid-template-rows: 200px 130px 160px;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-links">
+        <a href="index.html" class="nav-btn">Home</a>
+        <a href="aboutus.html" class="nav-btn active">About Us</a>
+        <div style="position:relative;"
+          onmouseenter="this.querySelector('.events-drop').style.opacity='1';this.querySelector('.events-drop').style.visibility='visible'"
+          onmouseleave="this.querySelector('.events-drop').style.opacity='0';this.querySelector('.events-drop').style.visibility='hidden'">
+          <button class="nav-btn" style="display:flex;align-items:center;gap:4px;">Events
+            <svg style="width:12px;height:12px;" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd" />
+            </svg>
+          </button>
+          <div class="events-drop">
+            <a href="becon.html">BECON #1.0</a>
+            <a href="events.html">MAIN EVENTS</a>
+          </div>
+        </div>
+        <a href="gallery.html" class="nav-btn">Gallery</a>
+        <a href="tribunal.html" class="nav-btn">Tribunal</a>
+        <a href="teampage.html" class="nav-btn">Team</a>
+        <a href="contactpage.html" class="nav-contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══ PAGE HERO ══ -->
+  <section class="page-hero fade-in">
+    <img src="Gallery&Logo/debating_society.png" alt="The Debating Society of IIEST Shibpur">
+  </section>
+
+
+  <!-- ══ OUR STORY INTRO SPLIT ══ -->
+
+
+  <div class="intro-section">
+    <div class="intro-grid">
+
+      <!-- Text -->
+      <div class="intro-text-block reveal">
+
+        <h2 class="intro-headline">Why Debsoc?&nbsp;</h2>
+        <div class="intro-body">
+          <p>
+            The Debating Society of IIEST, Shibpur, or DebSoc, is a student-led community built around conversation,
+            critical thinking, and public speaking. Since its early years, the society has served as a space where
+            students come together to debate ideas, challenge perspectives, and learn the art of expressing themselves
+            clearly and confidently.
+          </p>
+
+          <p>
+            What began as small weekly discussions gradually evolved into one of the institute’s most active platforms
+            for debate and Model United Nations. Over the years, DebSoc has hosted Oxford-style debates, parliamentary
+            formats, public speaking sessions, memorial debates, and MUN conferences, while also representing IIEST at
+            institutions across the country including IIT Kharagpur, IISER Kolkata, Jadavpur University, and IIT
+            Guwahati. The society has consistently participated in national debate and MUN circuits, earning accolades
+            in diplomacy, public speaking, and delegation performance.
+          </p>
+
+          <p>
+            But DebSoc has never been defined only by awards. At its core, it remains a place for learning. Many members
+            join with little or no experience in debating or public speaking. Through regular sessions, practice
+            debates, workshops, and peer mentorship, students gradually develop confidence not just in speaking, but in
+            thinking critically and listening carefully.
+          </p>
+
+          <p>
+            The society also hosts several flagship events through the year, including the BECON(Bengal Engineering Conclave of Nations),Paramesh Ranjan Dhar Memorial
+            Debate, Disputation(induction), Voices in Focus and collaborative debate events under Instruo, TechManthan. Each event
+            reflects the same spirit that has carried the society forward for years: open discussion, intellectual
+            curiosity, and meaningful dissent.
+          </p>
+
+          <p>
+            Even during the pandemic, DebSoc continued conducting online debates, training sessions, and inductions,
+            proving that the community extended far beyond physical rooms or auditoriums. That continuity remains one of
+            its defining strengths.
+          </p>
+
+          <p>
+            Today, DebSoc is home to students from different disciplines and backgrounds who share a common interest in
+            ideas, dialogue, and expression. Whether someone joins to compete nationally, improve communication skills,
+            explore international relations, or simply become more confident speaking in public, the society offers a
+            space to grow.
+          </p>
+        </div>
+      </div>
+
+
+
+      <!-- ══ CTA EXPLORE MORE ══ -->
+      <div class="cta-section">
+        <div class="cta-inner reveal">
+          <div class="cta-eyebrow">Go Deeper</div>
+          <h2 class="cta-headline">There's more to explore.</h2>
+          <p class="cta-sub">Trace our journey through the years, or see the faces and moments behind the society.</p>
+          <div class="cta-buttons">
+            <a href="debsoc_iiest_timeline_with_photos.html" class="btn-primary">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              Our Full Timeline
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+            <a href="gallery.html" class="btn-secondary">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              Browse the Gallery
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="intro-text-block reveal">
+
+        <h2 class="intro-headline">To The Batch of 2030</h2>
+        <div class="intro-body">
+          <p>
+            If you are reading this as someone considering joining DebSoc, there is something important you should know
+            early: <strong>you do not</strong> need to arrive here already polished, confident, or impossibly articulate. Despite what
+            competitive debate culture on the internet likes to pretend, nobody walks into a room at eighteen speaking
+            like a diplomat who swallowed three newspapers and a law textbook. Most people begin awkwardly. Most people
+            interrupt too early, forget points halfway through speaking, panic during rebuttals, or discover that
+            “winning arguments” and “communicating clearly” are very different skills. That is normal.
+          </p>
+
+          <p>
+            DebSoc has always been built around people learning publicly. Over the years, members have come from every
+            background imaginable: students who loved politics, students terrified of public speaking, people who joined
+            for MUNs, people who stayed for the discussions after sessions ended. Some went on to win competitions. Some
+            simply became more thoughtful, more confident, more capable of expressing themselves in classrooms,
+            interviews, meetings, and life beyond college. Both matter equally.
+          </p>
+
+          <p>
+            What survives in a society is rarely just trophies. It is culture. It is whether seniors stay back after
+            sessions to help juniors prepare speeches. Whether people keep showing up after bad performances. Whether
+            disagreements remain respectful. Whether curiosity is encouraged instead of mocked. DebSoc, through all its
+            uneven years and changing batches, has managed to preserve that spirit remarkably well. Which is mildly
+            miraculous by student-organisation standards. Most college groups collapse the moment Google Drive passwords
+            are lost.
+          </p>
+
+          <p>
+            You will debate serious topics here and occasionally ridiculous ones. You will probably lose arguments you
+            were convinced you would win. You may discover that listening carefully is harder than speaking loudly. You
+            will also find people willing to help you improve if you are willing to put in the effort consistently.
+          </p>
+
+          <p>
+            And that is really the only expectation: show up. Speak. Listen. Learn. Return the next week and do it
+            again.
+          </p>
+
+          <p>
+            Because in the end, DebSoc is not defined only by competitions, events, or committee names. It is defined by
+            generations of students choosing, year after year, to think critically, speak honestly, and engage with the
+            world a little more carefully than before.
+          </p>
+        </div>
+      </div>
+      
+
+      <!-- FOOTER -->
+      <footer class="site-footer">
+        <div class="footer-glow"></div>
+        <div class="footer-inner">
+          <div class="footer-grid">
+            <div class="footer-brand-col">
+              <div class="footer-brand">
+                <img src="debsoclogo.jpeg" alt="DebSoc Logo" class="footer-logo">
+                <div>
+                  <div class="footer-brand-name">DEBSOC</div>
+                  <div class="footer-brand-sub">The Debating Society of IIEST Shibpur</div>
+                </div>
+              </div>
+              <p class="footer-desc">A forum where discourse meets discipline. Through debate, diplomacy, and structured
+                dialogue, we cultivate thinkers capable of defending ideas with clarity, conviction, and intellectual
+                rigor.</p>
+            </div>
+            <div>
+              <div class="footer-col-heading">Navigation</div>
+              <ul class="footer-links-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="tribunal.html">Tribunal</a></li>
+                <li><a href="contactpage.html">Contact</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="footer-col-heading">Connect</div>
+              <div class="social-icons">
+                <a href="https://www.instagram.com/debsoc_iiests" target="_blank" rel="noopener" class="social-icon"
+                  aria-label="Instagram">
+                  <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                      d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z" />
+                  </svg>
+                </a>
+                <a href="https://www.linkedin.com/company/debsoc-iiest-shibpur/" target="_blank" rel="noopener"
+                  class="social-icon" aria-label="LinkedIn">
+                  <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                      d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="footer-divider"></div>
+          <div class="footer-bottom">
+            <span>© 2026 The Debating Society of IIEST Shibpur</span>
+            <span class="footer-bottom-dot"></span>
+            <span>Diplomacy · Debate · Discourse</span>
+          </div>
+        </div>
+      </footer>
+
+      <script>
+        let lastScrollY = window.scrollY;
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+          const y = window.scrollY;
+          if (y <= 7) navbar.classList.remove('nav-hidden');
+          else if (y > lastScrollY) navbar.classList.add('nav-hidden');
+          else navbar.classList.remove('nav-hidden');
+          lastScrollY = y;
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        reveals.forEach(el => observer.observe(el));
+      </script>
+
+</body>
+
+</html>

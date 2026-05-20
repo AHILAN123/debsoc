@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en" class="h-full">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team — Debating Society IIEST Shibpur</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --crimson: #800020;
+      --crimson-deep: #5c0017;
+      --crimson-dark: #1a0008;
+      --gold: #DAA520;
+      --cream: #FAF7F2;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--crimson-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── BACKGROUND ── */
+    #pageBg { position: fixed; inset: 0; z-index: 0; }
+
+    .bg-slide {
+      position: absolute; inset: 0;
+      opacity: 0;
+      transition: opacity 2s ease;
+      background-size: cover;
+      background-position: center;
+    }
+    .bg-slide.active { opacity: 0.35; }
+
+    .page-bg-overlay {
+      position: fixed; inset: 0; z-index: 1;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(26,0,8,0.3) 0%, rgba(26,0,8,0.85) 100%),
+        linear-gradient(to bottom, rgba(26,0,8,0.5) 0%, rgba(26,0,8,0.75) 100%);
+      pointer-events: none;
+    }
+
+    .page-wrap { position: relative; z-index: 10; min-height: 100vh; }
+
+    /* ── NAV ── */
+    nav {
+      width: 100%; padding: 6px 24px; position: sticky; top: 0; z-index: 50;
+      background: linear-gradient(135deg, rgba(128,0,32,0.97) 0%, rgba(92,0,23,0.97) 100%);
+      backdrop-filter: blur(8px);
+    }
+    .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-logo img { height: 36px; width: auto; object-fit: contain; }
+    .nav-wordmark { color: var(--cream); line-height: 1.25; }
+    .nav-wordmark .top { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; }
+    .nav-wordmark .bot { font-size: 13px; font-weight: 700; }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-btn {
+      color: rgba(250,247,242,0.8); font-size: 12px; padding: 5px 12px; border-radius: 6px;
+      text-decoration: none; background: transparent; border: none; cursor: pointer;
+      font-family: inherit; transition: background 0.2s, color 0.2s;
+    }
+    .nav-btn:hover, .nav-btn.active-nav { background: rgba(250,247,242,0.12); color: var(--cream); }
+    .nav-contact {
+      padding: 6px 18px; border-radius: 999px; font-size: 12px; font-weight: 600;
+      background: var(--gold); color: var(--crimson-dark); text-decoration: none; transition: transform 0.2s;
+    }
+    .nav-contact:hover { transform: scale(1.04); }
+    .events-drop {
+      position: absolute; left: 0; top: 100%; margin-top: 4px; width: 160px;
+      border-radius: 10px; background: var(--cream); box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; z-index: 100;
+    }
+    .events-wrap:hover .events-drop { opacity: 1; visibility: visible; }
+    .events-drop a { display: block; padding: 10px 16px; font-size: 13px; color: var(--crimson); text-decoration: none; transition: opacity 0.15s; }
+    .events-drop a:hover { opacity: 0.6; }
+
+    /* ── HERO ── */
+    .team-hero { padding: 72px 48px 48px; max-width: 1200px; margin: 0 auto; }
+    .team-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .team-eyebrow-line { width: 28px; height: 2px; background: var(--gold); }
+    .team-eyebrow-text { font-size: 10px; font-weight: 700; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; }
+    .team-ghost {
+      font-size: clamp(80px, 14vw, 180px); font-weight: 900; color: rgba(250,247,242,0.03);
+      line-height: 1; letter-spacing: -0.04em; pointer-events: none; user-select: none;
+      position: absolute; top: 60px; right: 48px;
+    }
+    .team-hero-inner { position: relative; }
+    .team-title { font-size: clamp(32px, 5vw, 56px); font-weight: 900; color: var(--cream); line-height: 1.05; margin-bottom: 14px; font-family: 'Playfair Display', serif; }
+    .team-subtitle { font-size: 14px; color: rgba(250,247,242,0.5); font-weight: 300; line-height: 1.6; max-width: 480px; }
+
+    /* ── TIER SECTIONS ── */
+    .tier-section { max-width: 1200px; margin: 0 auto; padding: 0 48px 48px; }
+
+    .tier-label-wrap {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 24px; margin-top: 40px;
+      /* starts hidden */
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .tier-label-wrap.visible { opacity: 1; transform: translateY(0); }
+    .tier-label-line { flex: 1; height: 1px; background: rgba(218,165,32,0.2); }
+    .tier-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; color: rgba(218,165,32,0.6); text-transform: uppercase; white-space: nowrap; }
+
+    /* ── CARD GRID ── */
+    .card-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; width: 100%; }
+
+    /* ── TEAM CARD ──
+       Key fix: opacity:0 + transform + transition all defined here.
+       JS just adds .visible — no inline style overrides needed.
+    ── */
+    .team-card {
+      width: 100%; min-width: 0;
+      background: rgba(10,0,4,0.68);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(218,165,32,0.18);
+      border-radius: 16px;
+      overflow: hidden;
+
+      /* BASE: invisible */
+      opacity: 0;
+      transform: translateY(20px);
+
+      /* TRANSITION for reveal + hover */
+      transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Revealed state */
+    .team-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hover only applies after visible */
+    .team-card.visible:hover {
+      transform: translateY(-4px);
+      border-color: rgba(218,165,32,0.45);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .team-card-photo { width: 100%; height: 145px; object-fit: cover; object-position: center top; display: block; }
+    .team-card-info { padding: 8px 8px 10px; }
+    .team-card-name { font-size: 10px; font-weight: 700; color: var(--cream); line-height: 1.3; margin-bottom: 5px; text-align: center; }
+    .team-card-role { font-size: 7px; font-weight: 700; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; text-align: center; line-height: 1.4; }
+
+    /* ── FOOTER ── */
+    footer { position: relative; z-index: 10; padding: 48px 24px; background: rgba(10,0,4,0.92); border-top: 1px solid rgba(218,165,32,0.1); margin-top: 48px; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+    .footer-brand { grid-column: span 2; }
+    .footer-logo-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .footer-logo-row img { height: 44px; width: auto; object-fit: contain; }
+    .footer-brand-name { font-size: 18px; font-weight: 700; color: var(--cream); }
+    .footer-desc { font-size: 13px; color: rgba(250,247,242,0.55); line-height: 1.65; max-width: 300px; }
+    .footer-col-title { font-size: 13px; font-weight: 600; color: var(--gold); margin-bottom: 14px; letter-spacing: 0.5px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-links a { font-size: 13px; color: rgba(250,247,242,0.55); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-socials { display: flex; gap: 10px; }
+    .footer-social { width: 38px; height: 38px; border-radius: 50%; background: rgba(218,165,32,0.12); display: flex; align-items: center; justify-content: center; transition: transform 0.2s, background 0.2s; }
+    .footer-social:hover { transform: scale(1.1); background: rgba(218,165,32,0.22); }
+    .footer-bottom { border-top: 1px solid rgba(218,165,32,0.1); padding-top: 20px; text-align: center; font-size: 12px; color: rgba(250,247,242,0.35); }
+
+    @media (max-width: 768px) {
+      .team-hero { padding: 60px 20px 32px; }
+      .tier-section { padding: 0 20px 32px; }
+      .team-ghost { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: span 2; }
+      .nav-links { display: none; }
+      .card-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="pageBg"></div>
+  <div class="page-bg-overlay"></div>
+
+  <div class="page-wrap">
+
+    <nav>
+      <div class="nav-inner">
+        <div class="nav-logo">
+          <img src="debsoclogo.jpeg" alt="DEBSOC Logo">
+          <div class="nav-wordmark">
+            <div class="top">THE DEBATING SOCIETY OF</div>
+            <div class="bot">IIEST-SHIBPUR</div>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="index.html" class="nav-btn">Home</a>
+          <button class="nav-btn" onclick="handleAboutClick()">About Us</button>
+          <div class="events-wrap" style="position:relative;">
+            <button class="nav-btn" style="display:flex;align-items:center;gap:4px;">Events
+              <svg style="width:12px;height:12px;" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            </button>
+            <div class="events-drop">
+              <a href="becon.html">BECON #1.0</a>
+              <a href="events.html">MAIN EVENTS</a>
+            </div>
+          </div>
+          <a href="gallery.html" class="nav-btn">Gallery</a>
+          <a href="tribunal.html" class="nav-btn">Tribunal</a>
+          <a href="teampage.html" class="nav-btn active-nav">Team</a>
+          <a href="contactpage.html" class="nav-contact">Contact</a>
+        </div>
+        <button id="hamburger-btn" onclick="toggleMobileMenu()" style="display:none;color:var(--cream);background:none;border:none;cursor:pointer;">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+      <div id="mobile-menu" style="display:none;position:absolute;top:100%;right:16px;margin-top:8px;width:220px;flex-direction:column;padding:8px;gap:4px;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.08);background:var(--crimson);z-index:50;">
+        <a href="index.html" style="padding:12px 16px;font-size:13px;color:white;text-decoration:none;">Home</a>
+        <button onclick="handleAboutClick();toggleMobileMenu()" style="text-align:left;padding:12px 16px;font-size:13px;color:white;background:none;border:none;cursor:pointer;font-family:inherit;">About Us</button>
+        <a href="events.html" style="padding:12px 16px;font-size:13px;color:white;text-decoration:none;">Main Events</a>
+        <a href="becon.html" style="padding:12px 16px;font-size:13px;color:white;text-decoration:none;">BECON #1.0</a>
+        <a href="gallery.html" style="padding:12px 16px;font-size:13px;color:white;text-decoration:none;">Gallery</a>
+        <a href="tribunal.html" style="padding:12px 16px;font-size:13px;color:white;text-decoration:none;">Tribunal</a>
+        <a href="teampage.html" style="padding:12px 16px;font-size:13px;color:white;text-decoration:none;">Team</a>
+        <a href="contactpage.html" style="display:block;padding:12px 16px;font-size:13px;margin:4px 8px;border-radius:999px;text-align:center;background:var(--gold);color:var(--crimson-dark);text-decoration:none;font-weight:600;">Contact</a>
+      </div>
+    </nav>
+
+    <div class="team-hero">
+      <div class="team-hero-inner">
+        <div class="team-ghost" aria-hidden="true">TEAM</div>
+        <div class="team-eyebrow">
+          <div class="team-eyebrow-line"></div>
+          <span class="team-eyebrow-text"></span>
+        </div>
+        <h1 class="team-title">Meet The People Behind Debsoc</h1>
+        <p class="team-subtitle">Organizers, negotiators, and students running on caffeine and geopolitical tension, MUNs, oxfords, Parliamentary debates alike. Our best friends and lifelong buddies!
+          
+        </p>
+      </div>
+    </div>
+
+    <!-- TIER 1 -->
+    <div class="tier-section">
+      <div class="tier-label-wrap" id="tier1Label">
+        <div class="tier-label-line"></div>
+        <span class="tier-label">Batch of 2027</span>
+        <div class="tier-label-line"></div>
+      </div>
+      <div class="card-grid" id="tier1Grid">
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p11.jpg" alt=""><div class="team-card-info"><div class="team-card-name">Anurag Rajeshkumar Singh</div><div class="team-card-role">Secretary</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p12.png" alt=""><div class="team-card-info"><div class="team-card-name">Ankita Singh</div><div class="team-card-role">Core Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p13.jpg" alt=""><div class="team-card-info"><div class="team-card-name">Pranjal Diwakar</div><div class="team-card-role">Core Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p14.png" alt=""><div class="team-card-info"><div class="team-card-name">Arun Kumar</div><div class="team-card-role">Core Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p15.png" alt=""><div class="team-card-info"><div class="team-card-name">Diptee Vinod Barai</div><div class="team-card-role">Treasurer</div></div></div>
+      </div>
+    </div>
+
+    <!-- TIER 2 -->
+    <div class="tier-section">
+      <div class="tier-label-wrap" id="tier2Label">
+        <div class="tier-label-line"></div>
+        <span class="tier-label">Batch of 2028</span>
+        <div class="tier-label-line"></div>
+      </div>
+      <div class="card-grid" id="tier2Grid">
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p21.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Karan Mandal</div><div class="team-card-role">Core Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p22.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Ahana Pal</div><div class="team-card-role">Core Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p23.jpg" alt=""><div class="team-card-info"><div class="team-card-name">Anik Chakraborty</div><div class="team-card-role">Core Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p24.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Rajeswar Nag</div><div class="team-card-role">Core Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p25.jpg" alt=""><div class="team-card-info"><div class="team-card-name">Shrutika Tiwari</div><div class="team-card-role">Core Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p26.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Sakshi Singh</div><div class="team-card-role">Core Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p27.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Utsab Kumar Bar</div><div class="team-card-role">Core Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p28.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Anubhav Kumar Gupta</div><div class="team-card-role">Core Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p29.jpg" alt=""><div class="team-card-info"><div class="team-card-name">Alok Kumar</div><div class="team-card-role">Core Member</div></div></div>
+      </div>
+    </div>
+
+    <!-- TIER 3 -->
+    <div class="tier-section">
+      <div class="tier-label-wrap" id="tier3Label">
+        <div class="tier-label-line"></div>
+        <span class="tier-label">Batch of 2029</span>
+        <div class="tier-label-line"></div>
+      </div>
+      <div class="card-grid" id="tier3Grid">
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p31.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Aditya Singh</div><div class="team-card-role">Executive Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p32.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Md. Nabeel Nishat</div><div class="team-card-role">Executive Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p33.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Kahini Thakur</div><div class="team-card-role">Executive Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p34.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Ananya Goswami</div><div class="team-card-role">Executive Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p35.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Nikhil Dhania</div><div class="team-card-role">Executive Member</div></div></div>
+         <div class="team-card"><img class="team-card-photo" src="Photosofperson/p311.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Ahilan Bhattacharya</div><div class="team-card-role">Executive Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p36.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Sanchitya Podder</div><div class="team-card-role">Executive Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p37.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Tushar Agarwal</div><div class="team-card-role">Executive Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p38.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Srijani Singha</div><div class="team-card-role">Executive Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p39.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Sampriti Karmakar</div><div class="team-card-role">Executive Member</div></div></div>
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p310.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Ayushi Bhattacharjee</div><div class="team-card-role">Executive Member</div></div></div>
+       
+        <div class="team-card"><img class="team-card-photo" src="Photosofperson/p312.jpeg" alt=""><div class="team-card-info"><div class="team-card-name">Ashutosh Tripathi</div><div class="team-card-role">Executive Member</div></div></div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo-row">
+              <img src="debsoclogo.jpeg" alt="DEBSOC Logo">
+              <span class="footer-brand-name">DebSoc</span>
+            </div>
+            <p class="footer-desc">A community dedicated to the synthesis of technical precision and humanistic inquiry. Through debates and formal discourse, we equip scholars with the cognitive agility to dissect multifaceted issues and defend truth through reasoned conviction.</p>
+          </div>
+          <div>
+            <div class="footer-col-title">Quick Links</div>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="events.html">Events</a></li>
+              <li><a href="tribunal.html">Tribunal</a></li>
+              <li><a href="contactpage.html">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="footer-col-title">Connect</div>
+            <div class="footer-socials">
+              <a href="https://www.instagram.com/debsoc_iiests" target="_blank" class="footer-social">
+                <svg width="18" height="18" fill="#DAA520" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/company/debsoc-iiest-shibpur/" target="_blank" class="footer-social">
+                <svg width="18" height="18" fill="#DAA520" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">© 2025 The Debating Society. All rights reserved.</div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    /* ── BACKGROUND CROSSFADE ── */
+    const BG_PHOTOS = [
+      'Gallery&Logo/becon/becon_1.jpg','Gallery&Logo/becon/becon_2.jpg',
+      'Gallery&Logo/becon/becon_3.jpg','Gallery&Logo/becon/becon_4.jpg',
+      'Gallery&Logo/becon/becon_5.jpg','Gallery&Logo/becon/becon_6.jpg',
+      'Gallery&Logo/becon/becon_7.jpg','Gallery&Logo/bcon_end.jpeg',
+    ];
+    const bgWrap = document.getElementById('pageBg');
+    const slides = BG_PHOTOS.map(src => {
+      const d = document.createElement('div');
+      d.className = 'bg-slide';
+      d.style.backgroundImage = `url('${src}')`;
+      bgWrap.appendChild(d);
+      return d;
+    });
+    let bgCur = 0;
+    slides[0].classList.add('active');
+    setInterval(() => {
+      slides[bgCur].classList.remove('active');
+      bgCur = (bgCur + 1) % slides.length;
+      slides[bgCur].classList.add('active');
+    }, 5000);
+
+    /* ── TIERED REVEAL ────────────────────────────────────────────────
+       Logic:
+       1. All cards start at opacity:0 (CSS).
+       2. An IntersectionObserver watches ONLY the current tier's label.
+       3. When it enters view → reveal that tier's label + stagger cards.
+       4. After the last card of that tier finishes animating, we start
+          observing the NEXT tier's label. This enforces strict order.
+    ─────────────────────────────────────────────────────────────────── */
+    const STAGGER  = 75;   // ms between cards
+    const TIER_GAP = 400;  // ms after last card before watching next tier
+
+    const tiers = [
+      { labelId: 'tier1Label', gridId: 'tier1Grid' },
+      { labelId: 'tier2Label', gridId: 'tier2Grid' },
+      { labelId: 'tier3Label', gridId: 'tier3Grid' },
+    ];
+
+    function revealTier(index, onDone) {
+      const { labelId, gridId } = tiers[index];
+      const label = document.getElementById(labelId);
+      const cards = [...document.querySelectorAll(`#${gridId} .team-card`)];
+
+      // Label in first
+      label.classList.add('visible');
+
+      // Cards stagger in after 150ms head-start
+      cards.forEach((card, i) => {
+        setTimeout(() => card.classList.add('visible'), 150 + i * STAGGER);
+      });
+
+      // Notify caller when this tier is done
+      const totalMs = 150 + (cards.length - 1) * STAGGER + TIER_GAP;
+      setTimeout(onDone, totalMs);
+    }
+
+    function watchTier(index) {
+      if (index >= tiers.length) return;
+
+      const label = document.getElementById(tiers[index].labelId);
+
+      const obs = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        obs.disconnect(); // fire once only
+
+        revealTier(index, () => watchTier(index + 1));
+      }, { threshold: 0.1 });
+
+      obs.observe(label);
+    }
+
+    // Kick off — start watching tier 1's label
+    watchTier(0);
+
+    /* ── MOBILE MENU ── */
+    function toggleMobileMenu() {
+      const m = document.getElementById('mobile-menu');
+      m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+    }
+    function handleAboutClick() {
+      if (typeof window._handleAboutClick === 'function') window._handleAboutClick();
+    }
+  </script>
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,636 @@
+/* ============================================================
+   DEBSOC — style.css  (mobile-first responsive update)
+   All original tokens preserved; media queries added/refined.
+   ============================================================ */
+
+/* ---------- Base font utilities ---------- */
+.font-display { font-family: 'Playfair Display', serif; }
+.font-accent   { font-family: 'Crimson Text', serif; }
+.font-body     { font-family: 'Poppins', sans-serif; }
+
+nav { font-family: 'Playfair Display', serif; }
+
+html { scroll-behavior: smooth; box-sizing: border-box; }
+*, *::before, *::after { box-sizing: inherit; }
+
+body {
+  background-color: #FAF7F2;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* ---------- Animations ---------- */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%       { transform: translateY(-20px) rotate(3deg); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes floatMove {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-18px); }
+  100% { transform: translateY(0px); }
+}
+@keyframes floatBubble {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-20px); }
+}
+@keyframes glowPulse {
+  0%   { box-shadow: 0 0 8px  rgba(218,165,32,0.4); }
+  50%  { box-shadow: 0 0 18px rgba(218,165,32,0.7); }
+  100% { box-shadow: 0 0 8px  rgba(218,165,32,0.4); }
+}
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes beconScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes zoomInGallery {
+  0%   { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+.animate-float    { animation: floatMove 8s ease-in-out infinite; }
+.animate-slide-up { animation: slideUp  0.8s ease-out forwards; }
+.animate-fade-in  { animation: fadeIn   1s ease-out forwards; }
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+
+/* ---------- Background pattern ---------- */
+.pattern-bg {
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(128,0,32,0.05)  0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(218,165,32,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(128,0,32,0.03)  0%, transparent 70%);
+}
+
+/* ---------- Card hover ---------- */
+.card-hover { transition: all 0.4s cubic-bezier(0.4,0,0.2,1); }
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px -12px rgba(128,0,32,0.25);
+}
+
+/* ---------- Primary button ---------- */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
+  transition: left 0.5s ease;
+}
+.btn-primary:hover::before { left: 100%; }
+
+/* ---------- Nav glass buttons ---------- */
+.nav-btn {
+  position: relative;
+  padding: 6px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #FAF7F2;
+  font-size: 14px;
+  font-weight: 500;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.4s ease-in-out;
+  white-space: nowrap;
+}
+.nav-btn:hover {
+  background: rgba(218,165,32,0.15);
+  border-color: #DAA520;
+  transform: translateY(-2px);
+  animation: glowPulse 1.5s infinite ease-in-out;
+}
+.nav-btn.active-nav {
+  background: rgba(218,165,32,0.2);
+  border-color: #DAA520;
+  box-shadow: 0 0 15px rgba(218,165,32,0.5);
+}
+
+/* ---------- BECON ticker ---------- */
+.becon-ticker { width: 100%; overflow: hidden; }
+.becon-track {
+  display: flex;
+  gap: 120px;
+  white-space: nowrap;
+  animation: beconScroll 4s linear infinite;
+}
+.becon-track a {
+  font-size: 22px;
+  font-weight: 700;
+  color: #800020;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+
+/* ---------- Carousel (hero) ---------- */
+.carousel { position: relative; }
+.carousel-item {
+  position: absolute;
+  width: 320px;
+  height: 220px;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  opacity: 0;
+  border-radius: 45px;
+  overflow: hidden;
+  transition: all 1s ease;
+}
+.carousel-item img { width: 100%; height: 100%; object-fit: cover; }
+.carousel-item.center {
+  transform: translate(-50%,-50%) scale(1.2);
+  z-index: 3; opacity: 1;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+.carousel-item.left  { transform: translate(-150%,-50%) scale(0.8); opacity: 0.6; z-index: 2; }
+.carousel-item.right { transform: translate(50%,-50%)  scale(0.8); opacity: 0.6; z-index: 2; }
+
+/* ---------- Carousel (about) ---------- */
+.about-carousel { position: relative; width: 100%; height: 100%; }
+.about-carousel .carousel-item {
+  position: absolute;
+  width: 320px; height: 220px;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%) scale(0.8);
+  opacity: 0;
+  transition: all 0.7s ease;
+  border-radius: 24px;
+}
+.about-carousel .carousel-item.center { transform: translate(-50%,-50%) scale(1);    opacity: 1; z-index: 3; }
+.about-carousel .carousel-item.left   { transform: translate(-130%,-50%) scale(0.75); opacity: 0.6; z-index: 2; }
+.about-carousel .carousel-item.right  { transform: translate(30%,-50%) scale(0.75);  opacity: 0.6; z-index: 2; }
+
+/* ---------- Footer headings ---------- */
+.footer-heading {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+.footer-heading::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 2px;
+  background: #DAA520;
+}
+.footer-heading::before {
+  content: "";
+  position: absolute;
+  bottom: -4px; left: -6px;
+  width: 8px; height: 8px;
+  background: #DAA520;
+  border-radius: 50%;
+}
+.footer-heading span.dot-right {
+  position: absolute;
+  bottom: -4px; right: -6px;
+  width: 8px; height: 8px;
+  background: #DAA520;
+  border-radius: 50%;
+}
+
+/* ---------- BECON title decoration ---------- */
+.becon-title {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 18px;
+}
+.becon-title::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 85%; height: 3px;
+  background: #DAA520;
+}
+.becon-title::before {
+  content: "";
+  position: absolute;
+  bottom: -4px; right: -18px;
+  width: 10px; height: 10px;
+  background: #DAA520;
+  border-radius: 50%;
+}
+
+/* ---------- Font helpers ---------- */
+.font-playfair   { font-family: 'Playfair Display', serif; }
+.font-montserrat { font-family: 'Montserrat', sans-serif; }
+
+/* ---------- About heading ---------- */
+.about-heading {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 14px;
+  color: #800020;
+}
+.about-heading::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 70%; height: 3px;
+  background: linear-gradient(to right, #800020, #DAA520);
+  border-radius: 50px;
+}
+
+/* ---------- Team page ---------- */
+.team-heading {
+  font-family: 'Playfair Display', serif;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 15px;
+}
+.team-heading::after {
+  content: "";
+  position: absolute;
+  left: 50%; transform: translateX(-50%);
+  bottom: 0;
+  width: 120px; height: 3px;
+  background: linear-gradient(to right, #800020, #DAA520);
+  border-radius: 50px;
+}
+.team-card { text-align: center; }
+.team-photo {
+  width: 180px; height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 0 auto 20px auto;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+.team-post {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: #DAA520; margin-bottom: 4px;
+}
+.team-dept { font-family: 'Montserrat', sans-serif; font-size: 13px; color: #555; }
+.team-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: bold;
+  color: #800020; margin-bottom: 10px;
+  position: relative; display: inline-block;
+  padding-bottom: 10px;
+}
+.team-name::after {
+  content: "";
+  position: absolute;
+  left: 50%; transform: translateX(-50%);
+  bottom: 0;
+  width: 60%; height: 2px;
+  background: linear-gradient(to right, #800020, #DAA520);
+  border-radius: 50px;
+}
+.team-watermark {
+  position: absolute;
+  top: 55%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 800px; max-width: 90vw;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
+#team-page > div,
+.team-page-content { position: relative; z-index: 2; }
+
+/* ---------- Bubbles ---------- */
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15;
+  animation: floatBubble 6s ease-in-out infinite;
+  z-index: 0;
+}
+.bubble-1 { width: 120px; height: 120px; background: #DAA520; top: 10%;  right: 8%;  }
+.bubble-2 { width: 80px;  height: 80px;  background: #800020; top: 22%;  right: 18%; animation-delay: 2s; }
+.bubble-3 { width: 60px;  height: 60px;  background: #DAA520; top: 35%;  right: 5%;  animation-delay: 4s; }
+
+/* ---------- Gallery ---------- */
+.gallery-img {
+  width: 100%; height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+.gallery-img:hover { transform: scale(1.05); }
+.gallery-btn {
+  padding: 10px 18px;
+  border: 2px solid #800020;
+  color: #800020; border-radius: 8px;
+  font-weight: 600; transition: 0.3s ease;
+}
+.gallery-btn:hover { background: #800020; color: white; }
+.gallery-zoom { animation: zoomInGallery 0.8s ease forwards; }
+
+/* ---------- Contact ---------- */
+.contact-watermark {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 900px; max-width: 90vw;
+  opacity: 0.05;
+  pointer-events: none;
+}
+.contact-heading {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 18px;
+}
+.contact-heading::after {
+  content: "";
+  position: absolute;
+  left: 50%; transform: translateX(-50%);
+  bottom: 0;
+  width: 140px; height: 3px;
+  background: linear-gradient(to right, #800020, #DAA520);
+  border-radius: 50px;
+}
+.contact-row h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; color: #800020;
+  margin-bottom: 6px;
+}
+.contact-row p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px; color: #5c4a3d;
+}
+.contact-row {
+  position: relative;
+  padding-bottom: 20px;
+}
+.contact-row::after {
+  content: "";
+  position: absolute;
+  left: 50%; transform: translateX(-50%);
+  bottom: 0;
+  width: 200px; height: 1px;
+  background: rgba(128,0,32,0.2);
+}
+
+/* ---------- Marquee ---------- */
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 18s linear infinite;
+}
+
+/* ============================================================
+   MOBILE-RESPONSIVE OVERRIDES
+   All layout, spacing, typography scaled for phones/tablets.
+   ============================================================ */
+
+/* --- Global safety net --- */
+img { max-width: 100%; height: auto; }
+
+/* ======== ≤768 px — tablets & large phones ======== */
+@media (max-width: 768px) {
+
+  /* --- Body / root --- */
+  body { overflow-x: hidden; }
+
+  /* --- Section padding --- */
+  .py-24 { padding-top: 3rem    !important; padding-bottom: 3rem    !important; }
+  .py-20 { padding-top: 2.5rem  !important; padding-bottom: 2.5rem  !important; }
+  .py-28 { padding-top: 3.5rem  !important; padding-bottom: 3.5rem  !important; }
+  .px-8  { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+
+  /* --- Typography --- */
+  .text-5xl  { font-size: 2.2rem   !important; }
+  .text-4xl  { font-size: 1.8rem  !important; }
+  .text-3xl  { font-size: 1.4rem  !important; }
+
+  /* --- Homepage hero grid → single col --- */
+  .hero-grid,
+  .max-w-6xl.mx-auto.grid.lg\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  /* Hero heading */
+  h1.font-bold.text-5xl,
+  h1.text-5xl { font-size: 2.4rem !important; line-height: 1.15 !important; }
+
+  /* Hero bottom quote — un-absolute on mobile */
+  .absolute.bottom-2.left-7 {
+    position: relative !important;
+    bottom: auto !important; left: auto !important;
+    margin-top: 1.5rem;
+    display: flex; justify-content: center;
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  /* Floating decorative circles — hide on mobile */
+  .absolute.top-10.right-10,
+  .absolute.bottom-20.left-10,
+  .absolute.top-20.right-16,
+  .absolute.bottom-24.left-16 { display: none !important; }
+
+  /* --- Carousel sizes (hero) --- */
+  .carousel-item {
+    width: 210px !important;
+    height: 150px !important;
+    border-radius: 24px !important;
+  }
+  .carousel-item.left  { transform: translate(-120%,-50%) scale(0.75) !important; }
+  .carousel-item.right { transform: translate(20%,-50%)   scale(0.75) !important; }
+
+  /* --- About carousel sizes --- */
+  .about-carousel { height: 240px !important; }
+  .about-carousel .carousel-item {
+    width: 200px !important; height: 150px !important;
+  }
+
+  /* --- About section image container --- */
+  .relative.h-\[400px\] { height: 240px !important; }
+
+  /* --- BECON hero section --- */
+  .relative.h-\[90vh\] {
+    height: auto !important;
+    min-height: 75vh !important;
+    padding: 4rem 1rem 3rem !important;
+  }
+  .font-display.text-4xl { font-size: 1.75rem !important; }
+  .text-2xl.font-semibold { font-size: 1.1rem !important; }
+
+  /* BECON logo+title row → stack */
+  .flex.items-center.justify-center.gap-6.mb-8.flex-wrap {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    text-align: center;
+  }
+
+  /* BECON about text — center on mobile */
+  .max-w-4xl.ml-auto.pr-12 {
+    margin-left: auto !important;
+    padding-right: 0 !important;
+    text-align: center;
+  }
+
+  /* CTA button rows → column */
+  .flex.justify-center.gap-6.flex-wrap {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 1rem !important;
+  }
+  .flex.justify-center.gap-6.flex-wrap a { width: 100%; max-width: 300px; text-align: center; }
+
+  /* --- Hero CTA buttons → column --- */
+  .flex.flex-wrap.gap-4 {
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+  }
+  .flex.flex-wrap.gap-4 a {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  /* --- Tribunal grid → single col --- */
+  .grid.md\:grid-cols-3 {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  /* --- Committee cards → single col --- */
+  .max-w-7xl.mx-auto.grid.md\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  .relative.bg-white.p-10.rounded-2xl { padding: 1.5rem !important; }
+
+  /* --- Footer grid → 2 cols --- */
+  footer .grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.5rem !important;
+  }
+  footer .md\:col-span-2 { grid-column: span 2 !important; }
+
+  /* --- BECON ticker font --- */
+  .becon-track a { font-size: 16px !important; letter-spacing: 1px !important; }
+  .becon-track   { gap: 50px !important; }
+
+  /* --- Team grid → 2 cols --- */
+  .grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 2rem !important;
+  }
+
+  /* Gallery grid → 2 cols */
+  section .grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ======== ≤480 px — small phones ======== */
+@media (max-width: 480px) {
+
+  /* Typography tighter */
+  .text-5xl  { font-size: 1.85rem !important; }
+  .text-4xl  { font-size: 1.55rem !important; }
+  .text-3xl  { font-size: 1.25rem !important; }
+  .text-2xl  { font-size: 1.1rem  !important; }
+  .text-xl   { font-size: 1rem    !important; }
+  .text-lg   { font-size: 0.95rem !important; }
+
+  /* Section padding tighter */
+  .px-6 { padding-left: 0.875rem !important; padding-right: 0.875rem !important; }
+  .py-24 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+
+  /* Nav logo */
+  nav img.h-12, nav img.h-9, nav img.h-10 { height: 2.2rem !important; }
+  nav .text-lg { font-size: 0.7rem  !important; }
+  nav .text-xl { font-size: 0.85rem !important; }
+
+  /* Mobile menu items */
+  #mobile-menu a, #mobile-menu button {
+    font-size: 0.9rem  !important;
+    padding: 0.6rem 1rem !important;
+  }
+
+  /* Team → single col on very small */
+  .grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-3 {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  section .grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Gallery single col */
+  .gallery-img { height: 200px !important; }
+
+  /* Team photo */
+  .team-photo { width: 150px !important; height: 150px !important; }
+  .team-name  { font-size: 18px !important; }
+
+  /* Bubbles — hide on tiny screens */
+  .bubble-1, .bubble-2, .bubble-3 { display: none !important; }
+
+  /* Footer → single col */
+  footer .grid {
+    grid-template-columns: 1fr !important;
+  }
+  footer .md\:col-span-2 { grid-column: span 1 !important; }
+
+  /* Contact */
+  .contact-heading { font-size: 1.75rem !important; }
+  .contact-row h3  { font-size: 16px !important; }
+  .contact-row p   { font-size: 13px !important; }
+
+  /* BECON scroll indicator */
+  .w-14.h-14 { width: 2.75rem !important; height: 2.75rem !important; }
+
+  /* Carousel even smaller */
+  .carousel-item {
+    width: 160px !important;
+    height: 120px !important;
+    border-radius: 18px !important;
+  }
+  .carousel-item.center { transform: translate(-50%,-50%) scale(1.1) !important; }
+  .carousel-item.left   { transform: translate(-110%,-50%) scale(0.7) !important; }
+  .carousel-item.right  { transform: translate(10%,-50%)   scale(0.7) !important; }
+
+  .about-carousel { height: 200px !important; }
+  .about-carousel .carousel-item {
+    width: 160px !important; height: 120px !important;
+  }
+
+  /* Committee card padding */
+  .relative.bg-white.p-10.rounded-2xl { padding: 1rem !important; }
+
+  /* BECON ticker */
+  .becon-track a { font-size: 13px !important; }
+  .becon-track   { gap: 30px !important; }
+}
+
+/* ======== ≤360 px — very narrow phones ======== */
+@media (max-width: 360px) {
+  nav img { height: 1.9rem !important; }
+  nav .text-lg { font-size: 0.65rem !important; }
+  nav .text-xl { font-size: 0.78rem !important; }
+  .text-5xl { font-size: 1.6rem !important; }
+  .text-4xl { font-size: 1.35rem !important; }
+}

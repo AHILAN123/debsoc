@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery — Debating Society IIEST Shibpur</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson: #700c0c;
+    --crimson-deep: #4a0816;
+    --gold: #C9963A;
+    --gold-light: #e8b84b;
+    --cream: #FAF6EE;
+    --cream-dark: #f0e9db;
+    --ink: #1e0a08;
+    --ink-muted: #5c3a30;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+    background: rgba(32,4,10,0.85); backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(201,150,58,0.16);
+    transition: transform 0.32s ease;
+  }
+  nav.nav-hidden { transform: translateY(-100%); }
+  .nav-inner { max-width: 1240px; margin: 0 auto; height: 34px; padding: 0 14px; display: flex; align-items: center; justify-content: center; }
+  .nav-links { display: flex; align-items: center; gap: 10px; }
+  .nav-btn {
+    height: 18px; padding: 0 10px; border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10.5px; font-weight: 500; letter-spacing: 0.04em;
+    color: rgba(250,246,238,0.78); background: transparent; border: none;
+    text-decoration: none; transition: all 0.18s ease; cursor: pointer;
+  }
+  .nav-btn:hover, .nav-btn.active { background: rgba(255,255,255,0.08); color: var(--cream); }
+  .nav-contact {
+    height: 30px; padding: 0 14px; background: var(--gold);
+    color: #2a0710 !important; font-weight: 700; border-radius: 999px;
+    text-decoration: none; margin-left: 6px;
+    display: inline-flex; align-items: center;
+  }
+  .events-drop {
+    position: absolute; left: 0; top: 100%; margin-top: 4px;
+    width: 160px; border-radius: 10px; background: var(--cream);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    opacity: 0; visibility: hidden; transition: all 0.2s; z-index: 100;
+  }
+  .events-drop a { display: block; padding: 10px 16px; font-size: 13px; color: var(--crimson); text-decoration: none; }
+  .events-drop a:hover { opacity: 0.7; }
+
+  /* PAGE HEADER */
+  .page-header {
+    padding-top: 34px;
+    background: var(--crimson);
+    padding-bottom: 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 60% 0%, rgba(201,150,58,0.12), transparent 60%);
+  }
+  .page-header-inner { position: relative; z-index: 2; padding-top: 56px; }
+  .page-header-eyebrow {
+    font-size: 10px; letter-spacing: 3.5px; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 16px;
+  }
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 7vw, 80px); font-weight: 900;
+    color: var(--cream); line-height: 1; letter-spacing: -2px;
+    margin-bottom: 16px;
+  }
+  .page-header-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; color: rgba(250,246,238,0.6);
+    font-style: italic;
+  }
+  .header-divider {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,150,58,0.4), transparent);
+  }
+
+  /* FILTER TABS */
+  .filter-bar {
+    background: var(--cream);
+    padding: 32px 32px 0;
+    position: sticky; top: 34px; z-index: 50;
+    border-bottom: 1px solid rgba(112,12,12,0.08);
+  }
+  .filter-bar-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: flex-end; gap: 0;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .filter-bar-inner::-webkit-scrollbar { display: none; }
+  .filter-tab {
+    flex-shrink: 0;
+    padding: 10px 22px 12px;
+    font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--ink-muted); background: transparent; border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer; transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .filter-tab:hover { color: var(--crimson); }
+  .filter-tab.active {
+    color: var(--crimson);
+    border-bottom-color: var(--gold);
+  }
+
+  /* GALLERY BODY */
+  .gallery-body { max-width: 1200px; margin: 0 auto; padding: 48px 32px 80px; }
+
+  /* YEAR GROUP */
+  .year-group { margin-bottom: 64px; display: none; }
+  .year-group.visible { display: block; }
+
+  .year-label {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 24px;
+  }
+  .year-label-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px; font-weight: 700; letter-spacing: 3px;
+    color: var(--gold); white-space: nowrap;
+  }
+  .year-label-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(to right, rgba(201,150,58,0.4), transparent);
+  }
+  .year-label-count {
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(92,58,48,0.4); white-space: nowrap;
+  }
+
+  /* GRID */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .photo-item {
+    position: relative; overflow: hidden;
+    border-radius: 3px;
+    background: rgba(112,12,12,0.08);
+    cursor: pointer;
+    aspect-ratio: 4/3;
+  }
+  .photo-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
+    transition: transform 0.45s ease;
+  }
+  .photo-item:hover img { transform: scale(1.06); }
+  .photo-item-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(30,10,8,0.55), transparent 50%);
+    opacity: 0; transition: opacity 0.3s ease;
+    display: flex; align-items: flex-end; padding: 12px;
+  }
+  .photo-item:hover .photo-item-overlay { opacity: 1; }
+  .photo-item-overlay-icon {
+    width: 32px; height: 32px; margin-left: auto;
+    background: rgba(201,150,58,0.9); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* LIGHTBOX */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(10,2,4,0.96);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .lightbox.open { opacity: 1; visibility: visible; }
+
+  .lightbox-img-wrap {
+    position: relative;
+    max-width: 90vw; max-height: 88vh;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lightbox-img-wrap img {
+    max-width: 90vw; max-height: 85vh;
+    object-fit: contain; border-radius: 3px;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    transform: scale(0.95); transition: transform 0.3s ease;
+  }
+  .lightbox.open .lightbox-img-wrap img { transform: scale(1); }
+
+  .lightbox-close {
+    position: fixed; top: 20px; right: 24px;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    color: white; font-size: 20px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .lightbox-close:hover { background: rgba(255,255,255,0.16); }
+
+  .lightbox-nav {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    color: white; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s; font-size: 18px;
+  }
+  .lightbox-nav:hover { background: rgba(201,150,58,0.25); border-color: rgba(201,150,58,0.4); }
+  .lightbox-prev { left: 16px; }
+  .lightbox-next { right: 16px; }
+
+  .lightbox-counter {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    font-size: 11px; letter-spacing: 2px; color: rgba(255,255,255,0.4);
+  }
+
+  /* FOOTER */
+  .site-footer {
+    background: linear-gradient(180deg, #320812 0%, #180307 100%);
+    padding: 64px 24px 28px;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; }
+  .footer-brand { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .footer-logo { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; }
+  .footer-brand-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--cream); }
+  .footer-brand-sub { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(250,246,238,0.45); margin-top: 3px; }
+  .footer-desc { font-size: 13px; line-height: 1.85; color: rgba(250,246,238,0.6); max-width: 360px; }
+  .footer-col-heading { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .footer-links-list { list-style: none; }
+  .footer-links-list li+li { margin-top: 10px; }
+  .footer-links-list a { color: rgba(250,246,238,0.6); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .footer-links-list a:hover { color: var(--cream); }
+  .social-icons { display: flex; gap: 12px; }
+  .social-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.04); border: 1px solid rgba(201,150,58,0.18); color: var(--gold); text-decoration: none; transition: all 0.2s; }
+  .social-icon:hover { background: rgba(201,150,58,0.12); transform: translateY(-2px); }
+  .footer-divider { height: 1px; background: linear-gradient(to right, transparent, rgba(201,150,58,0.2), transparent); margin: 40px 0 20px; }
+  .footer-bottom { text-align: center; font-size: 11px; letter-spacing: 1px; color: rgba(250,246,238,0.35); }
+
+  /* ANIMATIONS */
+  @keyframes fade-up { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  .photo-item { animation: fade-up 0.5s ease both; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) { .photo-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 680px) {
+    .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+  @media (max-width: 400px) { .photo-grid { grid-template-columns: repeat(1, 1fr); } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-links">
+      <a href="index.html" class="nav-btn">Home</a>
+      <a href="aboutus.html" class="nav-btn">About Us</a>
+      <div style="position:relative;"
+        onmouseenter="this.querySelector('.events-drop').style.opacity='1';this.querySelector('.events-drop').style.visibility='visible'"
+        onmouseleave="this.querySelector('.events-drop').style.opacity='0';this.querySelector('.events-drop').style.visibility='hidden'">
+        <button class="nav-btn">Events
+          <svg style="width:10px;height:10px;" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+        <div class="events-drop">
+          <a href="becon.html">BECON #1.0</a>
+          <a href="events.html">MAIN EVENTS</a>
+        </div>
+      </div>
+      <a href="gallery.html" class="nav-btn active">Gallery</a>
+      <a href="tribunal.html" class="nav-btn">Tribunal</a>
+      <a href="teampage.html" class="nav-btn">Team</a>
+      <a href="contactpage.html" class="nav-contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-header-eyebrow">The Debating Society of IIEST Shibpur</div>
+    <h1>Gallery</h1>
+    
+  </div>
+  <div class="header-divider"></div>
+</div>
+
+<!-- FILTER BAR -->
+
+<!-- GALLERY BODY -->
+<div class="gallery-body">
+
+  <!-- BECON -->
+  <div class="year-group visible" data-group="becon">
+    <div class="year-label">
+      <span class="year-label-text">BECON 2026</span>
+      <div class="year-label-line"></div>
+      <span class="year-label-count">8 photos</span>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-item" onclick="openLightbox(this)">
+        <img src="Gallery&Logo/becon/becon_1.jpg" alt="BECON 2026" loading="lazy">
+        <div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div></div>
+      </div>
+      <div class="photo-item" onclick="openLightbox(this)">
+        <img src="Gallery&Logo/becon/becon_2.jpg" alt="BECON 2026" loading="lazy">
+        <div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div></div>
+      </div>
+      <div class="photo-item" onclick="openLightbox(this)">
+        <img src="Gallery&Logo/becon/becon_3.jpg" alt="BECON 2026" loading="lazy">
+        <div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div></div>
+      </div>
+      <div class="photo-item" onclick="openLightbox(this)">
+        <img src="Gallery&Logo/becon/becon_4.jpg" alt="BECON 2026" loading="lazy">
+        <div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div></div>
+      </div>
+      <div class="photo-item" onclick="openLightbox(this)">
+        <img src="Gallery&Logo/becon/becon_5.jpg" alt="BECON 2026" loading="lazy">
+        <div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div></div>
+      </div>
+      <div class="photo-item" onclick="openLightbox(this)">
+        <img src="Gallery&Logo/becon/becon_6.jpg" alt="BECON 2026" loading="lazy">
+        <div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div></div>
+      </div>
+      <div class="photo-item" onclick="openLightbox(this)">
+        <img src="Gallery&Logo/becon/becon_7.jpg" alt="BECON 2026" loading="lazy">
+        <div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div></div>
+      </div>
+      <div class="photo-item" onclick="openLightbox(this)">
+        <img src="Gallery&Logo/becon/becon_8.jpg" alt="BECON 2026" loading="lazy">
+        <div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2026 -->
+  <div class="year-group visible" data-group="2026">
+    <div class="year-label">
+      <span class="year-label-text">2026</span>
+      <div class="year-label-line"></div>
+      <span class="year-label-count">4 photos</span>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2026_1.jpg" alt="2026" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2026_2.jpeg" alt="2026" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2026_3.jpeg" alt="2026" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2026_4.jpeg" alt="2026" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+    </div>
+  </div>
+
+  <!-- 2025 -->
+  <div class="year-group visible" data-group="2025">
+    <div class="year-label">
+      <span class="year-label-text">2025</span>
+      <div class="year-label-line"></div>
+      <span class="year-label-count">4 photos</span>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2025_1.jpeg" alt="2025" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2025_2.jpg" alt="2025" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2025_3.jpeg" alt="2025" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2025_4.jpeg" alt="2025" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+    </div>
+  </div>
+
+  <!-- 2024 -->
+  <div class="year-group visible" data-group="2024">
+    <div class="year-label">
+      <span class="year-label-text">2024</span>
+      <div class="year-label-line"></div>
+      <span class="year-label-count">2 photos</span>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2024_1.jpeg" alt="2024" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2024_2.jpeg" alt="2024" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+    </div>
+  </div>
+
+  <!-- 2023 -->
+  <div class="year-group visible" data-group="2023">
+    <div class="year-label">
+      <span class="year-label-text">2023</span>
+      <div class="year-label-line"></div>
+      <span class="year-label-count">1 photo</span>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2023_1.jpg" alt="2023" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+    </div>
+  </div>
+
+  <!-- 2020 -->
+  <div class="year-group visible" data-group="2020">
+    <div class="year-label">
+      <span class="year-label-text">2020</span>
+      <div class="year-label-line"></div>
+      <span class="year-label-count">2 photos</span>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2020_1.jpg" alt="2020" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2020_2.jpg" alt="2020" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+    </div>
+  </div>
+
+  <!-- 2019 -->
+  <div class="year-group visible" data-group="2019">
+    <div class="year-label">
+      <span class="year-label-text">2019</span>
+      <div class="year-label-line"></div>
+      <span class="year-label-count">2 photos</span>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2019_1.jpg" alt="2019" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2019_2.jpg" alt="2019" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+    </div>
+  </div>
+
+  <!-- 2018 -->
+  <div class="year-group visible" data-group="2018">
+    <div class="year-label">
+      <span class="year-label-text">2018</span>
+      <div class="year-label-line"></div>
+      <span class="year-label-count">2 photos</span>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2018_1.jpg" alt="2018" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2018_2.jpg" alt="2018" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+    </div>
+  </div>
+
+  <!-- 2017 -->
+  <div class="year-group visible" data-group="2017">
+    <div class="year-label">
+      <span class="year-label-text">2017</span>
+      <div class="year-label-line"></div>
+      <span class="year-label-count">1 photo</span>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2017_1.jpg" alt="2017" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+    </div>
+  </div>
+
+  <!-- 2016 -->
+  <div class="year-group visible" data-group="2016">
+    <div class="year-label">
+      <span class="year-label-text">2016</span>
+      <div class="year-label-line"></div>
+      <span class="year-label-count">2 photos</span>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2016_1.jpg" alt="2016" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2016_2.jpg" alt="2016" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+    </div>
+  </div>
+
+  <!-- 2015 -->
+  <div class="year-group visible" data-group="2015">
+    <div class="year-label">
+      <span class="year-label-text">2015</span>
+      <div class="year-label-line"></div>
+      <span class="year-label-count">1 photo</span>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2015_1.jpg" alt="2015" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+    </div>
+  </div>
+
+  <!-- 2014 -->
+  <div class="year-group visible" data-group="2014">
+    <div class="year-label">
+      <span class="year-label-text">2014</span>
+      <div class="year-label-line"></div>
+      <span class="year-label-count">1 photo</span>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2014_1.jpg" alt="2014" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+    </div>
+  </div>
+
+  <!-- 2013 -->
+  <div class="year-group visible" data-group="2013">
+    <div class="year-label">
+      <span class="year-label-text">2013</span>
+      <div class="year-label-line"></div>
+      <span class="year-label-count">1 photo</span>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-item" onclick="openLightbox(this)"><img src="photos/2013_1.jpg" alt="2013" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-overlay-icon"><svg width="14" height="14" stroke="white" stroke-width="2" fill="none" viewBox="0 0 24 24" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg></div></div></div>
+    </div>
+  </div>
+
+</div><!-- /gallery-body -->
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">&#x2715;</button>
+  <button class="lightbox-nav lightbox-prev" onclick="shiftLightbox(-1)">&#8592;</button>
+  <div class="lightbox-img-wrap">
+    <img id="lightboxImg" src="" alt="">
+  </div>
+  <button class="lightbox-nav lightbox-next" onclick="shiftLightbox(1)">&#8594;</button>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="debsoclogo.jpeg" alt="DebSoc" class="footer-logo">
+          <div>
+            <div class="footer-brand-name">DEBSOC</div>
+            <div class="footer-brand-sub">The Debating Society of IIEST Shibpur</div>
+          </div>
+        </div>
+        <p class="footer-desc">A forum where discourse meets discipline. Through debate, diplomacy, and structured dialogue, we cultivate thinkers capable of defending ideas with clarity and conviction.</p>
+      </div>
+      <div>
+        <div class="footer-col-heading">Navigation</div>
+        <ul class="footer-links-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="aboutus.html">About Us</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="tribunal.html">Tribunal</a></li>
+          <li><a href="contactpage.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-heading">Connect</div>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/debsoc_iiests" target="_blank" class="social-icon" aria-label="Instagram">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/company/debsoc-iiest-shibpur/" target="_blank" class="social-icon" aria-label="LinkedIn">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <span>© 2026 The Debating Society of IIEST Shibpur</span>
+      &nbsp;·&nbsp;
+      <span>Diplomacy · Debate · Discourse</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // NAV HIDE ON SCROLL
+  let lastY = window.scrollY;
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y <= 10) navbar.classList.remove('nav-hidden');
+    else if (y > lastY) navbar.classList.add('nav-hidden');
+    else navbar.classList.remove('nav-hidden');
+    lastY = y;
+  });
+
+  // FILTER TABS
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+      document.querySelectorAll('.year-group').forEach(g => {
+        if (filter === 'all' || g.dataset.group === filter) {
+          g.classList.add('visible');
+        } else {
+          g.classList.remove('visible');
+        }
+      });
+    });
+  });
+
+  // LIGHTBOX
+  let allImages = [];
+  let currentIndex = 0;
+
+  function buildImageList() {
+    allImages = Array.from(document.querySelectorAll('.photo-item img'));
+  }
+  buildImageList();
+
+  function openLightbox(item) {
+    const img = item.querySelector('img');
+    currentIndex = allImages.indexOf(img);
+    showLightboxImage();
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function showLightboxImage() {
+    document.getElementById('lightboxImg').src = allImages[currentIndex].src;
+    document.getElementById('lightboxCounter').textContent = (currentIndex + 1) + ' / ' + allImages.length;
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeLightboxOnBg(e) {
+    if (e.target === document.getElementById('lightbox')) closeLightbox();
+  }
+
+  function shiftLightbox(dir) {
+    currentIndex = (currentIndex + dir + allImages.length) % allImages.length;
+    showLightboxImage();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (e.key === 'ArrowLeft') shiftLightbox(-1);
+    if (e.key === 'ArrowRight') shiftLightbox(1);
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // Stagger animation on photo items
+  document.querySelectorAll('.photo-item').forEach((el, i) => {
+    el.style.animationDelay = (i * 0.04) + 's';
+  });
+</script>
+</body>
+</html>
