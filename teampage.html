@@ -190,48 +190,89 @@
 
   <div class="page-wrap">
 
-    <nav>
-      <div class="nav-inner">
-        <div class="nav-logo">
-          <img src="debsoclogo.jpeg" alt="DEBSOC Logo">
-          <div class="nav-wordmark">
-            <div class="top">THE DEBATING SOCIETY OF</div>
-            <div class="bot">IIEST-SHIBPUR</div>
-          </div>
+      <!-- NAV -->
+<nav class="w-full px-4 md:px-6 py-3 sticky top-0 z-50 backdrop-blur-md transition-all" 
+     style="background: linear-gradient(135deg, rgba(128, 0, 32, 0.95) 0%, rgba(92, 0, 23, 0.95) 100%);">
+  <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 lg:gap-4">
+    
+    <div class="flex items-center gap-2 md:gap-3 flex-shrink-0">
+      <img src="debsoclogo.jpeg" alt="Logo" class="h-9 md:h-10 w-auto object-contain">
+      <div class="font-display tracking-wide" style="color:#FAF7F2;">
+        <div class="hidden md:block text-[14px] lg:text-[16px] font-semibold uppercase leading-tight whitespace-nowrap">
+          THE DEBATING SOCIETY<br>
+          <span class="text-[12px] lg:text-[14px] font-normal opacity-90 tracking-normal">OF IIEST SHIBPUR</span>
         </div>
-        <div class="nav-links">
-          <a href="index.html" class="nav-btn">Home</a>
-          <button class="nav-btn" onclick="handleAboutClick()">About Us</button>
-          <div class="events-wrap" style="position:relative;">
-            <button class="nav-btn" style="display:flex;align-items:center;gap:4px;">Events
-              <svg style="width:12px;height:12px;" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-            </button>
-            <div class="events-drop">
-              <a href="becon.html">BECON #1.0</a>
-              <a href="events.html">MAIN EVENTS</a>
-            </div>
-          </div>
-          <a href="gallery.html" class="nav-btn">Gallery</a>
-          <a href="tribunal.html" class="nav-btn">Tribunal</a>
-          <a href="teampage.html" class="nav-btn active-nav">Team</a>
-          <a href="contactpage.html" class="nav-contact">Contact</a>
-        </div>
-        <button id="hamburger-btn" onclick="toggleMobileMenu()" style="display:none;color:var(--cream);background:none;border:none;cursor:pointer;">
-          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
+        <div class="md:hidden text-[15px] font-semibold uppercase whitespace-nowrap">THE DEBATING SOCIETY
+          <br>OF IIEST SHIBPUR</br></div>
       </div>
-      <div id="mobile-menu" style="display:none;position:absolute;top:100%;right:16px;margin-top:8px;width:220px;flex-direction:column;padding:8px;gap:4px;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.08);background:var(--crimson);z-index:50;">
-        <a href="index.html" style="padding:12px 16px;font-size:13px;color:white;text-decoration:none;">Home</a>
-        <button onclick="handleAboutClick();toggleMobileMenu()" style="text-align:left;padding:12px 16px;font-size:13px;color:white;background:none;border:none;cursor:pointer;font-family:inherit;">About Us</button>
-        <a href="events.html" style="padding:12px 16px;font-size:13px;color:white;text-decoration:none;">Main Events</a>
-        <a href="becon.html" style="padding:12px 16px;font-size:13px;color:white;text-decoration:none;">BECON #1.0</a>
-        <a href="gallery.html" style="padding:12px 16px;font-size:13px;color:white;text-decoration:none;">Gallery</a>
-        <a href="tribunal.html" style="padding:12px 16px;font-size:13px;color:white;text-decoration:none;">Tribunal</a>
-        <a href="teampage.html" style="padding:12px 16px;font-size:13px;color:white;text-decoration:none;">Team</a>
-        <a href="contactpage.html" style="display:block;padding:12px 16px;font-size:13px;margin:4px 8px;border-radius:999px;text-align:center;background:var(--gold);color:var(--crimson-dark);text-decoration:none;font-weight:600;">Contact</a>
-      </div>
-    </nav>
+    </div>
 
+    <!-- DESKTOP MENU -->
+    <div class="hidden md:flex items-center gap-6">
+      <a href="index.html" class="nav-btn active-nav">Home</a>
+      <a href = aboutus.html onclick="handleAboutClick()" class="nav-btn">About Us</a>
+
+      <div class="relative group">
+        <button class="nav-btn flex items-center gap-1">
+          Events
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"/>
+          </svg>
+        </button>
+        <div class="absolute left-0 mt-1 w-40 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all"
+          style="background:#FAF7F2;">
+          <a href="becon.html" class="block px-4 py-2 text-sm hover:opacity-70 text-[#800020]">BECON #1.0</a>
+          <a href="events.html" class="block px-4 py-2 text-sm hover:opacity-70 text-[#800020]">MAIN EVENTS</a>
+        </div>
+      </div>
+
+      <a href="gallery.html" class="nav-btn">Gallery</a>
+      <a href="tribunal.html" class="nav-btn">Tribunal</a>
+      <a href="teampage.html" class="nav-btn">Team</a>
+
+      <a href="contactpage.html"
+        class="px-5 py-2 rounded-full text-sm font-semibold transition hover:scale-105"
+        style="background:#DAA520;color:#800020;">
+        Contact
+      </a>
+    </div>
+
+    <!-- HAMBURGER -->
+    <button id="hamburger-btn"
+      onclick="toggleMobileMenu()"
+      class="md:hidden text-white">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+
+  </div>
+
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu"
+    class="hidden absolute top-full right-4 mt-2 w-56 flex flex-col p-2 gap-1 rounded-xl shadow-2xl border border-white/10 md:hidden z-50"
+    style="background:#800020;">
+    <a href="index.html" class="px-4 py-3 text-sm text-white">Home</a>
+    <a href="aboutus.html" onclick="handleAboutClick(); toggleMobileMenu()"
+      class="w-full text-left px-4 py-3 text-sm text-white">
+      About Us
+    </a>
+    <a href="events.html" class="px-4 py-3 text-sm text-white">Main Events</a>
+    <a href="becon.html" class="px-4 py-3 text-sm text-white">Becon #1.0</a>
+    <a href="gallery.html" class="px-4 py-3 text-sm text-white">Gallery</a>
+    <a href="tribunal.html" class="px-4 py-3 text-sm text-white">Tribunal</a>
+    <a href="teampage.html" class="px-4 py-3 text-sm text-white">Team</a>
+    <a href="contactpage.html"
+      class="block px-4 py-3 text-sm mt-2 rounded-full text-center"
+      style="background:#DAA520;color:#800020;margin:0 1rem;">
+      Contact
+    </a>
+  </div>
+
+</nav>
     <div class="team-hero">
       <div class="team-hero-inner">
         <div class="team-ghost" aria-hidden="true">TEAM</div>
