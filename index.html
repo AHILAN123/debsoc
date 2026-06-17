@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DebSocIIEST</title>
-  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" href="favicon.ico">
   <meta name="description" content="Official website of DebSoc IIEST Shibpur — debates, events, BECON and more.">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link rel="stylesheet" href="style.css">
@@ -41,6 +41,31 @@
       color: var(--ink);
       overflow-x: hidden;
     }
+     .nav-btn {
+      color: rgba(250, 247, 242, 0.85);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-btn:hover {
+      background: rgba(250, 247, 242, 0.12);
+      color: #FAF7F2;
+    }
+
+    .active-nav {
+      background: rgba(255, 255, 255, 0.15);
+      color: #FAF7F2;
+    }
+
 
     .site-footer {
       position: relative;
@@ -230,11 +255,6 @@
         radial-gradient(circle at 20% 50%, rgba(107, 15, 26, 0.04) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(201, 150, 58, 0.06) 0%, transparent 40%);
     }
-    /* TRIBUNAL-STYLE NAV: active link highlight */
-    .active-nav {
-      background: rgba(255,255,255,0.15) !important;
-      color: #FAF7F2 !important;
-    }
 
     /* ─── HERO — FULL BLEED DIAGONAL TAKEOVER ─── */
     .hero {
@@ -259,41 +279,38 @@
       object-fit: cover;
       object-position: center 30%;
       filter:
-  grayscale(18%)
-  contrast(108%)
-  brightness(0.68);
+        grayscale(30%)
+        contrast(105%)
+        brightness(0.48);
     }
 
-    /* Dark vignette over photo so it doesn't fight text */
-   .hero-photo::after {
-  content: '';
+    /* Warm dark gradient: very dark on left, eases to moderately dark on right */
+    .hero-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(12, 2, 4, 0.97) 0%,
+          rgba(12, 2, 4, 0.92) 18%,
+          rgba(15, 4, 6, 0.82) 38%,
+          rgba(10, 2, 4, 0.62) 62%,
+          rgba(8, 1, 3, 0.38) 80%,
+          rgba(6, 0, 2, 0.18) 100%
+        ),
+        radial-gradient(
+          ellipse at center,
+          transparent 15%,
+          rgba(0, 0, 0, 0.22) 100%
+        );
+    }
 
-  position: absolute;
-  inset: 0;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(8, 0, 3, 0.88) 0%,
-      rgba(8, 0, 3, 0.78) 22%,
-      rgba(8, 0, 3, 0.55) 75%,
-      rgba(8, 0, 3, 0.18) 90%,
-      rgba(8, 0, 3, 0.05) 100%,
-      transparent 100%
-    ),
-
-    radial-gradient(
-      ellipse at center,
-      transparent 20%,
-      rgba(0,0,0,0.28) 100%
-    );
-}
     /* Diagonal crimson panel — clips in from left */
     .hero-panel {
       position: absolute;
       inset: 0;
       z-index: 1;
-      /* Diagonal cut: panel covers left ~55%, then cuts diagonally to ~35% at bottom */
       clip-path: polygon(0 0, 62% 0, 44% 100%, 0 100%);
       background: linear-gradient(135deg, var(--crimson-dark) 0%, var(--crimson) 60%, #9a0028 100%);
     }
@@ -330,7 +347,7 @@
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 100px 60px 80px;
+      padding: 20px 60px 80px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center;
@@ -376,62 +393,21 @@
 
     /* Quote beneath heading */
     .hero-quote {
-      font-size: 13px;
+      font-size: 23px;
       font-weight: 300;
       color: rgba(250, 247, 242, 0.65);
       font-style: italic;
       letter-spacing: 0.5px;
+      margin-left: 20px;
       margin-bottom: 36px;
       line-height: 1.6;
+      justify-content: center;
     }
 
     .hero-quote strong {
       color: rgba(250, 247, 242, 0.9);
       font-style: normal;
       font-weight: 600;
-    }
-
-    /* CTA buttons */
-    .hero-ctas {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 48px;
-    }
-
-    .btn-primary {
-      padding: 14px 32px;
-      background: var(--gold);
-      color: var(--crimson-dark);
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 700;
-      text-decoration: none;
-      letter-spacing: 0.3px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 24px rgba(218, 165, 32, 0.35);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(218, 165, 32, 0.45);
-    }
-
-    .btn-ghost {
-      padding: 13px 32px;
-      border: 1.5px solid rgba(250, 247, 242, 0.35);
-      color: rgba(250, 247, 242, 0.85);
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: border-color 0.2s, color 0.2s, transform 0.2s;
-    }
-
-    .btn-ghost:hover {
-      border-color: var(--cream);
-      color: var(--cream);
-      transform: translateY(-2px);
     }
 
     /* Stats */
@@ -472,90 +448,54 @@
       gap: 16px;
     }
 
+    /* BECON card — now a full clickable link */
     .hero-event-card {
-      background: rgba(10, 0, 4, 0.7);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(218, 165, 32, 0.25);
-      border-radius: 16px;
-      padding: 24px 28px;
-      max-width: 320px;
-      width: 100%;
-    }
-
-    .event-card-tag {
-      display: inline-block;
-      background: var(--gold);
-      color: var(--crimson-dark);
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 2.5px;
-      padding: 4px 12px;
-      border-radius: 999px;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-
-    .event-card-title {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--cream);
-      line-height: 1.1;
-      margin-bottom: 6px;
-    }
-
-    .event-card-sub {
-      font-size: 11px;
-      color: var(--gold);
-      font-weight: 600;
-      letter-spacing: 1px;
-      margin-bottom: 18px;
-    }
-
-    .event-card-detail {
       display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    .event-card-detail-icon {
-      width: 24px;
-      height: 24px;
-      border-radius: 6px;
-      background: rgba(218, 165, 32, 0.15);
-      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .event-card-detail-text {
-      font-size: 12px;
-      color: rgba(250, 247, 242, 0.75);
-    }
-
-    .event-card-cta {
-      display: block;
-      margin-top: 20px;
-      padding: 11px 0;
-      background: var(--crimson);
-      color: var(--cream);
-      text-align: center;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 700;
+      gap: 5x;
       text-decoration: none;
-      letter-spacing: 0.5px;
-      transition: background 0.2s;
-      border: 1px solid rgba(218, 165, 32, 0.2);
+
+      background: rgba(10, 0, 4, 0.30);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(201, 150, 58, 0.28);
+      border-radius: 16px;
+      padding: 10px 10px 10px;
+      max-width: 280px;
+      width: 100%;
+
+      transition: border-color 0.25s ease, background 0.25s ease, transform 0.2s ease;
+      cursor: pointer;
     }
 
-    .event-card-cta:hover {
-      background: #9a0028;
+    .hero-event-card:hover {
+      border-color: rgba(201, 150, 58, 0.55);
+      background: rgba(10, 2, 0, 0.45);
+      transform: translateY(-3px);
     }
 
-    /* Floating photo badge — photo thumbnail that anchors in photo area */
+    .becon-card-logo {
+      border-radius: 5%;
+      object-fit: contain;
+      display: block;
+      /* REPLACE src with your BECON logo filename, e.g. becon_logo.png */
+    }
+    .becon-card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 300;
+      
+      color: rgb(255, 242, 200);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    
+
+    /* Floating photo badge */
     .hero-photo-badge {
       position: relative;
       max-width: 260px;
@@ -587,20 +527,37 @@
       text-transform: uppercase;
     }
 
-    /* Gold diagonal accent line behind the cut */
-    .hero-accent-line {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-      opacity: 0.6;
-      z-index: 5;
-      /* Positioned at the diagonal cut — approx 44-62% horizontally, so we animate it at the midpoint */
-      left: 52%;
-      transform: rotate(var(--diagonal-angle, -6deg)) scaleY(1.3);
-      transform-origin: center;
-      pointer-events: none;
+    /* Fade-in animation for content */
+    @keyframes fade-up {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-eyebrow {
+      animation: fade-up 0.7s ease both;
+    }
+
+    .hero-heading-img {
+      animation: fade-up 0.7s 0.1s ease both;
+    }
+
+    .hero-quote {
+      animation: fade-up 0.7s 0.2s ease both;
+    }
+
+    .hero-stats {
+      animation: fade-up 0.7s 0.4s ease both;
+    }
+
+    .hero-right {
+      animation: fade-up 0.7s 0.25s ease both;
     }
 
     /* Bottom bar — BECON ticker */
@@ -645,96 +602,15 @@
     }
 
     @keyframes ticker-scroll {
-      0% {
-        transform: translateX(0);
-      }
-
-      100% {
-        transform: translateX(-50%);
-      }
-    }
-
-    /* Scroll hint */
-    .scroll-hint {
-      position: absolute;
-      bottom: 56px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 20;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      opacity: 0.5;
-      animation: hint-bounce 2s ease-in-out infinite;
-      cursor: default;
-    }
-
-    .scroll-hint span {
-      font-size: 9px;
-      letter-spacing: 2px;
-      color: var(--cream);
-      text-transform: uppercase;
-    }
-
-    .scroll-hint svg {
-      color: var(--cream);
-    }
-
-    @keyframes hint-bounce {
-
-      0%,
-      100% {
-        transform: translateX(-50%) translateY(0);
-      }
-
-      50% {
-        transform: translateX(-50%) translateY(6px);
-      }
-    }
-
-    /* Fade-in animation for content */
-    @keyframes fade-up {
-      from {
-        opacity: 0;
-        transform: translateY(24px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .hero-eyebrow {
-      animation: fade-up 0.7s ease both;
-    }
-
-    .hero-heading-img {
-      animation: fade-up 0.7s 0.1s ease both;
-    }
-
-    .hero-quote {
-      animation: fade-up 0.7s 0.2s ease both;
-    }
-
-    .hero-ctas {
-      animation: fade-up 0.7s 0.3s ease both;
-    }
-
-    .hero-stats {
-      animation: fade-up 0.7s 0.4s ease both;
-    }
-
-    .hero-right {
-      animation: fade-up 0.7s 0.25s ease both;
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     /* Responsive */
     @media (max-width: 900px) {
       .hero-content {
         grid-template-columns: 1fr;
-        padding: 80px 28px 60px;
+        padding: 20px 28px 60px;
         min-height: auto;
         gap: 32px;
       }
@@ -767,42 +643,21 @@
   <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 lg:gap-4">
     
     <div class="flex items-center gap-2 md:gap-3 flex-shrink-0">
-      <img src="debsoclogo.jpeg" alt="Logo" class="h-9 md:h-10 w-auto object-contain">
+     
       <div class="font-display tracking-wide" style="color:#FAF7F2;">
         <div class="hidden md:block text-[14px] lg:text-[16px] font-semibold uppercase leading-tight whitespace-nowrap">
-          THE DEBATING SOCIETY<br>
-          <span class="text-[12px] lg:text-[14px] font-normal opacity-90 tracking-normal">OF IIEST SHIBPUR</span>
+        
+          
         </div>
-        <div class="md:hidden text-[15px] font-semibold uppercase whitespace-nowrap">THE DEBATING SOCIETY
-          <br>OF IIEST SHIBPUR</br></div>
+        <div class="md:hidden text-[15px] font-semibold uppercase whitespace-nowrap">IIEST SHIBPUR</div>
       </div>
     </div>
 
     <!-- DESKTOP MENU -->
     <div class="hidden md:flex items-center gap-6">
-      <a href="index.html" class="nav-btn active-nav">Home</a>
-      <a href = aboutus.html onclick="handleAboutClick()" class="nav-btn">About Us</a>
-
-      <div class="relative group">
-        <button class="nav-btn flex items-center gap-1">
-          Events
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clip-rule="evenodd"/>
-          </svg>
-        </button>
-        <div class="absolute left-0 mt-1 w-40 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all"
-          style="background:#FAF7F2;">
-          <a href="becon.html" class="block px-4 py-2 text-sm hover:opacity-70 text-[#800020]">BECON #1.0</a>
-          <a href="events.html" class="block px-4 py-2 text-sm hover:opacity-70 text-[#800020]">MAIN EVENTS</a>
-        </div>
-      </div>
-
+      <a href="aboutus.html" onclick="handleAboutClick()" class="nav-btn">About Us</a>
       <a href="gallery.html" class="nav-btn">Gallery</a>
       <a href="tribunal.html" class="nav-btn">Tribunal</a>
-      <a href="teampage.html" class="nav-btn">Team</a>
-
       <a href="contactpage.html"
         class="px-5 py-2 rounded-full text-sm font-semibold transition hover:scale-105"
         style="background:#DAA520;color:#800020;">
@@ -832,7 +687,7 @@
       About Us
     </a>
     <a href="events.html" class="px-4 py-3 text-sm text-white">Main Events</a>
-    <a href="becon.html" class="px-4 py-3 text-sm text-white">Becon #1.0</a>
+    <a href="becon.html" class="px-4 py-3 text-sm text-white">Becon</a>
     <a href="gallery.html" class="px-4 py-3 text-sm text-white">Gallery</a>
     <a href="tribunal.html" class="px-4 py-3 text-sm text-white">Tribunal</a>
     <a href="teampage.html" class="px-4 py-3 text-sm text-white">Team</a>
@@ -846,137 +701,76 @@
 </nav>
 
   <!-- ═══════════════════════════════════════════════
-       HERO — FULL BLEED DIAGONAL TAKEOVER
-       Replace everything from the old hero section
-       in your index.html with this block.
+       HERO
   ═══════════════════════════════════════════════ -->
   <section class="hero">
 
-    <!-- 1. Full-bleed background photo (no boxes, no borders) -->
+    <!-- 1. Full-bleed background photo -->
     <div class="hero-photo">
-      <!--
-        Use your best event photo here — crowd shots, panel, or BECON hall.
-        It spans the ENTIRE section. No clipping, no rounding.
-        Recommended: Gallery/event photo with crowd or panel in the center-right.
-
-        Replace src with your actual image path:
-      -->
       <img src="Gallery&Logo/becon/becon_2.jpg" alt="DEBSOC event">
     </div>
 
-    <!-- 2. Diagonal crimson panel cutting in from the left -->
+    <!-- 2. Diagonal crimson panel -->
     <div class="hero-panel"></div>
 
-    <!-- 3. Ghost year — massive typographic depth element -->
-    <div class="hero-ghost-year" aria-hidden="true">2026</div>
-
-    <!-- 4. Thin gold accent line at the diagonal cut -->
-    <div class="hero-accent-line"></div>
-
-    <!-- 5. All content -->
+    <!-- 4. All content -->
     <div class="hero-content">
 
-      <!-- LEFT — branding & CTAs (sits on the crimson panel) -->
+      <!-- LEFT — branding & stats -->
       <div class="hero-left">
-        <div class="hero-eyebrow">
-          <div class="hero-eyebrow-line"></div>
-          <span class="hero-eyebrow-text">The Debating Society of IIEST Shibpur</span>
-        </div>
+        
+         
+       
 
-        <!--
-          main2.png — your existing heading image, untouched.
-          Width controlled by CSS, aspect ratio preserved.
-        -->
         <img class="hero-heading-img" src="main2.png" alt="DEBSOC IIEST">
 
         <p class="hero-quote">
           <strong>"Can't debate without offending."</strong><br>
-           
         </p>
-
-        <div class="hero-ctas">
-          <a href="becon.html" class="btn-primary">Explore BECON '26 →</a>
-          <a href="contactpage.html" class="btn-ghost">Get in Touch</a>
-        </div>
 
         <div class="hero-stats">
           <div>
             <div class="hero-stat-num">15+</div>
-            <div class="hero-stat-lbl">Years </div>
+            <div class="hero-stat-lbl">Years</div>
           </div>
-          
-          
           <div class="hero-stat-divider"></div>
           <div>
             <div class="hero-stat-num">5+</div>
             <div class="hero-stat-lbl">Annual Events</div>
           </div>
+
         </div>
       </div>
 
-      <!-- RIGHT — floats over the photo area -->
+      <!-- RIGHT — BECON card (entire card is the link) -->
       <div class="hero-right">
 
-        <!-- BECON event card -->
-        <div class="hero-event-card">
-          <span class="event-card-tag">Flagship Event</span>
-          <div class="event-card-title">BECON #1.0</div>
-          <div class="event-card-sub">Bengal Engineering Conclave of Nations</div>
-
-          <div class="event-card-detail">
-            <div class="event-card-detail-icon">
-              <svg width="13" height="13" fill="none" stroke="#DAA520" stroke-width="2" viewBox="0 0 24 24">
-                <rect x="3" y="4" width="18" height="18" rx="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
-              </svg>
-            </div>
-            <span class="event-card-detail-text">28th – 29th March 2026</span>
-          </div>
-
-          <div class="event-card-detail">
-            <div class="event-card-detail-icon">
-              <svg width="13" height="13" fill="none" stroke="#DAA520" stroke-width="2" viewBox="0 0 24 24">
-                <circle cx="12" cy="11" r="3" />
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
-              </svg>
-            </div>
-            <span class="event-card-detail-text">IIEST Shibpur, West Bengal</span>
-          </div>
-
+        <!-- BECON card: click anywhere to go to becon.html -->
+        <!-- LOGO: replace BECON_LOGO_FILENAME with your actual file, e.g. becon_logo.png -->
+        <a href="becon.html" class="hero-event-card">
+          <img
+            src="becon_white_logo-removebg.png"
+            alt="BECON"
+            class="becon-card-logo"
+          >
           
+        </a>
 
-          <a href="becon.html" class="event-card-cta">View Committees & Winners</a>
-        </div>
-
-        <!--
-          Second photo — a different event photo floated below the card.
-          Replace src with another gallery image:
-        -->
-        <div class="hero-photo-badge">
-          <img src="Gallery&Logo/becon/becon_4.jpg" alt="BECON 2026 event moments">
-          <div class="hero-photo-badge-label">BECON · March 2026</div>
-        </div>
-
+        <!-- Secondary photo badge -->
+         <a href="debsoc_iiest_timeline_with_photos.html" class="hero-event-card">
+          <img
+            src="Legacy.jpg"
+            alt="About Us/Legacy"
+            class="becon-card-logo"
+          >
+           <div class="becon-card-name">See Our Story</div>
+          
+        </a>
       </div>
-    </div>
-
-
-
-    <!-- Subtle scroll indicator -->
-    <div class="scroll-hint" aria-hidden="true">
-      <span>scroll</span>
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <polyline points="6 9 12 15 18 9" />
-      </svg>
     </div>
 
   </section>
   <!-- ═══ END HERO ═══ -->
-
-  <!-- Everything below this line stays exactly as it was in your index.html -->
-  <!-- (About section, footer, etc.) -->
 
 
 <!-- FOOTER -->
@@ -1018,7 +812,6 @@
   </footer>
   
   <script>
-    /* Mobile menu toggle */
     function toggleMobileMenu() {
       const menu = document.getElementById('mobile-menu');
       menu.classList.toggle('hidden');
@@ -1031,58 +824,29 @@
       }
     });
 
-    /* About scroll */
     function handleAboutClick() {
       const el = document.getElementById('about-section');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
 
-    /* Carousel auto-rotate */
-    function initCarousel(selector, interval) {
-      const items = document.querySelectorAll(selector + ' .carousel-item');
-      if (!items.length) return;
-      let idx = 0;
-      setInterval(function () {
-        items[idx].classList.remove('active');
-        idx = (idx + 1) % items.length;
-        items[idx].classList.add('active');
-      }, interval || 3500);
-    }
-    initCarousel('.hero-carousel', 3500);
-    initCarousel('.about-carousel', 4000);
-  </script>
-
-  <!-- Preserve existing main.js hooks -->
-
-  <script>
-  let lastScrollY = window.scrollY;
-
-  const navbar = document.querySelector("nav");
-
-  window.addEventListener("scroll", () => {
-    const currentScrollY = window.scrollY;
-
-    /* always visible near top */
-    if (currentScrollY <= 7) {
-      navbar.classList.remove("nav-hidden");
+    let lastScrollY = window.scrollY;
+    const navbar = document.querySelector("nav");
+    window.addEventListener("scroll", () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY <= 7) {
+        navbar.classList.remove("nav-hidden");
+        lastScrollY = currentScrollY;
+        return;
+      }
+      if (currentScrollY > lastScrollY) {
+        navbar.classList.add("nav-hidden");
+      } else {
+        navbar.classList.remove("nav-hidden");
+      }
       lastScrollY = currentScrollY;
-      return;
-    }
-
-    /* scrolling down */
-    if (currentScrollY > lastScrollY) {
-      navbar.classList.add("nav-hidden");
-    }
-
-    /* scrolling up */
-    else {
-      navbar.classList.remove("nav-hidden");
-    }
-
-    lastScrollY = currentScrollY;
-  });
-</script>
+    });
+  </script>
   <script src="main.js"></script>
 </body>
 
-</html></html>
+</html>
