@@ -30,116 +30,124 @@
     }
 
     /* ── NAV ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: linear-gradient(135deg, #800020 0%, #5c0017 100%);
-      padding: 6px 24px;
-    }
-    .nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .nav-brand img { height: 32px; width: auto; object-fit: contain; }
-    .nav-brand-text { color: #FAF7F2; line-height: 1.2; }
-    .nav-brand-text .sub { font-size: 10px; font-weight: 600; letter-spacing: 1px; opacity: 0.8; }
-    .nav-brand-text .main { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; }
-    .nav-links { display: flex; align-items: center; gap: 4px; }
-    .nav-btn {
-      color: rgba(250,247,242,0.85);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 5px 12px;
-      border-radius: 5px;
-      text-decoration: none;
-      transition: background 0.2s;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      font-family: inherit;
-      letter-spacing: 0.03em;
-    }
-    .nav-btn:hover, .nav-btn.active { background: rgba(255,255,255,0.14); color: #FAF7F2; }
-    .nav-contact {
-      padding: 6px 18px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      background: #DAA520;
-      color: #800020;
-      transition: opacity 0.2s, transform 0.2s;
-      white-space: nowrap;
-    }
-    .nav-contact:hover { opacity: 0.88; transform: scale(1.04); }
-    .nav-dropdown { position: relative; }
-    .nav-dropdown-menu {
-      position: absolute;
-      top: calc(100% + 6px);
-      left: 0;
-      min-width: 160px;
-      background: #FAF7F2;
-      border-radius: 10px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.2s, transform 0.2s;
-      transform: translateY(-4px);
-      z-index: 200;
-    }
-    .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
-    .nav-dropdown-menu a {
-      display: block;
-      padding: 10px 16px;
-      font-size: 13px;
-      color: #800020;
-      text-decoration: none;
-      transition: opacity 0.15s;
-    }
-    .nav-dropdown-menu a:hover { opacity: 0.65; }
-    .hamburger { display: none; background: none; border: none; cursor: pointer; color: #FAF7F2; }
-    .mobile-menu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      right: 16px;
-      width: 220px;
-      background: #800020;
-      border-radius: 12px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
-      padding: 8px;
-      z-index: 200;
-    }
-    .mobile-menu a, .mobile-menu button {
-      display: block;
-      width: 100%;
-      text-align: left;
-      padding: 11px 14px;
-      color: #FAF7F2;
-      text-decoration: none;
-      font-size: 14px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-      border-radius: 8px;
-      transition: background 0.15s;
-    }
-    .mobile-menu a:hover, .mobile-menu button:hover { background: rgba(255,255,255,0.1); }
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hamburger { display: block; }
-    }
+    /* ── NAV ── */
+nav {
+  position: sticky; top: 0; width: 100%; z-index: 1000;
+  background: linear-gradient(135deg, rgba(128,0,32,0.96) 0%, rgba(92,0,23,0.96) 100%);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(201,150,58,0.14);
+  transition: transform 0.3s ease;
+}
+nav.nav-hidden { transform: translateY(-100%); }
+
+.nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  height: 48px; padding: 0 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.06em;
+  color: #FAF7F2; text-decoration: none;
+  flex-shrink: 0; opacity: 0.9;
+  transition: opacity 0.2s;
+}
+.nav-logo:hover { opacity: 1; }
+
+.nav-links {
+  display: flex; align-items: center; gap: 2px;
+}
+
+.nav-btn {
+  color: rgba(250,247,242,0.8);
+  font-size: 12px; font-weight: 500;
+  padding: 6px 13px; border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  border: none; background: transparent;
+  cursor: pointer; font-family: inherit;
+  letter-spacing: 0.03em; white-space: nowrap;
+}
+.nav-btn:hover, .nav-btn.active {
+  background: rgba(250,247,242,0.11);
+  color: #FAF7F2;
+}
+.nav-events-btn {
+  display: flex; align-items: center; gap: 4px;
+}
+
+.nav-contact-btn {
+  padding: 7px 18px; border-radius: 999px;
+  font-size: 12px; font-weight: 700;
+  background: #DAA520; color: #800020;
+  text-decoration: none; margin-left: 6px;
+  transition: background 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+.nav-contact-btn:hover { background: #e8c040; transform: translateY(-1px); }
+
+/* Events dropdown */
+.nav-events-wrap { position: relative; }
+.nav-events-drop {
+  position: absolute; left: 0; top: calc(100% + 8px);
+  width: 160px; border-radius: 10px;
+  background: #FAF6EE;
+  box-shadow: 0 10px 36px rgba(0,0,0,0.18);
+  opacity: 0; visibility: hidden;
+  transform: translateY(-6px);
+  transition: all 0.2s ease;
+  z-index: 100; overflow: hidden;
+}
+.nav-events-wrap:hover .nav-events-drop,
+.nav-events-wrap:focus-within .nav-events-drop {
+  opacity: 1; visibility: visible; transform: translateY(0);
+}
+.nav-events-drop a {
+  display: block; padding: 11px 16px;
+  font-size: 12px; font-weight: 500;
+  color: #6B0F1A; text-decoration: none;
+  transition: background 0.15s;
+}
+.nav-events-drop a:hover { background: #f0e9db; }
+
+/* Hamburger */
+.nav-hamburger {
+  display: none; flex-direction: column;
+  gap: 5px; cursor: pointer;
+  padding: 8px; background: none; border: none;
+}
+.nav-hamburger span {
+  display: block; width: 22px; height: 2px;
+  background: rgba(250,246,238,0.85); border-radius: 2px;
+  transition: all 0.25s ease;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile menu */
+.nav-mobile {
+  display: none; padding: 8px 0 14px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.nav-mobile.open { display: block; }
+
+.mob-link {
+  display: block; padding: 12px 20px;
+  color: rgba(250,247,242,0.8);
+  text-decoration: none; font-size: 14px; font-weight: 500;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: color 0.15s;
+}
+.mob-link:hover, .mob-link.active { color: #DAA520; }
+.mob-link-contact { color: #DAA520 !important; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+}
 
     /* ══ MAGAZINE-BLEED SLIDESHOW ══ */
     .slideshow-wrap {
@@ -921,97 +929,99 @@
 <body>
 
   <!-- NAV -->
-  <nav>
-    <div class="nav-inner">
-      <div class="nav-brand">
-        <img src="debsoclogo.jpeg" alt="DebSoc Logo">
-        <div class="nav-brand-text">
-          <div class="sub">The Debating Society of</div>
-          <div class="main">IIEST-Shibpur</div>
-        </div>
-      </div>
-      <div class="nav-links">
-        <a href="index.html" class="nav-btn">Home</a>
-        <button onclick="handleAboutClick()" class="nav-btn">About Us</button>
-        <div class="nav-dropdown">
-          <button class="nav-btn active">Events ▾</button>
-          <div class="nav-dropdown-menu">
-            <a href="becon.html">BECON #1.0</a>
-            <a href="events.html">Main Events</a>
-          </div>
-        </div>
-        <a href="gallery.html" class="nav-btn">Gallery</a>
-        <a href="tribunal.html" class="nav-btn">Tribunal</a>
-        <a href="teampage.html" class="nav-btn">Team</a>
-        <a href="contactpage.html" class="nav-contact">Contact</a>
-      </div>
-      <button class="hamburger" onclick="toggleMobileMenu()">
-        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
-    </div>
-    <div class="mobile-menu" id="mobile-menu" style="display:none;">
-      <a href="index.html">Home</a>
-      <button onclick="handleAboutClick();toggleMobileMenu()">About Us</button>
-      <a href="events.html">Main Events</a>
-      <a href="becon.html">BECON #1.0</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="tribunal.html">Tribunal</a>
-      <a href="teampage.html">Team</a>
-      <a href="contactpage.html" style="background:#DAA520;color:#800020;border-radius:999px;margin-top:6px;text-align:center;">Contact</a>
-    </div>
-  </nav>
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">DebSoc</a>
 
+    <!-- DESKTOP -->
+    <div class="nav-links">
+      <a href="index.html"       class="nav-btn">Home</a>
+      <a href="aboutus.html"     class="nav-btn">About Us</a>
+      <div class="nav-events-wrap">
+        <button class="nav-btn nav-events-btn">Events
+          <svg width="10" height="10" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+        <div class="nav-events-drop">
+          <a href="becon.html">BECON #1.0</a>
+          <a href="events.html">Main Events</a>
+        </div>
+      </div>
+      <a href="gallery.html"     class="nav-btn active">Gallery</a>
+      <a href="tribunal.html"    class="nav-btn">Tribunal</a>
+      <a href="teampage.html"    class="nav-btn">Team</a>
+      <a href="contactpage.html" class="nav-contact-btn">Contact</a>
+    </div>
+
+    <!-- HAMBURGER -->
+    <button class="nav-hamburger" id="hamburger-btn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- MOBILE MENU -->
+  <div class="nav-mobile" id="mobile-menu">
+    <a href="index.html"       class="mob-link">Home</a>
+    <a href="aboutus.html"     class="mob-link">About Us</a>
+    <a href="becon.html"       class="mob-link">BECON #1.0</a>
+    <a href="events.html"      class="mob-link">Main Events</a>
+    <a href="gallery.html"     class="mob-link active">Gallery</a>
+    <a href="tribunal.html"    class="mob-link">Tribunal</a>
+    <a href="teampage.html"    class="mob-link">Team</a>
+    <a href="contactpage.html" class="mob-link mob-link-contact">Contact</a>
+  </div>
+</nav>
   <!-- ══ MAGAZINE-BLEED SLIDESHOW ══ -->
   <div class="slideshow-wrap" id="slideshow">
 
     <div class="slide active" id="s0">
-      <img src="Gallery&Logo/becon/becon_1.jpg" alt="BECON 2026">
+      <img src="Gallery&Logo/becon/becon_1.webp" alt="BECON 2026">
       <div class="slide-overlay"></div>
     </div>
     <div class="slide" id="s1">
-      <img src="Gallery&Logo/becon/becon_2.jpg" alt="Diplomacy">
+      <img src="Gallery&Logo/becon/becon_2.webp" alt="Diplomacy">
       <div class="slide-overlay"></div>
     </div>
     <div class="slide" id="s2">
-      <img src="Gallery&Logo/becon/becon_3.jpg" alt="High-Stakes Debate">
+      <img src="Gallery&Logo/becon/becon_3.webp" alt="High-Stakes Debate">
       <div class="slide-overlay"></div>
     </div>
     <div class="slide" id="s3">
-      <img src="Gallery&Logo/becon/becon_4.jpg" alt="BECON Committee">
+      <img src="Gallery&Logo/becon/becon_4.webp" alt="BECON Committee">
       <div class="slide-overlay"></div>
     </div>
     <div class="slide" id="s4">
-      <img src="Gallery&Logo/becon/becon_5.jpg" alt="BECON Delegates">
+      <img src="Gallery&Logo/becon/becon_5.webp" alt="BECON Delegates">
       <div class="slide-overlay"></div>
     </div>
     <div class="slide" id="s5">
-      <img src="Gallery&Logo/becon/becon_6.jpg" alt="BECON Session">
+      <img src="Gallery&Logo/becon/becon_6.webp" alt="BECON Session">
       <div class="slide-overlay"></div>
     </div>
     <div class="slide" id="s6">
-      <img src="Gallery&Logo/becon/becon_7.jpg" alt="BECON Awards">
+      <img src="Gallery&Logo/becon/becon_7.webp" alt="BECON Awards">
       <div class="slide-overlay"></div>
     </div>
     <div class="slide" id="s6">
-      <img src="Gallery&Logo/becon/becon_8.jpg" alt="BECON Awards">
+      <img src="Gallery&Logo/becon/becon_8.webp" alt="BECON Awards">
       <div class="slide-overlay"></div>
     </div>
     <div class="slide" id="s6">
-      <img src="Gallery&Logo/becon/becon_9.jpg" alt="BECON Awards">
+      <img src="Gallery&Logo/becon/becon_9.webp" alt="BECON Awards">
       <div class="slide-overlay"></div>
     </div>
     <div class="slide" id="s6">
-      <img src="Gallery&Logo/becon/becon_10.jpg" alt="BECON Awards">
+      <img src="Gallery&Logo/becon/becon_10.webp" alt="BECON Awards">
       <div class="slide-overlay"></div>
     </div>
     <div class="slide" id="s6">
-      <img src="Gallery&Logo/becon/becon_11.jpeg" alt="BECON Awards">
+      <img src="Gallery&Logo/becon/becon_11.webp" alt="BECON Awards">
       <div class="slide-overlay"></div>
     </div>
     <div class="slide" id="s6">
-      <img src="Gallery&Logo/becon/becon_12.jpeg" alt="BECON Awards">
+      <img src="Gallery&Logo/becon/becon_12.webp" alt="BECON Awards">
       <div class="slide-overlay"></div>
     </div>
 
@@ -1101,7 +1111,7 @@
           
           "In a time shaped by conflict, defense, and changing global realities, BECON challenges delegates to engage with diplomacy, strategy, and the difficult questions defining the modern world."
         </blockquote>
-        <a href="BECONBROCHURE.pdf" target="_blank" class="about-download">
+        <a href="https://drive.google.com/file/d/1vbnqZuSOoaarC5-6iXZxlIM0znU-KwBd/view?usp=sharing" target="_blank" class="about-download">
           <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-8m0 8l-3-3m3 3l3-3M4 20h16"/>
           </svg>
@@ -1155,13 +1165,13 @@
         <div class="section-title" style="color:var(--crimson);">THE FLOOR</div>
       </div>
       <div class="gallery-row">
-        <div class="gallery-img-wrap"><img src="Gallery&Logo/becon/becon_1.jpg" alt="BECON moment 1"></div>
-        <div class="gallery-img-wrap"><img src="Gallery&Logo/becon/becon_2.jpg" alt="BECON moment 2"></div>
-        <div class="gallery-img-wrap"><img src="Gallery&Logo/becon/becon_3.jpg" alt="BECON moment 3"></div>
-        <div class="gallery-img-wrap"><img src="Gallery&Logo/becon/becon_4.jpg" alt="BECON moment 4"></div>
-        <div class="gallery-img-wrap"><img src="Gallery&Logo/becon/becon_5.jpg" alt="BECON moment 5"></div>
-        <div class="gallery-img-wrap"><img src="Gallery&Logo/becon/becon_6.jpg" alt="BECON moment 6"></div>
-        <div class="gallery-img-wrap"><img src="Gallery&Logo/becon/becon_7.jpg" alt="BECON moment 7"></div>
+        <div class="gallery-img-wrap"><img src="Gallery&Logo/becon/becon_1.webp" alt="BECON moment 1"></div>
+        <div class="gallery-img-wrap"><img src="Gallery&Logo/becon/becon_2.webp" alt="BECON moment 2"></div>
+        <div class="gallery-img-wrap"><img src="Gallery&Logo/becon/becon_3.webp" alt="BECON moment 3"></div>
+        <div class="gallery-img-wrap"><img src="Gallery&Logo/becon/becon_4.webp" alt="BECON moment 4"></div>
+        <div class="gallery-img-wrap"><img src="Gallery&Logo/becon/becon_5.webp" alt="BECON moment 5"></div>
+        <div class="gallery-img-wrap"><img src="Gallery&Logo/becon/becon_6.webp" alt="BECON moment 6"></div>
+        <div class="gallery-img-wrap"><img src="Gallery&Logo/becon/becon_7.webp" alt="BECON moment 7"></div>
       </div>
     </div>
   </div>
@@ -1189,7 +1199,7 @@
       <div class="footer-grid">
         <div>
           <div class="footer-brand-row">
-            <img src="debsoclogo.jpeg" alt="DebSoc">
+            <img src="debsoclogo.webp" alt="DebSoc">
             <div class="footer-brand-name">DebSoc</div>
           </div>
           <p class="footer-desc">A community dedicated to the synthesis of technical precision and humanistic inquiry. Through debates and formal discourse, we equip scholars with the cognitive agility to dissect multifaceted issues and defend truth.</p>
@@ -1222,6 +1232,31 @@
   </footer>
 
   <script>
+    // Nav: hamburger toggle
+const hamburgerBtn = document.getElementById('hamburger-btn');
+const mobileMenu  = document.getElementById('mobile-menu');
+hamburgerBtn.addEventListener('click', () => {
+  hamburgerBtn.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+document.addEventListener('click', e => {
+  if (!mobileMenu.classList.contains('open')) return;
+  if (!mobileMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+    hamburgerBtn.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+});
+
+// Nav: hide on scroll down
+let lastScrollY = window.scrollY;
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (y <= 10) navbar.classList.remove('nav-hidden');
+  else if (y > lastScrollY + 4) navbar.classList.add('nav-hidden');
+  else if (y < lastScrollY - 4) navbar.classList.remove('nav-hidden');
+  lastScrollY = y;
+}, { passive: true });
     // ── Slideshow ──
     const slides = document.querySelectorAll('.slide');
     const dotsWrap = document.getElementById('ss-dots');

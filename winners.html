@@ -1,664 +1,718 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BECON 2026 Winners</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --crimson: #800020;
-      --deep: #1a0008;
-      --gold: #DAA520;
-      --cream: #FAF7F2;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Winners BECON</title>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cinzel:wght@400;600;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson: #800020;
+    --deep: #1a0008;
+    --gold: #DAA520;
+    --cream: #FAF7F2;
+  }
 
-    body { background-color: var(--cream); font-family: 'Montserrat', sans-serif; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--cream); font-family: 'Inter', sans-serif; color: #000; overflow-x: hidden; }
 
-    /* NAV */
-    .nav-btn {
-      color: #FAF7F2;
-      border: 1px solid rgba(250,247,242,0.3);
-      border-radius: 999px;
-      padding: 4px 12px;
-      font-size: 12px;
-      transition: all 0.2s;
-      background: transparent;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-    }
-    .nav-btn:hover { background: rgba(250,247,242,0.15); }
-    .active-nav { border-color: var(--gold); color: var(--gold); }
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; width: 100%; z-index: 1000;
+    background: rgb(255, 125, 125);
+    backdrop-filter: blur(18px);
+    border-bottom: 4px solid rgb(255, 255, 255);
+    transition: transform 0.3s ease;
+  }
+  nav.nav-hidden { transform: translateY(-100%); }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    height: 48px; padding: 0 20px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px; font-weight: 700; letter-spacing: 0.06em;
+    color: #FAF7F2; text-decoration: none; flex-shrink: 0; opacity: 0.9;
+    transition: opacity 0.2s;
+  }
+  .nav-logo:hover { opacity: 1; }
+  .nav-links { display: flex; align-items: center; gap: 2px; }
+  .nav-btn {
+    color: rgba(250,247,242,0.8); font-size: 12px; font-weight: 500;
+    padding: 6px 13px; border-radius: 6px; text-decoration: none;
+    transition: background 0.2s, color 0.2s; border: none; background: transparent;
+    cursor: pointer; font-family: inherit; letter-spacing: 0.03em; white-space: nowrap;
+  }
+  .nav-btn:hover, .nav-btn.active { background: rgba(250,247,242,0.11); color: #FAF7F2; }
+  .nav-events-btn { display: flex; align-items: center; gap: 4px; }
+  .nav-contact-btn {
+    padding: 7px 18px; border-radius: 999px; font-size: 12px; font-weight: 700;
+    background: #DAA520; color: #800020; text-decoration: none; margin-left: 6px;
+    transition: background 0.2s, transform 0.15s; white-space: nowrap;
+  }
+  .nav-contact-btn:hover { background: #e8c040; transform: translateY(-1px); }
+  .nav-events-wrap { position: relative; }
+  .nav-events-drop {
+    position: absolute; left: 0; top: calc(100% + 8px); width: 160px;
+    border-radius: 10px; background: #FAF6EE;
+    box-shadow: 0 10px 36px rgba(0,0,0,0.18);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.2s ease; z-index: 100; overflow: hidden;
+  }
+  .nav-events-wrap:hover .nav-events-drop,
+  .nav-events-wrap:focus-within .nav-events-drop { opacity: 1; visibility: visible; transform: translateY(0); }
+  .nav-events-drop a {
+    display: block; padding: 11px 16px; font-size: 12px; font-weight: 500;
+    color: #6B0F1A; text-decoration: none; transition: background 0.15s;
+  }
+  .nav-events-drop a:hover { background: #f0e9db; }
+  .nav-hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer;
+    padding: 8px; background: none; border: none;
+  }
+  .nav-hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: rgba(250,246,238,0.85); border-radius: 2px; transition: all 0.25s ease;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-mobile { display: none; padding: 8px 0 14px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .nav-mobile.open { display: block; }
+  .mob-link {
+    display: block; padding: 12px 20px; color: rgba(250,247,242,0.8);
+    text-decoration: none; font-size: 14px; font-weight: 500;
+    border-bottom: 1px solid rgba(255,255,255,0.05); transition: color 0.15s;
+  }
+  .mob-link:hover, .mob-link.active { color: #DAA520; }
+  .mob-link-contact { color: #DAA520 !important; }
+  @media (max-width: 768px) { .nav-links { display: none; } .nav-hamburger { display: flex; } }
 
-    /* HERO */
-    .winners-hero {
-      background: linear-gradient(135deg, var(--deep) 0%, #3d0018 50%, var(--deep) 100%);
-      padding: 80px 24px 60px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .winners-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, rgba(218,165,32,0.08) 0%, transparent 70%);
-    }
-    .winners-hero h1 {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      color: var(--gold);
-      letter-spacing: 4px;
-      margin-bottom: 8px;
-    }
-    .winners-hero .sub {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1rem, 2vw, 1.3rem);
-      color: rgba(250,247,242,0.7);
-      letter-spacing: 2px;
-      font-style: italic;
-    }
-    .hero-divider {
-      width: 80px;
-      height: 2px;
-      background: var(--gold);
-      margin: 20px auto;
-      opacity: 0.6;
-    }
+  /* ── HERO — timeline style ── */
+  .page-top {
+    padding: 4rem 2rem;
+    border-bottom: 4px solid #000;
+    background: #f4f4f4;
+  }
+  .page-top-eyebrow {
+    font-size: 0.75rem; font-weight: 900; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #000;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 1rem;
+  }
+  .page-top-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 3px; background: var(--crimson);
+  }
+  .page-top h1 {
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 900; letter-spacing: -0.04em; color: #000; line-height: 1;
+  }
+  .page-top h3 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: clamp(1.2rem, 2vw, 2.8rem);
+    font-weight: 290; letter-spacing: -0.04em; color: rgb(255, 137, 137); line-height: 1;
+  }
+  .page-top h1 span { color: var(--crimson); }
+  .page-top-sub {
+    font-size: 1rem; font-weight: 400; color: #000;
+    margin-top: 1.25rem;
+    border-left: 4px solid #000; padding-left: 1rem;
+    max-width: 560px; line-height: 1.6;
+  }
+  .page-top-meta {
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    margin-top: 1rem;
+    font-size: 1rem; font-weight: 500; letter-spacing: 0.04em;
+    color: rgba(0,0,0,0.49);
+  }
 
-    /* COMMITTEE TABS */
-    .tab-btn {
-      font-family: 'Cinzel', serif;
-      font-size: 13px;
-      letter-spacing: 2px;
-      padding: 10px 28px;
-      border-radius: 999px;
-      border: 1.5px solid rgba(128,0,32,0.3);
-      background: transparent;
-      color: var(--crimson);
-      cursor: pointer;
-      transition: all 0.25s;
-    }
-    .tab-btn:hover { background: rgba(128,0,32,0.07); }
-    .tab-btn.active {
-      background: var(--crimson);
-      color: var(--cream);
-      border-color: var(--crimson);
-    }
+  /* ── COMMITTEE TABS ── */
+  .tab-bar {
+    display: flex; gap: 0;
+    border-bottom: 4px solid #000;
+    background: #fff;
+    position: sticky; top: 48px; z-index: 100;
+  }
+  .tab-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 900;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 16px 32px;
+    border: none; border-right: 2px solid #000;
+    background: transparent; color: #000;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .tab-btn:last-child { border-right: none; }
+  .tab-btn:hover { background: #f4f4f4; }
+  .tab-btn.active { background: #000; color: #fff; }
 
-    /* AWARD CARDS */
-    .committee-section { display: none; }
-    .committee-section.active { display: block; }
+  /* ── COMMITTEE SECTION ── */
+  .committee-section { display: none; padding: 0 2rem 5rem; }
+  .committee-section.active { display: block; }
 
-    .award-tier {
-      margin-bottom: 40px;
-    }
+  /* ── COMMITTEE HEADER ── */
+  .committee-header {
+    padding: 3rem 0 2rem;
+    border-bottom: 4px solid #000;
+    margin-bottom: 3rem;
+    display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+  .committee-name {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 900; letter-spacing: -0.05em; color: #000; line-height: 0.9;
+  }
+  .committee-name span { color: var(--crimson); }
+  .committee-desc {
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(0,0,0,0.4);
+  }
 
-    .tier-label {
-      font-family: 'Cinzel', serif;
-      font-size: 11px;
-      letter-spacing: 4px;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .tier-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: rgba(218,165,32,0.25);
-    }
+  /* ── PHOTO STRIP — identical to timeline ── */
+  .photo-strip-wrap {
+    margin: 0 -2rem 3rem;
+    padding: 0 2rem;
+  }
+  .photo-strip {
+    display: flex; gap: 1.5rem;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1.25rem;
+    scrollbar-width: none;
+  }
+  .photo-strip::-webkit-scrollbar { display: none; }
+  .photo-slide {
+    flex-shrink: 0; width: 340px; height: 240px;
+    border: 3px solid #000;
+    box-shadow: 6px 6px 0 #000;
+    scroll-snap-align: start;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: #111;
+  }
+  .photo-slide:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 10px 10px 0 #000;
+  }
+  .photo-slide img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: grayscale(100%) contrast(1.15);
+    transition: filter 0.35s ease;
+  }
+  .photo-slide:hover img { filter: grayscale(0%) contrast(1); }
+  .photo-hint {
+    font-size: 0.78rem; font-weight: 900; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #000;
+    margin-top: 0.75rem; text-align: right;
+  }
 
-    .award-card {
-      background: white;
-      border-radius: 12px;
-      border: 1px solid rgba(128,0,32,0.1);
-      padding: 20px 24px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      transition: all 0.25s;
-      margin-bottom: 10px;
-    }
-    .award-card:hover {
-      transform: translateX(4px);
-      border-color: rgba(128,0,32,0.25);
-      box-shadow: 0 4px 20px rgba(128,0,32,0.08);
-    }
+  /* ── AWARD TIERS ── */
+  .award-tier { margin-bottom: 3rem; }
 
-    .award-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      flex-shrink: 0;
-    }
+  .tier-label {
+    font-size: 0.7rem; font-weight: 900; letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 1rem; color: #000;
+  }
+  .tier-label-pill {
+    padding: 4px 14px; font-size: 0.65rem; font-weight: 900;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    border: 2px solid #000; white-space: nowrap;
+  }
+  .tier-label-pill.gold   { background: #FFD700; color: #000; border-color: #000; }
+  .tier-label-pill.silver { background: #C0C0C0; color: #000; border-color: #000; }
+  .tier-label-pill.bronze { background: var(--gold); color: #000; border-color: #000; }
+  .tier-label-pill.crimson{ background: var(--crimson); color: #fff; border-color: #000; }
+  .tier-label-pill.purple { background: #5b21b6; color: #fff; border-color: #000; }
+  .tier-label-pill.blue   { background: #0369a1; color: #fff; border-color: #000; }
+  .tier-label::after { content: ''; flex: 1; height: 2px; background: #000; }
 
-    .rank-badge {
-      font-family: 'Cinzel', serif;
-      font-size: 10px;
-      letter-spacing: 1.5px;
-      padding: 3px 10px;
-      border-radius: 999px;
-      display: inline-block;
-      margin-bottom: 4px;
-    }
+  /* ── AWARD CARD — brutalist ── */
+  .award-card {
+    background: #fff; border: 2px solid #000;
+    box-shadow: 5px 5px 0 #000;
+    padding: 18px 22px;
+    display: flex; align-items: flex-start; gap: 16px;
+    margin-bottom: 10px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .award-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 #000;
+  }
+  .award-card.gold-card   { border-left: 8px solid #FFD700; }
+  .award-card.silver-card { border-left: 8px solid #C0C0C0; }
+  .award-card.bronze-card { border-left: 8px solid var(--gold); }
+  .award-card.crimson-card{ border-left: 8px solid var(--crimson); }
 
-    .name-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.15rem;
-      color: var(--deep);
-      font-weight: 600;
-      line-height: 1.3;
-    }
+  .award-icon {
+    width: 42px; height: 42px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; border: 2px solid #000;
+    background: #f4f4f4;
+  }
+  .award-body { flex: 1; }
+  .award-rank {
+    font-size: 0.62rem; font-weight: 900; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(0,0,0,0.45);
+    margin-bottom: 4px;
+  }
+  .award-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700; color: #000; line-height: 1.3;
+  }
+  .award-role {
+    font-size: 0.78rem; font-weight: 500; color: rgba(0,0,0,0.45);
+    margin-top: 3px; letter-spacing: 0.03em;
+  }
 
-    /* Country card for DISEC */
-    .country-card {
-      background: white;
-      border-radius: 12px;
-      border: 1px solid rgba(128,0,32,0.1);
-      padding: 18px 24px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      transition: all 0.25s;
-      margin-bottom: 10px;
-    }
-    .country-card:hover {
-      transform: translateX(4px);
-      border-color: rgba(128,0,32,0.25);
-      box-shadow: 0 4px 20px rgba(128,0,32,0.08);
-    }
-    .country-name {
-      font-family: 'Cinzel', serif;
-      font-size: 1rem;
-      color: var(--deep);
-      letter-spacing: 1px;
-    }
+  /* ── MENTION GROUP ── */
+  .mention-group {
+    background: #fff; border: 2px solid #000;
+    box-shadow: 5px 5px 0 #000; padding: 20px 22px;
+    margin-bottom: 10px;
+  }
+  .mention-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0;
+  }
+  .mention-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem; color: #000;
+    padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.08);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .mention-name:last-child { border-bottom: none; }
+  .mention-name::before {
+    content: ''; width: 6px; height: 6px; flex-shrink: 0;
+    background: #000; border-radius: 0;
+  }
 
-    /* Mention group (multiple names) */
-    .mention-group {
-      background: white;
-      border-radius: 12px;
-      border: 1px solid rgba(128,0,32,0.1);
-      padding: 20px 24px;
-      margin-bottom: 10px;
-    }
-    .mention-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1rem;
-      color: var(--deep);
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(128,0,32,0.07);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .mention-name:last-child { border-bottom: none; padding-bottom: 0; }
-    .mention-name::before {
-      content: '';
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--gold);
-      flex-shrink: 0;
-    }
-
-    /* FOOTER */
-    .footer-heading { font-family: 'Cinzel', serif; }
-
-    /* Animations */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .fade-up { animation: fadeUp 0.5s ease both; }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-    .delay-3 { animation-delay: 0.3s; }
-  </style>
+  /* ── FOOTER ── */
+  .site-footer { background: #1a0008; padding: 64px 24px 32px; }
+  .footer-inner { max-width: 1160px; margin: 0 auto; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; }
+  .footer-brand { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .footer-logo { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; }
+  .footer-brand-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--cream); }
+  .footer-brand-sub { font-size: 9.5px; letter-spacing: 2px; text-transform: uppercase; color: rgba(250,246,238,0.4); margin-top: 4px; }
+  .footer-desc { font-size: 13px; line-height: 1.9; color: rgba(250,246,238,0.55); max-width: 360px; }
+  .footer-col-heading { font-size: 9.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+  .footer-links-list { list-style: none; }
+  .footer-links-list li+li { margin-top: 11px; }
+  .footer-links-list a { color: rgba(250,246,238,0.55); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .footer-links-list a:hover { color: var(--cream); }
+  .social-icons { display: flex; gap: 10px; }
+  .social-icon {
+    width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(201,150,58,0.2);
+    color: var(--gold); text-decoration: none; transition: all 0.22s;
+  }
+  .social-icon:hover { background: rgba(201,150,58,0.14); transform: translateY(-2px); }
+  .footer-divider { height: 1px; background: linear-gradient(to right, transparent, rgba(201,150,58,0.18), transparent); margin: 44px 0 22px; }
+  .footer-bottom { text-align: center; font-size: 11px; letter-spacing: 1px; color: rgba(250,246,238,0.3); }
+  @media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+    .committee-section { padding: 0 1.25rem 4rem; }
+    .photo-strip-wrap { margin: 0 -1.25rem 2.5rem; padding: 0 1.25rem; }
+    .photo-slide { width: 270px; height: 190px; }
+    .committee-header { padding: 2rem 0 1.5rem; }
+    .committee-name { font-size: 2.8rem; }
+    .tab-btn { padding: 14px 20px; font-size: 10px; }
+    .page-top { padding: 2.5rem 1.25rem; }
+    .mention-grid { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
-
 <body>
 
-  <!-- NAV -->
-  <nav class="w-full px-6 py-1 sticky top-0 z-50" style="background: linear-gradient(135deg, #800020 0%, #5c0017 100%);">
-    <div class="max-w-6xl mx-auto flex flex-nowrap items-center justify-between gap-2">
-      <div class="flex items-center gap-3 shrink-0">
-        <img src="debsoclogo.jpeg" alt="DEBSOC Logo" class="h-8 w-auto object-contain">
-        <div class="leading-tight hidden lg:block" style="color:#FAF7F2; letter-spacing:1px;">
-          <div class="text-xs font-semibold whitespace-nowrap">THE DEBATING SOCIETY OF</div>
-          <div class="text-sm font-bold whitespace-nowrap">IIEST-SHIBPUR</div>
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">DebSoc</a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-btn">Home</a>
+      <a href="aboutus.html" class="nav-btn">About Us</a>
+      <div class="nav-events-wrap">
+        <button class="nav-btn nav-events-btn">Events
+          <svg width="10" height="10" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+        <div class="nav-events-drop">
+          <a href="becon.html">BECON #1.0</a>
+          <a href="events.html">Main Events</a>
         </div>
       </div>
-      <div class="hidden lg:flex items-center gap-2 ml-auto">
-        <a href="index.html" class="nav-btn">Home</a>
-        <button onclick="handleAboutClick()" class="nav-btn">About Us</button>
-        <div class="relative group">
-          <button class="nav-btn active-nav flex items-center gap-1">Events
-            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-            </svg>
-          </button>
-          <div class="absolute left-0 mt-1 w-40 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all" style="background-color:#FAF7F2;">
-            <a href="becon.html" class="block px-4 py-2 text-sm hover:opacity-70" style="color:#800020;">BECON #1.0</a>
-            <a href="events.html" class="block px-4 py-2 text-sm hover:opacity-70" style="color:#800020;">MAIN EVENTS</a>
+      <a href="gallery.html" class="nav-btn">Gallery</a>
+      <a href="tribunal.html" class="nav-btn">Tribunal</a>
+      <a href="teampage.html" class="nav-btn">Team</a>
+      <a href="contactpage.html" class="nav-contact-btn">Contact</a>
+    </div>
+    <button class="nav-hamburger" id="hamburger-btn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="mobile-menu">
+    <a href="index.html" class="mob-link">Home</a>
+    <a href="aboutus.html" class="mob-link">About Us</a>
+    <a href="becon.html" class="mob-link">BECON #1.0</a>
+    <a href="events.html" class="mob-link">Main Events</a>
+    <a href="gallery.html" class="mob-link">Gallery</a>
+    <a href="tribunal.html" class="mob-link">Tribunal</a>
+    <a href="teampage.html" class="mob-link">Team</a>
+    <a href="contactpage.html" class="mob-link mob-link-contact">Contact</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+
+<!-- COMMITTEE TABS -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('lok-sabha', this)">Lok Sabha</button>
+  <button class="tab-btn" onclick="switchTab('disec', this)">DISEC</button>
+</div>
+
+<!-- ═══ LOK SABHA ═══ -->
+<div id="lok-sabha" class="committee-section active">
+
+  <div class="committee-header">
+    <div>
+      <div class="committee-name">LOK<br><span>SABHA</span></div>
+    </div>
+    <div class="committee-desc">Indian Parliament </div>
+  </div>
+
+  <!-- Photo strip -->
+  <div class="photo-strip-wrap">
+    <div class="photo-strip">
+      <div class="photo-slide"><img src="Gallery&Logo/becon/ls_1.webp" alt="Lok Sabha" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/ls_2.webp" alt="Lok Sabha" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/ls_3.webp" alt="Lok Sabha" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/ls_4.webp" alt="Lok Sabha" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/ls_5.webp" alt="Lok Sabha" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/ls_6.webp" alt="Lok Sabha" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/ls_7.webp" alt="Lok Sabha" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/ls_8.webp" alt="Lok Sabha" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/ls_9.webp" alt="Lok Sabha" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/ls_10.webp" alt="Lok Sabha" loading="lazy"></div>
+    </div>
+    <div class="photo-hint">scroll for more →</div>
+  </div>
+
+  <!-- Best Parliamentarian -->
+  <div class="award-tier">
+    <div class="tier-label"><span class="tier-label-pill gold">Best Parliamentarian</span></div>
+    <div class="award-card gold-card">
+      <div class="award-icon">🥇</div>
+      <div class="award-body">
+        <div class="award-rank">Best Parliamentarian</div>
+        <div class="award-name">Arnab Ghosh &amp; Annesha Mukherjee</div>
+        <div class="award-role">as Sarabjeet Singh Khalsa</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- High Commendation -->
+  <div class="award-tier">
+    <div class="tier-label"><span class="tier-label-pill silver">High Commendation</span></div>
+    <div class="award-card silver-card">
+      <div class="award-icon">🥈</div>
+      <div class="award-body">
+        <div class="award-rank">High Commendation 1</div>
+        <div class="award-name">Akshat Nishania</div>
+        <div class="award-role">as E. T. Mohammed Basheer</div>
+      </div>
+    </div>
+    <div class="award-card silver-card">
+      <div class="award-icon">🥈</div>
+      <div class="award-body">
+        <div class="award-rank">High Commendation 2</div>
+        <div class="award-name">Sara Ghosh</div>
+        <div class="award-role">as Mian Altaf Ahmad Larvi</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Special Mention -->
+  <div class="award-tier">
+    <div class="tier-label"><span class="tier-label-pill bronze">Special Mention</span></div>
+    <div class="award-card bronze-card">
+      <div class="award-icon">⭐</div>
+      <div class="award-body">
+        <div class="award-rank">Special Mention</div>
+        <div class="award-name">Shivam Agarwal</div>
+        <div class="award-role">as Aga Syed Ruhullah Mehdi</div>
+      </div>
+    </div>
+    <div class="award-card bronze-card">
+      <div class="award-icon">⭐</div>
+      <div class="award-body">
+        <div class="award-rank">Special Mention</div>
+        <div class="award-name">Souparno Gupta</div>
+        <div class="award-role">as S. Jaishankar</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Outstanding Parliamentarian -->
+  <div class="award-tier">
+    <div class="tier-label"><span class="tier-label-pill crimson">Outstanding Parliamentarian</span></div>
+    <div class="award-card crimson-card">
+      <div class="award-icon">🏅</div>
+      <div class="award-body">
+        <div class="award-rank">Outstanding Parliamentarian 1</div>
+        <div class="award-name">Md. Shah Faisal Nasim</div>
+        <div class="award-role">as Priyanka Gandhi</div>
+      </div>
+    </div>
+    <div class="award-card crimson-card">
+      <div class="award-icon">🏅</div>
+      <div class="award-body">
+        <div class="award-rank">Outstanding Parliamentarian 2</div>
+        <div class="award-name">Rii Mukherjee</div>
+        <div class="award-role">as Raja Ram Singh Khushwaha</div>
+      </div>
+    </div>
+    <div class="award-card crimson-card">
+      <div class="award-icon">🏅</div>
+      <div class="award-body">
+        <div class="award-rank">Outstanding Parliamentarian 3</div>
+        <div class="award-name">Soubhagya Mukhopadhyay</div>
+        <div class="award-role">as Md. Haneefa</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Honorable Mention -->
+  <div class="award-tier">
+    <div class="tier-label"><span class="tier-label-pill purple">Honorable Mention</span></div>
+    <div class="mention-group">
+      <div class="mention-grid">
+        <div class="mention-name">Sampriti Karmakar <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Supriya Sule</span></div>
+        <div class="mention-name">Arindam Mukherjee <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Shantanu Thakur</span></div>
+        <div class="mention-name">Pritysha Ghosh &amp; Argha Sar <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Dipender Singh Hooda</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Verbal Mention -->
+  <div class="award-tier">
+    <div class="tier-label"><span class="tier-label-pill blue">Verbal Mention</span></div>
+    <div class="mention-group">
+      <div class="mention-grid">
+        <div class="mention-name">Akshat Lohia <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Asaduddin Owaisi</span></div>
+        <div class="mention-name">Aqsa Nadeem &amp; Aaman Ahmad <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Rahul Gandhi</span></div>
+        <div class="mention-name">Sagnik Das <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Abhisek Banerjee</span></div>
+        <div class="mention-name">Sreshtha Jhingon <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Mahua Moitra</span></div>
+        <div class="mention-name">Sanchayita Poddar <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Dr. Shashi Tharoor</span></div>
+        <div class="mention-name">Srijani Singha <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Dr. Sukanta Majumdar</span></div>
+        <div class="mention-name">Shrijato Banerjee <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Narendra Modi</span></div>
+        <div class="mention-name">Anjishnu Bhattacharya <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Amra Ram</span></div>
+        <div class="mention-name">Tushar Agarwal <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Gaurav Gogoi</span></div>
+        <div class="mention-name">Abhirup Chatterjee <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Capt. Anurag Singh Thakur</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- END LOK SABHA -->
+
+<!-- ═══ DISEC ═══ -->
+<div id="disec" class="committee-section">
+
+  <div class="committee-header">
+    <div>
+      <div class="committee-name">DIS<span>EC</span></div>
+    </div>
+    <div class="committee-desc">Disarmament &amp; International Security Committee</div>
+  </div>
+
+  <!-- Photo strip -->
+  <div class="photo-strip-wrap">
+    <div class="photo-strip">
+      <div class="photo-slide"><img src="Gallery&Logo/becon/disec_1.webp" alt="DISEC" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/disec_2.webp" alt="DISEC" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/disec_3.webp" alt="DISEC" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/disec_4.webp" alt="DISEC" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/disec_5.webp" alt="DISEC" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/disec_6.webp" alt="DISEC" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/disec_7.webp" alt="DISEC" loading="lazy"></div>
+      <div class="photo-slide"><img src="Gallery&Logo/becon/disec_23.webp" alt="DISEC" loading="lazy"></div>
+    </div>
+    <div class="photo-hint">scroll for more →</div>
+  </div>
+
+  <!-- Best Delegate -->
+  <div class="award-tier">
+    <div class="tier-label"><span class="tier-label-pill gold">Best Delegate</span></div>
+    <div class="award-card gold-card">
+      <div class="award-icon">🥇</div>
+      <div class="award-body">
+        <div class="award-rank">Best Delegate</div>
+        <div class="award-name">Kinshuk Trivedi &amp; Adrish Hossain</div>
+        <div class="award-role">Belarus</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- High Commendation -->
+  <div class="award-tier">
+    <div class="tier-label"><span class="tier-label-pill silver">High Commendation</span></div>
+    <div class="award-card silver-card">
+      <div class="award-icon">🥈</div>
+      <div class="award-body">
+        <div class="award-rank">High Commendation 1</div>
+        <div class="award-name">Karan Tripathi</div>
+        <div class="award-role">Germany</div>
+      </div>
+    </div>
+    <div class="award-card silver-card">
+      <div class="award-icon">🥈</div>
+      <div class="award-body">
+        <div class="award-rank">High Commendation 2</div>
+        <div class="award-name">Sattwik Dhar Roy</div>
+        <div class="award-role">Ukraine</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Special Mention -->
+  <div class="award-tier">
+    <div class="tier-label"><span class="tier-label-pill bronze">Special Mention</span></div>
+    <div class="award-card bronze-card">
+      <div class="award-icon">⭐</div>
+      <div class="award-body">
+        <div class="award-rank">Special Mention 1</div>
+        <div class="award-name">Kahini Thakur</div>
+        <div class="award-role">Ireland</div>
+      </div>
+    </div>
+    <div class="award-card bronze-card">
+      <div class="award-icon">⭐</div>
+      <div class="award-body">
+        <div class="award-rank">Special Mention 2</div>
+        <div class="award-name">Adrita Dutta</div>
+        <div class="award-role">Liechtenstein</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Honourable Mention -->
+  <div class="award-tier">
+    <div class="tier-label"><span class="tier-label-pill crimson">Honourable Mention</span></div>
+    <div class="award-card crimson-card">
+      <div class="award-icon">🏅</div>
+      <div class="award-body">
+        <div class="award-rank">Honourable Mention 1</div>
+        <div class="award-name">Md Nabeel Nishat</div>
+        <div class="award-role">USA</div>
+      </div>
+    </div>
+    <div class="award-card crimson-card">
+      <div class="award-icon">🏅</div>
+      <div class="award-body">
+        <div class="award-rank">Honourable Mention 2</div>
+        <div class="award-name">Sattwik Singha Roy &amp; Rushati Modak</div>
+        <div class="award-role">Japan</div>
+      </div>
+    </div>
+    <div class="award-card crimson-card">
+      <div class="award-icon">🏅</div>
+      <div class="award-body">
+        <div class="award-rank">Honourable Mention 3</div>
+        <div class="award-name">Subhosmit Chatterjee &amp; Alankrita Banerjee</div>
+        <div class="award-role">Netherlands</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- END DISEC -->
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="debsoclogo.webp" alt="DebSoc" class="footer-logo">
+          <div>
+            <div class="footer-brand-name">DEBSOC</div>
+            <div class="footer-brand-sub">The Debating Society of IIEST Shibpur</div>
           </div>
         </div>
-        <a href="gallery.html" class="nav-btn">Gallery</a>
-        <a href="tribunal.html" class="nav-btn">Tribunal</a>
-        <a href="teampage.html" class="nav-btn">Team</a>
-        <a href="contactpage.html" class="px-4 py-1.5 rounded-full text-xs font-semibold transition hover:scale-105 whitespace-nowrap" style="background:#DAA520; color:#800020;">Contact</a>
+        <p class="footer-desc">A forum where discourse meets discipline. Through debate, diplomacy, and structured dialogue, we cultivate thinkers capable of defending ideas with clarity and conviction.</p>
       </div>
-      <button onclick="toggleMobileMenu()" class="lg:hidden" style="color:#FAF7F2;">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
+      <div>
+        <div class="footer-col-heading">Navigation</div>
+        <ul class="footer-links-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="aboutus.html">About Us</a></li>
+          <li><a href="becon.html">BECON 2026</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="contactpage.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-heading">Connect</div>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/debsoc_iiests" target="_blank" class="social-icon" aria-label="Instagram">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/company/debsoc-iiest-shibpur/" target="_blank" class="social-icon" aria-label="LinkedIn">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z"/></svg>
+          </a>
+        </div>
+      </div>
     </div>
-    <div id="mobile-menu" class="hidden absolute top-full right-4 mt-2 w-56 flex flex-col p-2 gap-1 rounded-xl shadow-2xl border border-white/10 lg:hidden z-50" style="background:#800020;">
-      <a href="index.html" class="px-4 py-3 text-sm text-white">Home</a>
-      <a href="events.html" class="px-4 py-3 text-sm text-white">Main Events</a>
-      <a href="becon.html" class="px-4 py-3 text-sm text-white">Becon #1.0</a>
-      <a href="gallery.html" class="px-4 py-3 text-sm text-white">Gallery</a>
-      <a href="tribunal.html" class="px-4 py-3 text-sm text-white">Tribunal</a>
-      <a href="teampage.html" class="px-4 py-3 text-sm text-white">Team</a>
-      <a href="contactpage.html" class="block px-4 py-3 text-sm mt-2 rounded-full text-center" style="background:#DAA520;color:#800020;margin:0 1rem;">Contact</a>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <div class="winners-hero">
-    <div style="position:relative;z-index:1;">
-      <p class="sub fade-up">Bengal Engineering Conclave of Nations · 2026</p>
-      <h1 class="fade-up delay-1">HALL OF HONOUR</h1>
-      <div class="hero-divider fade-up delay-2"></div>
-      <p class="fade-up delay-3" style="color:rgba(250,247,242,0.55); font-size:13px; letter-spacing:3px; font-family:'Cinzel',serif;">28TH – 29TH MARCH 2026 · IIEST SHIBPUR</p>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <span>© 2026 The Debating Society of IIEST Shibpur</span>
+      &nbsp;·&nbsp;
+      <span>Diplomacy · Debate · Discourse</span>
     </div>
   </div>
-
-  <!-- MAIN CONTENT -->
-  <div style="max-width:900px; margin:0 auto; padding:48px 20px 64px;">
-    <!-- SLIDESHOWS -->
-<style>
-  .ss-wrap { position: relative; height: 420px; background: #111; border-radius: 12px; overflow: hidden; margin-bottom: 40px; }
-  .ss-slide { display: none; position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; }
-  .ss-slide.active { display: block; opacity: 1; }
-  .ss-arrow { background: rgba(0,0,0,0.35); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; }
-  .ss-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 7px; }
-  .ss-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.35); border: none; cursor: pointer; padding: 0; transition: background 0.3s, transform 0.2s; }
-  .ss-dot.active { background: #DAA520; transform: scale(1.3); }
-  .ss-counter { position: absolute; top: 12px; right: 14px; background: rgba(0,0,0,0.45); color: white; font-size: 11px; padding: 3px 10px; border-radius: 999px; }
-  .slideshow-block { display: none; }
-  .slideshow-block.active { display: block; }
-</style>
-
-<!-- LOK SABHA SLIDESHOW (15 images) -->
-<div id="ss-lok-sabha" class="slideshow-block active">
-  <div class="ss-wrap" id="ss-ls-wrap">
-    
-    <div class="ss-slide active"><img src="Gallery&Logo/becon/ls_2.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo/becon/ls_1.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo/becon/ls_3.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo/becon/ls_4.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo/becon/ls_5.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo/becon/ls_6.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo/becon/ls_7.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo/becon/ls_8.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo/becon/ls_9.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo/becon/ls_10.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    
-    
-    <button class="ss-arrow" style="left:12px;" onclick="ssPrev('ls')">&#8249;</button>
-    <button class="ss-arrow" style="right:12px;" onclick="ssNext('ls')">&#8250;</button>
-    <div class="ss-counter" id="ss-ls-counter">1 / 10</div>
-    <div class="ss-dots" id="ss-ls-dots"></div>
-  </div>
-</div>
-
-<!-- DISEC SLIDESHOW (10 images) -->
-<div id="ss-disec" class="slideshow-block">
-  <div class="ss-wrap" id="ss-dc-wrap">
-    <div class="ss-slide active"><img src="Gallery&Logo/becon/disec_1.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo/becon/disec_2.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo/becon/disec_3.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo/becon/disec_4.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo/becon/disec_5.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo/becon/disec_6.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo/becon/disec_7.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    <div class="ss-slide"><img src="Gallery&Logo\becon\disec_23.jpg" style="width:100%;height:100%;object-fit:cover;"></div>
-    
-    <button class="ss-arrow" style="left:12px;" onclick="ssPrev('dc')">&#8249;</button>
-    <button class="ss-arrow" style="right:12px;" onclick="ssNext('dc')">&#8250;</button>
-    <div class="ss-counter" id="ss-dc-counter">1 / 8</div>
-    <div class="ss-dots" id="ss-dc-dots"></div>
-  </div>
-</div>
+</footer>
 
 <script>
-  const ssState = {
-    ls: { cur: 0, timer: null },
-    dc: { cur: 0, timer: null }
-  };
-
-  function ssInit(key, wrapId, dotsId, counterId) {
-    const slides = document.querySelectorAll(`#${wrapId} .ss-slide`);
-    const dotsEl = document.getElementById(dotsId);
-    const total = slides.length;
-    slides.forEach((_, i) => {
-      const d = document.createElement('button');
-      d.className = 'ss-dot' + (i === 0 ? ' active' : '');
-      d.onclick = () => ssGoTo(key, i, wrapId, dotsId, counterId);
-      dotsEl.appendChild(d);
-    });
-    ssState[key].timer = setInterval(() => ssNext(key), 3500);
-  }
-
-  function ssGoTo(key, n, wrapId, dotsId, counterId) {
-    const slides = document.querySelectorAll(`#${wrapId} .ss-slide`);
-    const dots = document.querySelectorAll(`#${dotsId} .ss-dot`);
-    const total = slides.length;
-    slides[ssState[key].cur].classList.remove('active');
-    dots[ssState[key].cur].classList.remove('active');
-    ssState[key].cur = (n + total) % total;
-    slides[ssState[key].cur].classList.add('active');
-    dots[ssState[key].cur].classList.add('active');
-    document.getElementById(counterId).textContent = (ssState[key].cur + 1) + ' / ' + total;
-    clearInterval(ssState[key].timer);
-    ssState[key].timer = setInterval(() => ssNext(key), 3500);
-  }
-
-  function ssNext(key) {
-    const map = { ls: ['ss-ls-wrap','ss-ls-dots','ss-ls-counter'], dc: ['ss-dc-wrap','ss-dc-dots','ss-dc-counter'] };
-    ssGoTo(key, ssState[key].cur + 1, ...map[key]);
-  }
-  function ssPrev(key) {
-    const map = { ls: ['ss-ls-wrap','ss-ls-dots','ss-ls-counter'], dc: ['ss-dc-wrap','ss-dc-dots','ss-dc-counter'] };
-    ssGoTo(key, ssState[key].cur - 1, ...map[key]);
-  }
-
-  ssInit('ls', 'ss-ls-wrap', 'ss-ls-dots', 'ss-ls-counter');
-  ssInit('dc', 'ss-dc-wrap', 'ss-dc-dots', 'ss-dc-counter');
-</script>
-    <!-- Committee Tabs -->
-    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:48px;">
-      <button class="tab-btn active" onclick="switchTab('lok-sabha', this)">Lok Sabha</button>
-      <button class="tab-btn" onclick="switchTab('disec', this)">DISEC</button>
-    </div>
-
-    <!-- LOK SABHA -->
-    <div id="lok-sabha" class="committee-section active">
-
-      <div style="text-align:center; margin-bottom:40px;">
-        <div style="font-family:'Cinzel',serif; font-size:11px; letter-spacing:4px; color:var(--gold); margin-bottom:8px;">COMMITTEE</div>
-        <div style="font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--deep); font-weight:700;">Lok Sabha</div>
-      </div>
-
-      <!-- Best Parliamentarian -->
-      <div class="award-tier">
-        <div class="tier-label">Best Parliamentarian</div>
-        <div class="award-card" style="border-left: 4px solid #FFD700; background: linear-gradient(to right, #fffdf0, white);">
-          <div class="award-icon" style="background:#FFF8DC;">🥇</div>
-          <div>
-            <div class="rank-badge" style="background:#FFF8DC; color:#8B6914;">BEST PARLIAMENTARIAN</div>
-            <div class="name-text">Arnab Ghosh, Annesha Mukherjee :Sarabjeet Singh Khalsa</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- High Commendations -->
-      <div class="award-tier">
-        <div class="tier-label">High Commendation</div>
-        <div class="award-card" style="border-left: 4px solid #C0C0C0; background: linear-gradient(to right, #fafafa, white);">
-          <div class="award-icon" style="background:#f5f5f5;">🥈</div>
-          <div>
-            <div class="rank-badge" style="background:#f0f0f0; color:#555;">HIGH COMMENDATION 1</div>
-            <div class="name-text">Akshat Nishania: E. T. Mohammed Basheer</div>
-          </div>
-        </div>
-        <div class="award-card" style="border-left: 4px solid #C0C0C0; background: linear-gradient(to right, #fafafa, white);">
-          <div class="award-icon" style="background:#f5f5f5;">🥈</div>
-          <div>
-            <div class="rank-badge" style="background:#f0f0f0; color:#555;">HIGH COMMENDATION 2</div>
-            <div class="name-text">Sara Ghosh: Mian Altaf Ahmad Larvi</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Special Mention -->
-      <div class="award-tier">
-        <div class="tier-label">Special Mention</div>
-        <div class="award-card" style="border-left: 4px solid var(--gold); background: linear-gradient(to right, #fdf9ef, white);">
-          <div class="award-icon" style="background:#fdf5dc;">⭐</div>
-          <div>
-            <div class="rank-badge" style="background:#fdf5dc; color:#8B6914;">SPECIAL MENTION</div>
-            <div class="name-text">Shivam Agarwal: Aga Syed Ruhullah Mehdi</div>
-          </div>
-        </div>
-        <div class="award-card" style="border-left: 4px solid var(--gold); background: linear-gradient(to right, #fdf9ef, white);">
-          <div class="award-icon" style="background:#fdf5dc;">⭐</div>
-          <div>
-            <div class="rank-badge" style="background:#fdf5dc; color:#8B6914;">SPECIAL MENTION</div>
-            <div class="name-text">Souparno Gupta: S. Jaishankar</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Outstanding Parliamentarians -->
-      <div class="award-tier">
-        <div class="tier-label">Outstanding Parliamentarian</div>
-        <div class="award-card" style="border-left: 4px solid var(--crimson);">
-          <div class="award-icon" style="background:#fff0f3;">🏅</div>
-          <div>
-            <div class="rank-badge" style="background:#fff0f3; color:var(--crimson);">OUTSTANDING PARLIAMENTARIAN 1</div>
-            <div class="name-text">Md. Shah Faisal Nasim: Priyanka Gandhi</div>
-          </div>
-        </div>
-        <div class="award-card" style="border-left: 4px solid var(--crimson);">
-          <div class="award-icon" style="background:#fff0f3;">🏅</div>
-          <div>
-            <div class="rank-badge" style="background:#fff0f3; color:var(--crimson);">OUTSTANDING PARLIAMENTARIAN 2</div>
-            <div class="name-text">Rii Mukherjee: Raja Ram Singh Khushwaha</div>
-          </div>
-        </div>
-        <div class="award-card" style="border-left: 4px solid var(--crimson);">
-          <div class="award-icon" style="background:#fff0f3;">🏅</div>
-          <div>
-            <div class="rank-badge" style="background:#fff0f3; color:var(--crimson);">OUTSTANDING PARLIAMENTARIAN 3</div>
-            <div class="name-text">Soubhagya Mukhopadhyay: Md. Haneefa</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Honorable Mention -->
-      <div class="award-tier">
-        <div class="tier-label">Honorable Mention</div>
-        <div class="mention-group">
-          <div class="rank-badge" style="background:#f5f0ff; color:#5b21b6; margin-bottom:12px;">HONORABLE MENTION</div>
-          <div class="mention-name">Sampriti Karmakar:Supriya Sule</div>
-          <div class="mention-name">Arindam Mukherjee:Shantanu Thakur</div>
-          <div class="mention-name">Pritysha Ghosh, Argha Sar:Dipender Singh Hooda</div>
-        </div>
-      </div>
-
-      <!-- Verbal Mention -->
-      <div class="award-tier">
-        <div class="tier-label">Verbal Mention</div>
-        <div class="mention-group">
-          <div class="rank-badge" style="background:#f0f9ff; color:#0369a1; margin-bottom:12px;">VERBAL MENTION</div>
-          <div class="mention-name">Akshat Lohia:Asaduddin Owaisi</div>
-          <div class="mention-name">Aqsa Nadeem, Aaman Ahmad:Rahul Gandhi</div>
-          <div class="mention-name">Sagnik Das:Abhisek Banerjee</div>
-          <div class="mention-name">Sreshtha Jhingon:Mahua Moitra</div>
-          <div class="mention-name">Sanchayita Poddar:Dr. Shashi Tharoor</div>
-          <div class="mention-name">Srijani Singha:Dr. Sukanta Majumdar</div>
-          <div class="mention-name">Shrijato Banerjee:Narendra Modi</div>
-          <div class="mention-name">Anjishnu Bhattacharya:Amra Ram</div>
-          <div class="mention-name">Tushar Agarwal:Gaurav Gogoi</div>
-          <div class="mention-name">Abhirup Chatterjee:Capt. Anurag Singh Thakur</div>
-        </div>
-      </div>
-
-    </div>
-    <!-- END LOK SABHA -->
-
-    <!-- DISEC -->
-    <div id="disec" class="committee-section">
-
-      <div style="text-align:center; margin-bottom:40px;">
-        <div style="font-family:'Cinzel',serif; font-size:11px; letter-spacing:4px; color:var(--gold); margin-bottom:8px;">COMMITTEE</div>
-        <div style="font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--deep); font-weight:700;">DISEC</div>
-        <div style="font-size:12px; color:#888; margin-top:4px;">Disarmament & International Security Committee</div>
-      </div>
-
-      <!-- Best Delegate -->
-      <div class="award-tier">
-        <div class="tier-label">Best Delegate</div>
-        <div class="country-card" style="border-left: 4px solid #FFD700; background: linear-gradient(to right, #fffdf0, white);">
-          <div class="award-icon" style="background:#FFF8DC; font-size:22px;">🥇</div>
-          <div>
-            <div class="rank-badge" style="background:#FFF8DC; color:#8B6914;">BEST DELEGATE</div>
-            <div class="country-name">Kinshuk Trivedi, Adrish Hossain: Belarus</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- High Commendation -->
-      <div class="award-tier">
-        <div class="tier-label">High Commendation</div>
-        <div class="country-card" style="border-left: 4px solid #C0C0C0; background: linear-gradient(to right, #fafafa, white);">
-          <div class="award-icon" style="background:#f5f5f5; font-size:22px;">🥈</div>
-          <div>
-            <div class="rank-badge" style="background:#f0f0f0; color:#555;">HIGH COMMENDATION 1</div>
-            <div class="country-name">Karan Tripathi: Germany</div>
-          </div>
-        </div>
-        <div class="country-card" style="border-left: 4px solid #C0C0C0; background: linear-gradient(to right, #fafafa, white);">
-          <div class="award-icon" style="background:#f5f5f5; font-size:22px;">🥈</div>
-          <div>
-            <div class="rank-badge" style="background:#f0f0f0; color:#555;">HIGH COMMENDATION 2</div>
-            <div class="country-name">Sattwik Dhar Roy: Ukraine</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Special Mention -->
-      <div class="award-tier">
-        <div class="tier-label">Special Mention</div>
-        <div class="country-card" style="border-left: 4px solid var(--gold); background: linear-gradient(to right, #fdf9ef, white);">
-          <div class="award-icon" style="background:#fdf5dc; font-size:22px;">⭐</div>
-          <div>
-            <div class="rank-badge" style="background:#fdf5dc; color:#8B6914;">SPECIAL MENTION 1</div>
-            <div class="country-name">Kahini Thakur: Ireland</div>
-          </div>
-        </div>
-        <div class="country-card" style="border-left: 4px solid var(--gold); background: linear-gradient(to right, #fdf9ef, white);">
-          <div class="award-icon" style="background:#fdf5dc; font-size:22px;">⭐</div>
-          <div>
-            <div class="rank-badge" style="background:#fdf5dc; color:#8B6914;">SPECIAL MENTION 2</div>
-            <div class="country-name">Adrita Dutta: Liechtenstein</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Honourable Mention -->
-      <div class="award-tier">
-        <div class="tier-label">Honourable Mention</div>
-        <div class="country-card" style="border-left: 4px solid var(--crimson);">
-          <div class="award-icon" style="background:#fff0f3; font-size:22px;">🏅</div>
-          <div>
-            <div class="rank-badge" style="background:#fff0f3; color:var(--crimson);">HONOURABLE MENTION 1</div>
-            <div class="country-name">Md Nabeel Nishat: USA</div>
-          </div>
-        </div>
-        <div class="country-card" style="border-left: 4px solid var(--crimson);">
-          <div class="award-icon" style="background:#fff0f3; font-size:22px;">🏅</div>
-          <div>
-            <div class="rank-badge" style="background:#fff0f3; color:var(--crimson);">HONOURABLE MENTION 2</div>
-            <div class="country-name">Sattwik Singha Roy, Rushati Modak: Japan</div>
-          </div>
-        </div>
-        <div class="country-card" style="border-left: 4px solid var(--crimson);">
-          <div class="award-icon" style="background:#fff0f3; font-size:22px;">🏅</div>
-          <div>
-            <div class="rank-badge" style="background:#fff0f3; color:var(--crimson);">HONOURABLE MENTION 3</div>
-            <div class="country-name">Subhosmit Chatterjee, Alankrita Banerjee: Netherlands</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <!-- END DISEC -->
-
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="px-6 py-12" style="background-color:#1a0008;">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-4 gap-8 mb-8">
-        <div class="md:col-span-2">
-          <div class="flex items-center gap-3 mb-4">
-            <img src="debsoclogo.jpeg" alt="DEBSOC Logo" class="h-12 w-auto object-contain">
-            <span class="footer-heading font-bold text-lg" style="color:#FAF7F2;">DebSoc</span>
-          </div>
-          <p class="text-sm opacity-70 max-w-xs" style="color:#FAF7F2;">A community dedicated to the synthesis of
-            technical precision and humanistic inquiry. Through debates and formal discourse, we equip the scholars with
-            the cognitive agility to dissect multifaceted issues and defend truth through reasoned conviction</p>
-        </div>
-        <div>
-          <h4 class="footer-heading font-semibold mb-4" style="color:#DAA520;">Quick Links</h4>
-          <ul class="space-y-2 text-sm">
-            <li><a href="index.html" class="opacity-70 hover:opacity-100 transition-opacity" style="color:#FAF7F2;">Home</a></li>
-            <li><a href="events.html" class="opacity-70 hover:opacity-100 transition-opacity" style="color:#FAF7F2;">Events</a></li>
-            <li><a href="becon.html" class="opacity-70 hover:opacity-100 transition-opacity" style="color:#FAF7F2;">BECON 2026</a></li>
-            <li><a href="contactpage.html" class="opacity-70 hover:opacity-100 transition-opacity" style="color:#FAF7F2;">Contact</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="footer-heading font-semibold mb-4" style="color:#DAA520;">Connect</h4>
-          <div class="flex gap-3">
-            <a href="https://www.instagram.com/debsoc_iiests" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all" style="background-color:rgba(218,165,32,0.2);">
-              <svg class="w-5 h-5" fill="#DAA520" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            </a>
-            <a href="https://www.linkedin.com/company/debsoc-iiest-shibpur/" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all" style="background-color:rgba(218,165,32,0.2);">
-              <svg class="w-5 h-5" fill="#DAA520" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="pt-8 border-t text-center" style="border-color:rgba(218,165,32,0.2);">
-        <p class="text-sm opacity-60" style="color:#FAF7F2;">© 2026 The Debating Society. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    function toggleMobileMenu() {
-      const menu = document.getElementById('mobile-menu');
-      menu.classList.toggle('hidden');
+  // Nav hamburger
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburgerBtn.addEventListener('click', () => {
+    hamburgerBtn.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  document.addEventListener('click', e => {
+    if (!mobileMenu.classList.contains('open')) return;
+    if (!mobileMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+      hamburgerBtn.classList.remove('open');
+      mobileMenu.classList.remove('open');
     }
+  });
 
-    function switchTab(id, btn) {
-  document.querySelectorAll('.committee-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.slideshow-block').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
-  // show matching slideshow
-  const ssMap = { 'lok-sabha': 'ss-lok-sabha', 'disec': 'ss-disec' };
-  if (ssMap[id]) document.getElementById(ssMap[id]).classList.add('active');
-}
-  </script>
+  // Nav hide on scroll
+  /*let lastScrollY = window.scrollY;
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y <= 10) navbar.classList.remove('nav-hidden');
+    else if (y > lastScrollY + 4) navbar.classList.add('nav-hidden');
+    else if (y < lastScrollY - 4) navbar.classList.remove('nav-hidden');
+    lastScrollY = y;
+  }, { passive: true });*/
 
+  // Committee tab switch
+  function switchTab(id, btn) {
+    document.querySelectorAll('.committee-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
 </body>
 </html>
