@@ -276,10 +276,7 @@
     <div class="team-hero">
       <div class="team-hero-inner">
         <div class="team-ghost" aria-hidden="true">TEAM</div>
-        <div class="team-eyebrow">
-          <div class="team-eyebrow-line"></div>
-          <span class="team-eyebrow-text"></span>
-        </div>
+        
         <h1 class="team-title">Meet The People Behind Debsoc</h1>
         <p class="team-subtitle">Organizers, negotiators, and students running on caffeine and geopolitical tension, MUNs, oxfords, Parliamentary debates alike. Our best friends and lifelong buddies!
           
@@ -385,28 +382,7 @@
   </div>
 
   <script>
-    /* ── BACKGROUND CROSSFADE ── */
-    const BG_PHOTOS = [
-      'Gallery&Logo/becon/becon_1.webp','Gallery&Logo/becon/becon_2.webp',
-      'Gallery&Logo/becon/becon_3.webp','Gallery&Logo/becon/becon_4.webp',
-      'Gallery&Logo/becon/becon_5.webp','Gallery&Logo/becon/becon_6.webp',
-      'Gallery&Logo/becon/becon_7.webp','Gallery&Logo/bcon_end.webp',
-    ];
-    const bgWrap = document.getElementById('pageBg');
-    const slides = BG_PHOTOS.map(src => {
-      const d = document.createElement('div');
-      d.className = 'bg-slide';
-      d.style.backgroundImage = `url('${src}')`;
-      bgWrap.appendChild(d);
-      return d;
-    });
-    let bgCur = 0;
-    slides[0].classList.add('active');
-    setInterval(() => {
-      slides[bgCur].classList.remove('active');
-      bgCur = (bgCur + 1) % slides.length;
-      slides[bgCur].classList.add('active');
-    }, 5000);
+    
 
     /* ── TIERED REVEAL ────────────────────────────────────────────────
        Logic:
