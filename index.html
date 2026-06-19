@@ -6,16 +6,92 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DebSocIIEST</title>
   <link rel="icon" href="favicon.ico">
-  <meta name="description" content="Debate Society of IIEST, Erstwhile BESU/BE College: Kolkata MUN, Kolkata Debates, College Debate Society events, BECON and .">
+  <meta name="description"
+    content="Debate Society of IIEST, Erstwhile BESU/BE College: Kolkata MUN, Kolkata Debates, College Debate Society events, BECON and .">
   <link rel="preload" as="image" href="Gallery&Logo/becon/becon_2.webp">
   <link rel="stylesheet" href="tailwind.css">
   <link rel="stylesheet" href="style.css">
- 
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "EducationalOrganization",
+      "@id": "https://debsociiests.in/#aboutus",
+      "name": "The Debating Society of IIEST Shibpur",
+      "alternateName": [
+        "DebSoc IIEST", 
+        "DebSoc IIEST Shibpur", 
+        "IIEST Shibpur Debate Society"
+      ],
+      "url": "https://debsociiests.in",
+      "logo": "https://debsociiests.in/debsoclogo.webp",
+      "description": " Model United Nations (MUN) and Debate society of IIEST Shibpur, competitive debating, public speaking, and international relations studies within the Kolkata MUN circuit, West Bengal.",
+      "keywords": "Debate IIEST, IIEST Debate Society, Kolkata MUN, Kolkata Debate Circuit, BECON MUN, REBECA Debate, Parliamentary Debate Kolkata",
+      "parentOrganization": {
+        "@type": "EducationalOrganization",
+        "name": "Indian Institute of Engineering Science and Technology, Shibpur",
+        "url": "https://www.iiests.ac.in",
+        "sameAs": "https://en.wikipedia.org/wiki/IIEST,_Shibpur"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Student's Amenity Centre, IIEST Shibpur Campus",
+        "addressLocality": "Howrah",
+        "addressRegion": "Kolkata, West Bengal",
+        "postalCode": "711103",
+        "addressCountry": "IN"
+      },
+      "sameAs": [
+        "https://www.instagram.com/debsoc.iiest",
+        "https://www.linkedin.com/company/debsoc-iiest-shibpur"
+      ]
+    },
+    {
+      "@type": "Event",
+      "@id": "https://debsociiests.in/#becon",
+      "name": "BECON (Bengal Engineering Conclave of Nations)",
+      "alternateName": ["BECON MUN", "IIEST BECON", "KOLKATA MUN","Low Cost MUN Kolkata"],
+      "description": "Model United Nations conference hosted annually in Kolkata by the Debating Society of IIEST Shibpur.",
+      "startDate": "2026-03-28T09:00:00+05:30",
+      "endDate": "2026-03-29T18:00:00+05:30",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "organizer": {
+        "@id": "https://debsociiests.in/#aboutus"
+      },
+      "image": "https://debsociiests.in/Gallery&Logo/becon/becon_2.webp",
+      "offers": {
+      "@type": "Offer",
+      "price": "500",
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock",
+      "url": "https://debsociiests.in/becon.html"
+      },
+      "location": {
+        "@type": "Place",
+        "name": "IIEST Shibpur Campus",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Shibpur",
+          "addressLocality": "Howrah",
+          "addressRegion": "Kolkata, West Bengal",
+          "postalCode": "711103",
+          "addressCountry": "IN"
+        }
+      }
+    }
+  ]
+}
+</script>
+
+
   <style>
     body {
-    margin:0px;
-    
+      margin: 0px;
+
     }
+
     :root {
       --crimson: #6B0F1A;
       --crimson-deep: #3d0710;
@@ -34,12 +110,13 @@
     }
 
     body {
-      font-family:Georgia, 'Times New Roman', Times, serif;
+      font-family: Georgia, 'Times New Roman', Times, serif;
       background-color: var(--cream);
       color: var(--ink);
       overflow-x: hidden;
     }
-     .nav-btn {
+
+    .nav-btn {
       color: rgba(250, 247, 242, 0.85);
       font-size: 13px;
       font-weight: 500;
@@ -113,7 +190,7 @@
     }
 
     .footer-brand-name {
-      font-family:Georgia, 'Times New Roman', Times, serif;
+      font-family: Georgia, 'Times New Roman', Times, serif;
       font-size: 30px;
       font-weight: 700;
       color: var(--cream);
@@ -277,9 +354,7 @@
       object-fit: cover;
       object-position: center 30%;
       filter:
-        grayscale(30%)
-        contrast(105%)
-        brightness(0.48);
+        grayscale(30%) contrast(105%) brightness(0.48);
     }
 
     /* Warm dark gradient: very dark on left, eases to moderately dark on right */
@@ -288,20 +363,16 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(
-          90deg,
+        linear-gradient(90deg,
           rgba(12, 2, 4, 0.97) 0%,
           rgba(12, 2, 4, 0.92) 18%,
           rgba(15, 4, 6, 0.82) 38%,
           rgba(10, 2, 4, 0.62) 62%,
           rgba(8, 1, 3, 0.38) 80%,
-          rgba(6, 0, 2, 0.18) 100%
-        ),
-        radial-gradient(
-          ellipse at center,
+          rgba(6, 0, 2, 0.18) 100%),
+        radial-gradient(ellipse at center,
           transparent 15%,
-          rgba(0, 0, 0, 0.22) 100%
-        );
+          rgba(0, 0, 0, 0.22) 100%);
     }
 
     /* Diagonal crimson panel — clips in from left */
@@ -322,7 +393,7 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     }
 
-   
+
 
     /* Content — sits above panel and photo */
     .hero-content {
@@ -344,10 +415,10 @@
       flex-direction: column;
     }
 
-   
 
-    
-    
+
+
+
 
 
     /* Main heading image — untouched */
@@ -450,18 +521,19 @@
       display: block;
       /* REPLACE src with your BECON logo filename, e.g. becon_logo.png */
     }
+
     .becon-card-name {
-      font-family:Georgia, 'Times New Roman', Times, serif;
+      font-family: Georgia, 'Times New Roman', Times, serif;
       font-size: 15px;
       font-weight: 300;
-      
+
       color: rgb(255, 242, 200);
       letter-spacing: 1px;
       text-transform: uppercase;
       text-align: center;
     }
 
-    
+
 
     /* Floating photo badge */
     .hero-photo-badge {
@@ -570,8 +642,13 @@
     }
 
     @keyframes ticker-scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
     }
 
     /* Responsive */
@@ -606,67 +683,62 @@
 <body>
 
   <!-- NAV -->
-<nav class="w-full px-4 md:px-6 py-3 sticky top-0 z-50 backdrop-blur-md transition-all" 
-     style="background: linear-gradient(135deg, rgba(128, 0, 32, 0.95) 0%, rgba(92, 0, 23, 0.95) 100%);">
-  <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 lg:gap-4">
-    
-    <div class="flex items-center gap-2 md:gap-3 flex-shrink-0">
-     
-      <div class="font-display tracking-wide" style="color:#FAF7F2;">
-        <div class="hidden md:block text-[14px] lg:text-[16px] font-semibold uppercase leading-tight whitespace-nowrap">
-        
-          
+  <nav class="w-full px-4 md:px-6 py-3 sticky top-0 z-50 backdrop-blur-md transition-all"
+    style="background: linear-gradient(135deg, rgba(128, 0, 32, 0.95) 0%, rgba(92, 0, 23, 0.95) 100%);">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 lg:gap-4">
+
+      <div class="flex items-center gap-2 md:gap-3 flex-shrink-0">
+
+        <div class="font-display tracking-wide" style="color:#FAF7F2;">
+          <div
+            class="hidden md:block text-[14px] lg:text-[16px] font-semibold uppercase leading-tight whitespace-nowrap">
+
+
+          </div>
+          <div class="md:hidden text-[15px] font-semibold uppercase whitespace-nowrap">IIEST SHIBPUR</div>
         </div>
-        <div class="md:hidden text-[15px] font-semibold uppercase whitespace-nowrap">IIEST SHIBPUR</div>
       </div>
+
+      <!-- DESKTOP MENU -->
+      <div class="hidden md:flex items-center gap-6">
+        <a href="aboutus.html" onclick="handleAboutClick()" class="nav-btn">About Us</a>
+        <a href="gallery.html" class="nav-btn">Gallery</a>
+        <a href="tribunal.html" class="nav-btn">Tribunal</a>
+        <a href="contactpage.html" class="nav-btn" style="background:#DAA520;color:#800020;">
+          Contact
+        </a>
+      </div>
+
+      <!-- HAMBURGER -->
+      <button id="hamburger-btn" onclick="toggleMobileMenu()" class="md:hidden text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
     </div>
 
-    <!-- DESKTOP MENU -->
-    <div class="hidden md:flex items-center gap-6">
-      <a href="aboutus.html" onclick="handleAboutClick()" class="nav-btn">About Us</a>
-      <a href="gallery.html" class="nav-btn">Gallery</a>
-      <a href="tribunal.html" class="nav-btn">Tribunal</a>
-      <a href="contactpage.html"
-        class="nav-btn"
-        style="background:#DAA520;color:#800020;">
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu"
+      class="hidden absolute top-full right-4 mt-2 w-56 flex flex-col p-2 gap-1 rounded-xl shadow-2xl border border-white/10 md:hidden z-50"
+      style="background:#800020;">
+      <a href="index.html" class="px-4 py-3 text-sm text-white">Home</a>
+      <a href="aboutus.html" onclick="handleAboutClick(); toggleMobileMenu()"
+        class="w-full text-left px-4 py-3 text-sm text-white">
+        About Us
+      </a>
+      <a href="events.html" class="px-4 py-3 text-sm text-white">Main Events</a>
+      <a href="becon.html" class="px-4 py-3 text-sm text-white">Becon</a>
+      <a href="gallery.html" class="px-4 py-3 text-sm text-white">Gallery</a>
+      <a href="tribunal.html" class="px-4 py-3 text-sm text-white">Tribunal</a>
+      <a href="teampage.html" class="px-4 py-3 text-sm text-white">Team</a>
+      <a href="contactpage.html" class="block px-4 py-3 text-sm mt-2 rounded-full text-center"
+        style="background:#DAA520;color:#800020;margin:0 1rem;">
         Contact
       </a>
     </div>
 
-    <!-- HAMBURGER -->
-    <button id="hamburger-btn"
-      onclick="toggleMobileMenu()"
-      class="md:hidden text-white">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-    </button>
-
-  </div>
-
-  <!-- MOBILE MENU -->
-  <div id="mobile-menu"
-    class="hidden absolute top-full right-4 mt-2 w-56 flex flex-col p-2 gap-1 rounded-xl shadow-2xl border border-white/10 md:hidden z-50"
-    style="background:#800020;">
-    <a href="index.html" class="px-4 py-3 text-sm text-white">Home</a>
-    <a href="aboutus.html" onclick="handleAboutClick(); toggleMobileMenu()"
-      class="w-full text-left px-4 py-3 text-sm text-white">
-      About Us
-    </a>
-    <a href="events.html" class="px-4 py-3 text-sm text-white">Main Events</a>
-    <a href="becon.html" class="px-4 py-3 text-sm text-white">Becon</a>
-    <a href="gallery.html" class="px-4 py-3 text-sm text-white">Gallery</a>
-    <a href="tribunal.html" class="px-4 py-3 text-sm text-white">Tribunal</a>
-    <a href="teampage.html" class="px-4 py-3 text-sm text-white">Team</a>
-    <a href="contactpage.html"
-      class="block px-4 py-3 text-sm mt-2 rounded-full text-center"
-      style="background:#DAA520;color:#800020;margin:0 1rem;">
-      Contact
-    </a>
-  </div>
-
-</nav>
+  </nav>
 
   <!-- ═══════════════════════════════════════════════
        HERO
@@ -675,7 +747,7 @@
 
     <!-- 1. Full-bleed background photo -->
     <div class="hero-photo">
-     <img src="Gallery&Logo/becon/becon_2.webp" fetchpriority="high" alt="DEBSOC event">
+      <img src="Gallery&Logo/becon/becon_2.webp" fetchpriority="high" alt="DEBSOC event">
     </div>
 
     <!-- 2. Diagonal crimson panel -->
@@ -686,9 +758,9 @@
 
       <!-- LEFT — branding & stats -->
       <div class="hero-left">
-        
-         
-       
+
+
+
 
         <img class="hero-heading-img" src="main2.png" alt="DEBSOC IIEST">
 
@@ -696,7 +768,7 @@
           <strong>"Can't debate without offending."</strong><br>
         </p>
 
-        
+
       </div>
 
       <!-- RIGHT — BECON card (entire card is the link) -->
@@ -705,24 +777,16 @@
         <!-- BECON card: click anywhere to go to becon.html -->
         <!-- LOGO: replace BECON_LOGO_FILENAME with your actual file, e.g. becon_logo.png -->
         <a href="becon.html" class="hero-event-card">
-          <img
-            src="becon_white_logo-removebg.png"
-            alt="BECON"
-            class="becon-card-logo"
-          >
+          <img src="becon_white_logo-removebg.png" alt="BECON" class="becon-card-logo">
           <div class="becon-card-name">Our Flagship MUN</div>
-          
+
         </a>
 
         <!-- Secondary photo badge -->
-         <a href="debsoc_iiest_timeline_with_photos.html" class="hero-event-card">
-          <img
-            src="Legacy.webp"
-            alt="About Us/Legacy"
-            class="becon-card-logo"
-          >
-           <div class="becon-card-name">See Our Story</div>
-          
+        <a href="debsoc_iiest_timeline_with_photos.html" class="hero-event-card">
+          <img src="Legacy.webp" alt="About Us/Legacy" class="becon-card-logo">
+          <div class="becon-card-name">See Our Story</div>
+
         </a>
       </div>
     </div>
@@ -731,7 +795,7 @@
   <!-- ═══ END HERO ═══ -->
 
 
-<!-- FOOTER -->
+  <!-- FOOTER -->
   <footer class="px-6 py-12" style="background-color:#1a0008;">
     <div class="max-w-6xl mx-auto">
       <div class="grid md:grid-cols-4 gap-8 mb-8">
@@ -739,27 +803,46 @@
 
           <div class="flex items-center gap-3 mb-4">
             <img src="debsoclogo.webp" alt="DEBSOC Logo" class="h-12 w-auto object-contain">
-            <span class="font-display font-bold text-lg footer-heading" style="color:#FAF7F2;">DebSoc<span class="dot-right"></span></span>
+            <span class="font-display font-bold text-lg footer-heading" style="color:#FAF7F2;">DebSoc<span
+                class="dot-right"></span></span>
           </div>
-          <p class="text-sm opacity-70 max-w-xs" style="color:#FAF7F2;">A community dedicated to the synthesis of technical precision and humanistic inquiry. Through debates and formal discourse, we equip the scholars with the cognitive agility to dissect multifaceted issues and defend truth through reasoned conviction.</p>
+          <p class="text-sm opacity-70 max-w-xs" style="color:#FAF7F2;">A community dedicated to the synthesis of
+            technical precision and humanistic inquiry. Through debates and formal discourse, we equip the scholars with
+            the cognitive agility to dissect multifaceted issues and defend truth through reasoned conviction.</p>
         </div>
         <div>
-          <h4 class="font-semibold mb-4 footer-heading" style="color:#DAA520;">Quick Links<span class="dot-right"></span></h4>
+          <h4 class="font-semibold mb-4 footer-heading" style="color:#DAA520;">Quick Links<span
+              class="dot-right"></span></h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="index.html"    class="opacity-70 hover:opacity-100 transition-opacity" style="color:#FAF7F2;">Home</a></li>
-            <li><a href="events.html"      class="opacity-70 hover:opacity-100 transition-opacity" style="color:#FAF7F2;">Events</a></li>
-            <li><a href="tribunal.html"    class="opacity-70 hover:opacity-100 transition-opacity" style="color:#FAF7F2;">Tribunal</a></li>
-            <li><a href="contactpage.html" class="opacity-70 hover:opacity-100 transition-opacity" style="color:#FAF7F2;">Contact</a></li>
+            <li><a href="index.html" class="opacity-70 hover:opacity-100 transition-opacity"
+                style="color:#FAF7F2;">Home</a></li>
+            <li><a href="events.html" class="opacity-70 hover:opacity-100 transition-opacity"
+                style="color:#FAF7F2;">Events</a></li>
+            <li><a href="tribunal.html" class="opacity-70 hover:opacity-100 transition-opacity"
+                style="color:#FAF7F2;">Tribunal</a></li>
+            <li><a href="contactpage.html" class="opacity-70 hover:opacity-100 transition-opacity"
+                style="color:#FAF7F2;">Contact</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="font-semibold mb-4 footer-heading" style="color:#DAA520;">Connect<span class="dot-right"></span></h4>
+          <h4 class="font-semibold mb-4 footer-heading" style="color:#DAA520;">Connect<span class="dot-right"></span>
+          </h4>
           <div class="flex gap-3">
-            <a href="https://www.instagram.com/debsoc_iiests" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all" style="background-color:rgba(218,165,32,0.2);">
-              <svg class="w-5 h-5" fill="#DAA520" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <a href="https://www.instagram.com/debsoc_iiests" target="_blank"
+              class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all"
+              style="background-color:rgba(218,165,32,0.2);">
+              <svg class="w-5 h-5" fill="#DAA520" viewBox="0 0 24 24">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
             </a>
-            <a href="https://www.linkedin.com/company/debsoc-iiest-shibpur/" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all" style="background-color:rgba(218,165,32,0.2);">
-              <svg class="w-5 h-5" fill="#DAA520" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            <a href="https://www.linkedin.com/company/debsoc-iiest-shibpur/" target="_blank"
+              class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all"
+              style="background-color:rgba(218,165,32,0.2);">
+              <svg class="w-5 h-5" fill="#DAA520" viewBox="0 0 24 24">
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
             </a>
           </div>
         </div>
@@ -769,7 +852,7 @@
       </div>
     </div>
   </footer>
-  
+
   <script>
     function toggleMobileMenu() {
       const menu = document.getElementById('mobile-menu');
