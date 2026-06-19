@@ -4,9 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BECON</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-   <link href="https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  <link rel="preload" href="font/bebas-neue-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="font/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  
+
+
   <style>
+    @font-face {
+  font-family: 'Bebas Neue';
+  src: url('font/bebas-neue-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  
+}
+@font-face {
+  
+font-family: 'CG';
+  src: url('font/cormorant-garamond-latin-400-normal.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
     :root {
       --crimson: #6b0016;
       --crimson-deep: #3d000d;
@@ -23,13 +42,13 @@
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'DM Sans', sans-serif;
+      font-family:Georgia, 'Times New Roman', Times, serif;
       background: var(--cream);
       color: var(--ink);
       overflow-x: hidden;
     }
 
-    /* ── NAV ── */
+    
     /* ── NAV ── */
 nav {
   position: sticky; top: 0; width: 100%; z-index: 1000;
@@ -47,7 +66,7 @@ nav.nav-hidden { transform: translateY(-100%); }
 }
 
 .nav-logo {
-  font-family: 'Playfair Display', serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 15px; font-weight: 700; letter-spacing: 0.06em;
   color: #FAF7F2; text-decoration: none;
   flex-shrink: 0; opacity: 0.9;
@@ -228,31 +247,37 @@ nav.nav-hidden { transform: translateY(-100%); }
     }
 
     .slide-headline {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(72px, 10vw, 148px);
-      line-height: 0.9;
-      color: #FAF6EE;
-      letter-spacing: 10px;
-      text-shadow: 0 4px 48px rgba(0,0,0,0.4);
-    }
+  font-family: 'Bebas Neue', 'Arial Narrow', Arial, sans-serif;
+  font-size: clamp(60px, 12vw, 140px);  /* fixed: min < max */
+  font-weight: 200;
+  line-height: 0.9;
+  color: #FAF6EE;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 48px rgba(0,0,0,0.4);
+        /* add */
+  display: flex;             /* add */
+  flex-direction: column;    /* add */
+     /* add */
+  width: 100%;               /* add */
+}
 
-    .slide-headline em {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: Bold;
-      color: var(-light);
-      font-weight: 300;
-      font-size: 0.65em;
-      letter-spacing: 2px;
-      display: block;
-      margin-top: 4px;
-    }
+.slide-headline em {
+  font-family: 'CG',Georgia, 'Times New Roman', Times, serif;
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+  font-size: clamp(75px, 3.5vw, 88px);  /* independent size, not relative to parent */
+  letter-spacing: .60px;
+  display: block;
+  margin-top: 40px;
+  
+}
     .slide-headline em2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: Bold;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin-left: 600px;
       color: var(--gold-light);
-      font-weight: 300;
-      font-size: 0.65em;
-      letter-spacing: 2px;
+      font-weight: 400;
+      font-size: 0.55em;
+      letter-spacing: 0.5px;
       display: block;
       margin-top: 4px;
     }
@@ -340,18 +365,20 @@ nav.nav-hidden { transform: translateY(-100%); }
       margin-bottom: 10px;
     }
     .bleed-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(28px, 4vw, 48px);
-      font-weight: 700;
+      padding-left: 1em;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(37px, 4vw, 55px);
+      font-weight: 600;
       color: var(--crimson);
       line-height: 1.1;
     }
     .bleed-title span {
-      font-style: italic;
+      font-family: 'Times New Roman', Times, serif;
       color: var(--ink-muted);
       font-weight: 300;
     }
     .bleed-buttons {
+      justify-content: center;
       display: flex;
       gap: 14px;
       align-items: center;
@@ -446,6 +473,7 @@ nav.nav-hidden { transform: translateY(-100%); }
       padding: 100px 40px 80px;
     }
     .section-eyebrow {
+      font-family: 'Times New Roman', Times, serif;
       font-size: 10px;
       letter-spacing: 3.5px;
       text-transform: uppercase;
@@ -465,39 +493,40 @@ nav.nav-hidden { transform: translateY(-100%); }
       opacity: 0.5;
     }
     .about-grid {
+
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 80px;
       align-items: start;
     }
     .about-headline {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: Georgia, 'Times New Roman', Times, serif;
       font-size: clamp(40px, 5vw, 64px);
       font-weight: 700;
-      font-style: italic;
+      
       color: var(--crimson);
       line-height: 1.1;
       margin-bottom: 36px;
       letter-spacing: -0.5px;
     }
     .about-body p {
-      font-family: 'Gelasio', serif;
+      font-family: 'Times New Roman', Times, serif;
       font-size: 20px;
       line-height: 1.9;
       color: var(--ink-muted);
       margin-bottom: 20px;
       font-weight: 400;
     }
-    .about-body p strong { color: var(--ink); font-weight: 700; }
-    .about-body p em { font-style: italic; color: var(--crimson); }
+    .about-body p strong { font-family: 'Times New Roman', Times, serif;color: var(--ink); font-weight: 700; }
+    .about-body p em { font-family: 'Times New Roman', Times, serif; color: var(--crimson); }
     .about-pull {
       position: sticky;
       top: 100px;
     }
     .pull-quote {
-      font-family: 'Gelasio', serif;
+      font-family: 'Times New Roman', Times, serif;
       font-size: clamp(20px, 2vw, 20px);
-      font-style: italic;
+      
       font-weight: 300;
       color: var(--crimson);
       line-height: 1.5;
@@ -506,6 +535,7 @@ nav.nav-hidden { transform: translateY(-100%); }
       margin-bottom: 40px;
     }
     .about-download {
+      font-family: 'Times New Roman', Times, serif;
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -530,7 +560,7 @@ nav.nav-hidden { transform: translateY(-100%); }
     .features-inner { max-width: 1200px; margin: 0 auto; }
     .section-header { margin-bottom: 56px; }
     .section-title {
-      font-family: 'Bebas Neue', sans-serif;
+      font-family: 'Times New Roman', Times, serif;
       font-size: clamp(42px, 5vw, 68px);
       color: var(--crimson);
       letter-spacing: 2px;
@@ -580,14 +610,14 @@ nav.nav-hidden { transform: translateY(-100%); }
       opacity: 0.7;
     }
     .feature-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: Georgia, 'Times New Roman', Times, serif;
       font-size: 24px;
       font-weight: 700;
       color: var(--crimson);
       margin-bottom: 14px;
     }
     .feature-desc {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: Georgia, 'Times New Roman', Times, serif;
       font-size: 18px;
       line-height: 1.8;
       color: var(--ink-muted);
@@ -605,7 +635,7 @@ nav.nav-hidden { transform: translateY(-100%); }
       position: absolute;
       top: -40px;
       left: 40px;
-      font-family: 'Cormorant Garamond', serif;
+      font-family: Georgia, 'Times New Roman', Times, serif;
       font-size: 320px;
       color: rgba(201,150,58,0.06);
       line-height: 1;
@@ -656,9 +686,9 @@ nav.nav-hidden { transform: translateY(-100%); }
       color: var(--gold);
     }
     .t-text {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: Georgia, 'Times New Roman', Times, serif;
       font-size: 19px;
-      font-style: italic;
+      
       line-height: 1.75;
       color: rgba(250,246,238,0.82);
       margin-bottom: 24px;
@@ -676,7 +706,7 @@ nav.nav-hidden { transform: translateY(-100%); }
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Cormorant Garamond', serif;
+      font-family: Georgia, 'Times New Roman', Times, serif;
       font-size: 16px;
       font-weight: 700;
       color: var(--cream);
@@ -775,9 +805,9 @@ nav.nav-hidden { transform: translateY(-100%); }
       margin-bottom: 12px;
     }
     .cta-sub {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: Georgia, 'Times New Roman', Times, serif;
       font-size: 22px;
-      font-style: italic;
+      
       color: rgba(250,246,238,0.6);
       margin-bottom: 52px;
     }
@@ -842,7 +872,7 @@ nav.nav-hidden { transform: translateY(-100%); }
     }
     .footer-brand-row img { height: 44px; width: auto; object-fit: contain; }
     .footer-brand-name {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: Georgia, 'Times New Roman', Times, serif;
       font-size: 26px;
       font-weight: 700;
       color: #FAF6EE;
@@ -1031,7 +1061,7 @@ nav.nav-hidden { transform: translateY(-100%); }
       <div class="slide-headline">
         BECON
         <em>Bengal Engineering Conclave of Nations<em>
-        <em2>Edition 1.0</em2>
+        
       </div>
     </div>
 
@@ -1101,7 +1131,7 @@ nav.nav-hidden { transform: translateY(-100%); }
         <p>
           Cash prizes of <strong>₹2500, ₹1500, and ₹1500</strong> were awarded to the top delegates in both committees during the results ceremony. With registrations at just <strong>₹500</strong>, BECON was designed to make quality MUN participation genuinely accessible without sacrificing rigour.
         </p>
-        <p style="font-style:italic; color:var(--crimson); font-family:'Gelasio',serif; font-size:21px; line-height:1.7;">
+        <p style=" color:var(--crimson); font-family:'Georgia',serif; font-size:21px; line-height:1.7;">
           When silence is easy, will you dare to speak?
         </p>
       </div>

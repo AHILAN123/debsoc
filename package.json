@@ -1,0 +1,27 @@
+{
+  "name": "debsoc-main",
+  "version": "1.0.0",
+  "description": "Official website of DEBSOC IIEST.  \r Live Website: https://debsociiests.in",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AHILAN123/debsoc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AHILAN123/debsoc/issues"
+  },
+  "homepage": "https://github.com/AHILAN123/debsoc#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  },
+  "dependencies": {
+    "@fontsource/bebas-neue": "^5.2.7"
+  }
+}

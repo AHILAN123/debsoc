@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Team</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="stylesheet" href="tailwind.css">
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
 
   <style>
     :root {
@@ -21,7 +21,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Montserrat', sans-serif;
+     
       background: var(--crimson-dark);
       min-height: 100vh;
       overflow-x: hidden;
@@ -51,6 +51,7 @@
 
     /* ── NAV ── */
     nav {
+      
       width: 100%; padding: 6px 24px; position: sticky; top: 0; z-index: 50;
       background: linear-gradient(135deg, rgba(128,0,32,0.97) 0%, rgba(92,0,23,0.97) 100%);
       backdrop-filter: blur(8px);
@@ -63,12 +64,14 @@
     .nav-wordmark .bot { font-size: 13px; font-weight: 700; }
     .nav-links { display: flex; align-items: center; gap: 4px; }
     .nav-btn {
+      
       color: rgba(250,247,242,0.8); font-size: 12px; padding: 5px 12px; border-radius: 6px;
       text-decoration: none; background: transparent; border: none; cursor: pointer;
-      font-family: inherit; transition: background 0.2s, color 0.2s;
+      transition: background 0.2s, color 0.2s;
     }
     .nav-btn:hover, .nav-btn.active-nav { background: rgba(250,247,242,0.12); color: var(--cream); }
     .nav-contact {
+      font-family: 'Times New Roman', Times, serif;
       padding: 6px 18px; border-radius: 999px; font-size: 12px; font-weight: 600;
       background: var(--gold); color: var(--crimson-dark); text-decoration: none; transition: transform 0.2s;
     }
@@ -93,7 +96,7 @@
       position: absolute; top: 60px; right: 48px;
     }
     .team-hero-inner { position: relative; }
-    .team-title { font-size: clamp(32px, 5vw, 56px); font-weight: 900; color: var(--cream); line-height: 1.05; margin-bottom: 14px; font-family: 'Playfair Display', serif; }
+    .team-title { font-size: clamp(32px, 5vw, 56px); font-weight: 900; color: var(--cream); line-height: 1.05; margin-bottom: 14px; font-family: 'Times New Roman', Times, serif; }
     .team-subtitle { font-size: 14px; color: rgba(250,247,242,0.5); font-weight: 300; line-height: 1.6; max-width: 480px; }
 
     /* ── TIER SECTIONS ── */

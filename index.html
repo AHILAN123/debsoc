@@ -6,13 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DebSocIIEST</title>
   <link rel="icon" href="favicon.ico">
-  <meta name="description" content="Official website of DebSoc IIEST Shibpur — debates, events, BECON and more.">
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <meta name="description" content="Debate Society of IIEST, Erstwhile BESU/BE College: Kolkata MUN, Kolkata Debates, College Debate Society events, BECON and .">
+  <link rel="preload" as="image" href="Gallery&Logo/becon/becon_2.webp">
+  <link rel="stylesheet" href="tailwind.css">
   <link rel="stylesheet" href="style.css">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap"
-    rel="stylesheet">
-
+ 
   <style>
     body {
     margin:0px;
@@ -36,7 +34,7 @@
     }
 
     body {
-      font-family: 'DM Sans', sans-serif;
+      font-family:Georgia, 'Times New Roman', Times, serif;
       background-color: var(--cream);
       color: var(--ink);
       overflow-x: hidden;
@@ -52,7 +50,7 @@
       border: none;
       background: transparent;
       cursor: pointer;
-      font-family: inherit;
+      font-family: Georgia, 'Times New Roman', Times, serif;
       letter-spacing: 0.02em;
     }
 
@@ -115,7 +113,7 @@
     }
 
     .footer-brand-name {
-      font-family: 'Playfair Display', serif;
+      font-family:Georgia, 'Times New Roman', Times, serif;
       font-size: 30px;
       font-weight: 700;
       color: var(--cream);
@@ -324,21 +322,7 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     }
 
-    /* Ghost year — massive typographic element behind everything */
-    .hero-ghost-year {
-      position: absolute;
-      top: -0.05em;
-      left: -0.02em;
-      z-index: 2;
-      font-size: clamp(120px, 22vw, 260px);
-      font-weight: 900;
-      color: rgba(250, 247, 242, 0.035);
-      line-height: 1;
-      pointer-events: none;
-      user-select: none;
-      letter-spacing: -0.04em;
-      font-family: 'Montserrat', sans-serif;
-    }
+   
 
     /* Content — sits above panel and photo */
     .hero-content {
@@ -360,27 +344,11 @@
       flex-direction: column;
     }
 
-    /* Eyebrow */
-    .hero-eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
+   
 
-    .hero-eyebrow-line {
-      width: 32px;
-      height: 2px;
-      background: var(--gold);
-    }
+    
+    
 
-    .hero-eyebrow-text {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      color: var(--gold);
-      text-transform: uppercase;
-    }
 
     /* Main heading image — untouched */
     .hero-heading-img {
@@ -398,7 +366,7 @@
       color: rgba(250, 247, 242, 0.65);
       font-style: italic;
       letter-spacing: 0.5px;
-      margin-left: 20px;
+      text-align: center;
       margin-bottom: 36px;
       line-height: 1.6;
       justify-content: center;
@@ -483,7 +451,7 @@
       /* REPLACE src with your BECON logo filename, e.g. becon_logo.png */
     }
     .becon-card-name {
-      font-family: 'Playfair Display', serif;
+      font-family:Georgia, 'Times New Roman', Times, serif;
       font-size: 15px;
       font-weight: 300;
       
@@ -659,7 +627,7 @@
       <a href="gallery.html" class="nav-btn">Gallery</a>
       <a href="tribunal.html" class="nav-btn">Tribunal</a>
       <a href="contactpage.html"
-        class="px-5 py-2 rounded-full text-sm font-semibold transition hover:scale-105"
+        class="nav-btn"
         style="background:#DAA520;color:#800020;">
         Contact
       </a>
@@ -707,7 +675,7 @@
 
     <!-- 1. Full-bleed background photo -->
     <div class="hero-photo">
-      <img src="Gallery&Logo/becon/becon_2.webp" alt="DEBSOC event">
+     <img src="Gallery&Logo/becon/becon_2.webp" fetchpriority="high" alt="DEBSOC event">
     </div>
 
     <!-- 2. Diagonal crimson panel -->
