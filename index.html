@@ -1262,6 +1262,20 @@
     .weekly {
       grid-area: weekly;
     }
+    /* Base setup for laptop/desktop right alignment */
+  .why-debsoc-image-container {
+    float: right;
+    margin: 4px 0 20px 40px;
+  }
+
+  /* Responsive overrides for phone viewports */
+  @media (max-width: 768px) {
+    .why-debsoc-image-container {
+      float: none !important;
+      margin: 0 auto 24px !important;
+      text-align: center;
+    }
+  }
   </style>
 </head>
 
@@ -1383,211 +1397,221 @@
   </section>
   <!-- ═══ END HERO ═══ -->
 
-  <!-- ═══ 1. WHY DEBSOC ═══ -->
+  <!--//why debsoc-->
   <section style="background:#0a0b0e;">
-    <div class="section-wrap">
-      <h2 class="intro-headline" style="padding:0;margin-top:0;margin-bottom:24px;color:var(--cream);">Why join us?</h2>
+  <div class="section-wrap" style="max-width: 1100px; margin: 0 auto; padding: 80px 24px;">
+    <h2 class="intro-headline" style="padding:0; margin-top:0; margin-bottom:24px; color:var(--cream);">Why join us?</h2>
 
-      <div style="overflow:hidden;">
-        <div
-          style="float:right;margin:4px 0 20px 40px;max-width:240px;border:1px solid rgba(245,230,200,0.15);background:rgba(255,255,255,0.02);">
-          <img src="Gallery&Logo/becon/becon_9.webp" alt="DebSoc members debating" loading="lazy"
-            style="width:100%;display:block;filter:grayscale(20%) contrast(105%) brightness(0.85);">
-          <p
-            style="padding:7px 10px;font-size:11px;color:rgba(250,246,238,0.55);line-height:1.5;margin:0;font-style:italic;">
-            DebSoc members at a session, IIEST Shibpur.
-          </p>
+    <div style="overflow:hidden;">
+      <!-- Image box: Right-aligned on laptop, center-aligned on phone -->
+      <div class="why-debsoc-image-container" style="max-width:240px; border:1px solid rgba(245,230,200,0.15); background:rgba(255,255,255,0.02);">
+        <img src="Gallery&Logo/becon/becon_9.webp" alt="DebSoc members debating" loading="lazy"
+          style="width:100%; display:block; filter:grayscale(20%) contrast(105%) brightness(0.85);">
+        <p style="padding:7px 10px; font-size:11px; color:rgba(250,246,238,0.55); line-height:1.5; margin:0; font-style:italic;">
+          DebSoc members at a session, IIEST Shibpur.
+        </p>
+      </div>
+
+      <p style="font-family:Georgia,serif; font-size:16px; line-height:1.75; color:rgba(250,246,238,0.8); margin:0 0 16px;">
+        The <strong style="color:var(--gold-pale);">Debating Society of IIEST Shibpur</strong> (DebSoc) is the
+        institute's official debating and Model United Nations society. Since 2009, it has trained students in
+        parliamentary debate, public speaking, and diplomacy, sending members to competitions across India.
+      </p>
+      <p style="font-family:Georgia,serif; font-size:16px; line-height:1.75; color:rgba(250,246,238,0.8); margin:0 0 16px;">
+        Members compete on the <strong style="color:var(--gold-pale);">national debating circuit</strong>, reaching
+        elimination rounds at IIT, IIM, and open-circuit tournaments. Weekly sessions focus on rhetoric,
+        argumentation, and case-building, skills that carry well beyond debate halls.
+      </p>
+      <p style="font-family:Georgia,serif; font-size:16px; line-height:1.75; color:rgba(250,246,238,0.8); margin:0 0 16px;">
+        Through <strong style="color:var(--gold-pale);">Model United Nations</strong>, members prepare for and compete
+        at conferences across Kolkata and beyond, anchored by BECON, DebSoc's own annual MUN hosted at IIEST Shibpur
+        campus.
+      </p>
+      <p style="font-family:Georgia,serif; font-size:16px; line-height:1.75; color:rgba(250,246,238,0.8); margin:0;">
+        No prior experience is required. Most members start from scratch.
+      </p>
+    </div>
+
+    <div style="clear:both; padding-top:28px;">
+      <a href="aboutus.html" class="btn-outline-gold"
+        style="color:var(--gold-pale); border-color:rgba(245,230,200,0.3);">Learn More →</a>
+    </div>
+  </div>
+</section>
+
+
+  <!-- ═══ 2. EVENTS ═══ -->
+<style>
+  /* Clean responsive override to force a vertical scrolling block on phone screens */
+  @media (max-width: 768px) {
+    .responsive-events-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .responsive-main-card {
+      grid-row: span 1 !important;
+    }
+    .responsive-card-img {
+      height: 160px !important;
+    }
+  }
+</style>
+
+<section style="background:#12141a;">
+  <div class="section-wrap" style="max-width: 1200px; padding: 60px 24px;">
+
+    <h2 class="intro-headline" style="padding:0; margin-top:0; margin-bottom:40px; color:var(--cream);">
+      What we do.
+    </h2>
+
+    <!-- Asymmetric layout on desktop / Auto-fallback to single column vertical stack on mobile -->
+    <div class="responsive-events-grid" style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 24px; align-items: stretch;">
+
+      <!-- Column 1: Primary Feature (Takes up Left Half / Vertical Span on Desktop) -->
+      <a href="becon.html" class="responsive-main-card"
+        style="grid-column: 1; grid-row: span 2; background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease;"
+        onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.25)'"
+        onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)'">
+        <div class="responsive-card-img" style="width: 100%; height: 260px; overflow: hidden; background: #0f1115;">
+          <img src="Gallery&Logo/becon/becon_5.webp" alt="BECON"
+            style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
         </div>
+        <div
+          style="padding: 24px; flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+          <div style="font-size: 20px; font-weight: 700; color: var(--cream);">
+            BECON
+          </div>
+          <div
+            style="font-size: 11px; background: rgba(255, 255, 255, 0.06); color: rgba(250, 246, 238, 0.75); padding: 3px 8px; border-radius: 4px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">
+            IIEST Shibpur Campus
+          </div>
+          <div
+            style="font-size: 14px; line-height: 1.6; color: rgba(250, 246, 238, 0.7); margin-top: 6px; font-family: Georgia, serif;">
+            Bengal Engineering Conclave of Nations, our flagship annual MUN. 200+ delegates, multiple committees,
+            intense diplomacy across two days.
+          </div>
+          <div style="margin-top: auto; padding-top: 16px; font-size: 13px; color: var(--gold); font-weight: 500;">
+            March · 2 Days
+          </div>
+        </div>
+      </a>
 
-        <p
-          style="font-family:Georgia,serif;font-size:16px;line-height:1.75;color:rgba(250,246,238,0.8);margin:0 0 16px;">
-          The <strong style="color:var(--gold-pale);">Debating Society of IIEST Shibpur</strong> (DebSoc) is the
-          institute's official debating and Model United Nations society. Since 2009, it has trained students in
-          parliamentary debate, public speaking, and diplomacy , sending members to competitions across India.
-        </p>
-        <p
-          style="font-family:Georgia,serif;font-size:16px;line-height:1.75;color:rgba(250,246,238,0.8);margin:0 0 16px;">
-          Members compete on the <strong style="color:var(--gold-pale);">national debating circuit</strong>, reaching
-          elimination rounds at IIT, IIM, and open-circuit tournaments. Weekly sessions focus on rhetoric,
-          argumentation, and case-building , skills that carry well beyond debate halls.
-        </p>
-        <p
-          style="font-family:Georgia,serif;font-size:16px;line-height:1.75;color:rgba(250,246,238,0.8);margin:0 0 16px;">
-          Through <strong style="color:var(--gold-pale);">Model United Nations</strong>, members prepare for and compete
-          at conferences across Kolkata and beyond, anchored by BECON , DebSoc's own annual MUN hosted at IIEST Shibpur
-          campus.
-        </p>
-        <p style="font-family:Georgia,serif;font-size:16px;line-height:1.75;color:rgba(250,246,238,0.8);margin:0;">
-          No prior experience is required. Most members start from scratch.
-        </p>
-      </div>
+      <!-- Column 2 & 3: Secondary Small Cards Stacked Next to Feature (Half Size) -->
 
-      <div style="clear:both;padding-top:28px;">
-        <a href="aboutus.html" class="btn-outline-gold"
-          style="color:var(--gold-pale); border-color:rgba(245,230,200,0.3);">Learn More →</a>
-      </div>
+      <!-- Card 02: Freshers -->
+      <a href="events.html"
+        style="background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease;"
+        onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.25)'"
+        onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)'">
+        <div style="width: 100%; height: 130px; overflow: hidden; background: #0f1115;">
+          <img src="photos/freshers.webp" alt="Freshers Debate"
+            style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
+        </div>
+        <div
+          style="padding: 14px; flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+          <div style="font-size: 15px; font-weight: 700; color: var(--cream);">
+            Freshers' Debate
+          </div>
+          <div
+            style="font-size: 10px; background: rgba(255, 255, 255, 0.06); color: rgba(250, 246, 238, 0.75); padding: 2px 6px; border-radius: 3px; font-weight: 500;">
+            Amenities Center
+          </div>
+          <div
+            style="font-size: 12px; line-height: 1.4; color: rgba(250, 246, 238, 0.65); font-family: Georgia, serif; margin-top: 2px;">
+            The first competitive stage for incoming students. No experience required.
+          </div>
+          <div style="margin-top: auto; padding-top: 8px; font-size: 11px; color: var(--gold);">
+            First Sem
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 03: External MUNs -->
+      <a href="events.html"
+        style="background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease;"
+        onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.25)'"
+        onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)'">
+        <div style="width: 100%; height: 130px; overflow: hidden; background: #0f1115;">
+          <img src="photos/external.webp" alt="External MUNs"
+            style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
+        </div>
+        <div
+          style="padding: 14px; flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+          <div style="font-size: 15px; font-weight: 700; color: var(--cream);">
+            External MUNs
+          </div>
+          <div
+            style="font-size: 10px; background: rgba(255, 255, 255, 0.06); color: rgba(250, 246, 238, 0.75); padding: 2px 6px; border-radius: 3px; font-weight: 500;">
+            National Circuit
+          </div>
+          <div
+            style="font-size: 12px; line-height: 1.4; color: rgba(250, 246, 238, 0.65); font-family: Georgia, serif; margin-top: 2px;">
+            We send trained delegations to prestigious multi-city university circuits.
+          </div>
+          <div style="margin-top: auto; padding-top: 8px; font-size: 11px; color: var(--gold);">
+            Year-round
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 04: Workshops -->
+      <a href="events.html"
+        style="background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease;"
+        onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.25)'"
+        onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)'">
+        <div style="width: 100%; height: 130px; overflow: hidden; background: #0f1115;">
+          <img src="photos/workshop.webp" alt="Workshops"
+            style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
+        </div>
+        <div
+          style="padding: 14px; flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+          <div style="font-size: 15px; font-weight: 700; color: var(--cream);">
+            Workshops
+          </div>
+          <div
+            style="font-size: 10px; background: rgba(255, 255, 255, 0.06); color: rgba(250, 246, 238, 0.75); padding: 2px 6px; border-radius: 3px; font-weight: 500;">
+            Seminar Halls
+          </div>
+          <div
+            style="font-size: 12px; line-height: 1.4; color: rgba(250, 246, 238, 0.65); font-family: Georgia, serif; margin-top: 2px;">
+            Dynamic training blocks covering advanced geo-political case mechanics.
+          </div>
+          <div style="margin-top: auto; padding-top: 8px; font-size: 11px; color: var(--gold);">
+            6 Weeks Track
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 05: Weekly Sessions -->
+      <a href="events.html"
+        style="background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease;"
+        onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.25)'"
+        onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)'">
+        <div style="width: 100%; height: 130px; overflow: hidden; background: #0f1115;">
+          <img src="Gallery&Logo/Amenities.webp" alt="Weekly Sessions"
+            style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
+        </div>
+        <div
+          style="padding: 14px; flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+          <div style="font-size: 15px; font-weight: 700; color: var(--cream);">
+            Weekly Sessions
+          </div>
+          <div
+            style="font-size: 10px; background: rgba(255, 255, 255, 0.06); color: rgba(250, 246, 238, 0.75); padding: 2px 6px; border-radius: 3px; font-weight: 500;">
+            Amenity Centre
+          </div>
+          <div
+            style="font-size: 12px; line-height: 1.4; color: rgba(250, 246, 238, 0.65); font-family: Georgia, serif; margin-top: 2px;">
+            Regular weekend modules where members break down live layout motions.
+          </div>
+          <div style="margin-top: auto; padding-top: 8px; font-size: 11px; color: var(--gold);">
+            Every Week
+          </div>
+        </div>
+      </a>
+
     </div>
-  </section>
-
-
-  <!-- ═══ 2. EVENTS ═══ -->
-  <!-- ═══ 2. EVENTS ═══ -->
-  <section style="background:#12141a;">
-    <div class="section-wrap" style="max-width: 1200px; padding: 60px 24px;">
-
-      <h2 class="intro-headline" style="padding:0; margin-top:0; margin-bottom:40px; color:var(--cream);">
-        What we do.
-      </h2>
-
-      <!-- Asymmetric layout mirroring the layout principles of image_c85404.png -->
-      <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 24px; align-items: stretch;">
-
-        <!-- Column 1: Primary Feature (Takes up Left Half / Vertical Span) -->
-        <a href="becon.html"
-          style="grid-column: 1; grid-row: span 2; background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease;"
-          onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.25)'"
-          onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)'">
-          <div style="width: 100%; height: 260px; overflow: hidden; background: #0f1115;">
-            <img src="Gallery&Logo/becon/becon_5.webp" alt="BECON"
-              style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
-          </div>
-          <div
-            style="padding: 24px; flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-            <div style="font-size: 20px; font-weight: 700; color: var(--cream);">
-              BECON
-            </div>
-            <div
-              style="font-size: 11px; background: rgba(255, 255, 255, 0.06); color: rgba(250, 246, 238, 0.75); padding: 3px 8px; border-radius: 4px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">
-              IIEST Shibpur Campus
-            </div>
-            <div
-              style="font-size: 14px; line-height: 1.6; color: rgba(250, 246, 238, 0.7); margin-top: 6px; font-family: Georgia, serif;">
-              Bengal Engineering Conclave of Nations, our flagship annual MUN. 200+ delegates, multiple committees,
-              intense diplomacy across two days.
-            </div>
-            <div style="margin-top: auto; padding-top: 16px; font-size: 13px; color: var(--gold); font-weight: 500;">
-              March · 2 Days
-            </div>
-          </div>
-        </a>
-
-        <!-- Column 2 & 3: Secondary Small Cards Stacked Next to Feature (Half Size) -->
-
-        <!-- Card 02: Freshers -->
-        <a href="events.html"
-          style="background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease;"
-          onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.25)'"
-          onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)'">
-          <div style="width: 100%; height: 130px; overflow: hidden; background: #0f1115;">
-            <img src="photos/freshers.webp" alt="Freshers Debate"
-              style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
-          </div>
-          <div
-            style="padding: 14px; flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-            <div style="font-size: 15px; font-weight: 700; color: var(--cream);">
-              Freshers' Debate
-            </div>
-            <div
-              style="font-size: 10px; background: rgba(255, 255, 255, 0.06); color: rgba(250, 246, 238, 0.75); padding: 2px 6px; border-radius: 3px; font-weight: 500;">
-              Amenities Center
-            </div>
-            <div
-              style="font-size: 12px; line-height: 1.4; color: rgba(250, 246, 238, 0.65); font-family: Georgia, serif; margin-top: 2px;">
-              The first competitive stage for incoming students. No experience required.
-            </div>
-            <div style="margin-top: auto; padding-top: 8px; font-size: 11px; color: var(--gold);">
-              First Sem
-            </div>
-          </div>
-        </a>
-
-        <!-- Card 03: External MUNs -->
-        <a href="events.html"
-          style="background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease;"
-          onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.25)'"
-          onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)'">
-          <div style="width: 100%; height: 130px; overflow: hidden; background: #0f1115;">
-            <img src="photos/external.webp" alt="External MUNs"
-              style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
-          </div>
-          <div
-            style="padding: 14px; flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-            <div style="font-size: 15px; font-weight: 700; color: var(--cream);">
-              External MUNs
-            </div>
-            <div
-              style="font-size: 10px; background: rgba(255, 255, 255, 0.06); color: rgba(250, 246, 238, 0.75); padding: 2px 6px; border-radius: 3px; font-weight: 500;">
-              National Circuit
-            </div>
-            <div
-              style="font-size: 12px; line-height: 1.4; color: rgba(250, 246, 238, 0.65); font-family: Georgia, serif; margin-top: 2px;">
-              We send trained delegations to prestigious multi-city university circuits.
-            </div>
-            <div style="margin-top: auto; padding-top: 8px; font-size: 11px; color: var(--gold);">
-              Year-round
-            </div>
-          </div>
-        </a>
-
-        <!-- Card 04: Workshops -->
-        <a href="events.html"
-          style="background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease;"
-          onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.25)'"
-          onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)'">
-          <div style="width: 100%; height: 130px; overflow: hidden; background: #0f1115;">
-            <img src="photos/workshop.webp" alt="Workshops"
-              style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
-          </div>
-          <div
-            style="padding: 14px; flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-            <div style="font-size: 15px; font-weight: 700; color: var(--cream);">
-              Workshops
-            </div>
-            <div
-              style="font-size: 10px; background: rgba(255, 255, 255, 0.06); color: rgba(250, 246, 238, 0.75); padding: 2px 6px; border-radius: 3px; font-weight: 500;">
-              Seminar Halls
-            </div>
-            <div
-              style="font-size: 12px; line-height: 1.4; color: rgba(250, 246, 238, 0.65); font-family: Georgia, serif; margin-top: 2px;">
-              Dynamic training blocks covering advanced geo-political case mechanics.
-            </div>
-            <div style="margin-top: auto; padding-top: 8px; font-size: 11px; color: var(--gold);">
-              6 Weeks Track
-            </div>
-          </div>
-        </a>
-
-        <!-- Card 05: Weekly Sessions -->
-        <a href="events.html"
-          style="background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease;"
-          onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.25)'"
-          onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)'">
-          <div style="width: 100%; height: 130px; overflow: hidden; background: #0f1115;">
-            <img src="Gallery&Logo/Amenities.webp" alt="Weekly Sessions"
-              style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
-          </div>
-          <div
-            style="padding: 14px; flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-            <div style="font-size: 15px; font-weight: 700; color: var(--cream);">
-              Weekly Sessions
-            </div>
-            <div
-              style="font-size: 10px; background: rgba(255, 255, 255, 0.06); color: rgba(250, 246, 238, 0.75); padding: 2px 6px; border-radius: 3px; font-weight: 500;">
-              Amenity Centre
-            </div>
-            <div
-              style="font-size: 12px; line-height: 1.4; color: rgba(250, 246, 238, 0.65); font-family: Georgia, serif; margin-top: 2px;">
-              Regular weekend modules where members break down live layout motions.
-            </div>
-            <div style="margin-top: auto; padding-top: 8px; font-size: 11px; color: var(--gold);">
-              Every Week
-            </div>
-          </div>
-        </a>
-
-      </div>
-    </div>
-  </section>
+  </div>
+</section>
   <!-- ═══ 3. ACHIEVEMENTS ═══ -->
   <section style="background:#0a0b0e;overflow:hidden;position:relative;">
     <div
