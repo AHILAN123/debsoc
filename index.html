@@ -4,13 +4,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DebSocIIEST</title>
+  <title>DebSoc IIEST Shibpur | BECON MUN & Debating Society</title>
   <link rel="icon" href="favicon.ico">
   <meta name="description"
-    content="Debate Society of IIEST, Erstwhile BESU/BE College: Kolkata MUN, Kolkata Debates, College Debate Society events, BECON and .">
+    content="Debate Society of IIEST, Erstwhile BESU/BE College: Kolkata MUN, Kolkata Debates, College Debate Society events, BECON">
   <link rel="preload" as="image" href="Gallery&Logo/becon/becon_2.webp">
   <link rel="stylesheet" href="tailwind.css">
   <link rel="stylesheet" href="style.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://debsociiests.in/">
+  <meta property="og:title" content="The Debating Society of IIEST Shibpur | BECON MUN">
+  <meta property="og:description"
+    content="The Model United Nations and Debating Society of IIEST Shibpur. Teaching competitive debating, public speaking, and conducting the annual the Bengal Engineering Conclave of Nations (BECON).">
+  <meta property="og:image" content="https://debsociiests.in/Gallery&Logo/becon/becon_5.webp">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="debsociiests.in">
+  <meta property="twitter:url" content="https://debsociiests.in/">
+  <meta name="twitter:title" content="The Debating Society of IIEST Shibpur | BECON MUN">
+  <meta name="twitter:description"
+    content="The premier Model United Nations and Debating Society of IIEST Shibpur. Join us for competitive debating, public speaking, and the Bengal Engineering Conclave of Nations (BECON).">
+  <meta name="twitter:image" content="https://debsociiests.in/Gallery&Logo/becon/becon_5.webp">
   <script type="application/ld+json">
   {
   "@context": "https://schema.org",
@@ -141,6 +156,18 @@
       color: #FAF7F2;
     }
 
+    /* Screen-reader only utility for SEO and Accessibility */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
 
     .site-footer {
       position: relative;
@@ -149,6 +176,15 @@
         linear-gradient(180deg, #320812 0%, #180307 100%);
       padding: 80px 24px 32px;
       overflow: hidden;
+    }
+
+    .hero-description {
+      justify-content: center;
+      max-width: 500px;
+      margin-top: 18px;
+      font-size: 1.08rem;
+      line-height: 1.8;
+      color: rgba(250, 247, 242, 0.82);
     }
 
     .footer-glow {
@@ -331,7 +367,7 @@
         radial-gradient(circle at 80% 20%, rgba(201, 150, 58, 0.06) 0%, transparent 40%);
     }
 
-    /* ─── HERO — FULL BLEED DIAGONAL TAKEOVER ─── */
+    /* ─── HERO , FULL BLEED DIAGONAL TAKEOVER ─── */
     .hero {
       position: relative;
       width: 100%;
@@ -341,7 +377,7 @@
       align-items: center;
     }
 
-    /* Background photo — full bleed, no boxes */
+    /* Background photo , full bleed, no boxes */
     .hero-photo {
       position: absolute;
       inset: 0;
@@ -375,7 +411,7 @@
           rgba(0, 0, 0, 0.22) 100%);
     }
 
-    /* Diagonal crimson panel — clips in from left */
+    /* Diagonal crimson panel , clips in from left */
     .hero-panel {
       position: absolute;
       inset: 0;
@@ -395,14 +431,14 @@
 
 
 
-    /* Content — sits above panel and photo */
+    /* Content , sits above panel and photo */
     .hero-content {
       position: relative;
       z-index: 10;
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 20px 60px 80px;
+      padding: 20px 60px 20px 30px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center;
@@ -421,7 +457,7 @@
 
 
 
-    /* Main heading image — untouched */
+    /* Main heading image , untouched */
     .hero-heading-img {
       width: min(480px, 100%);
       height: auto;
@@ -479,7 +515,7 @@
       margin: 4px 0;
     }
 
-    /* Right side — floating event card that sits over the photo */
+    /* Right side , floating event card that sits over the photo */
     .hero-right {
       display: flex;
       flex-direction: column;
@@ -487,7 +523,7 @@
       gap: 16px;
     }
 
-    /* BECON card — now a full clickable link */
+    /* BECON card , now a full clickable link */
     .hero-event-card {
       display: flex;
       flex-direction: column;
@@ -530,6 +566,17 @@
       color: rgb(255, 242, 200);
       letter-spacing: 1px;
       text-transform: uppercase;
+      text-align: center;
+    }
+
+    .becon-card-name2 {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      font-size: 10px;
+      font-weight: 250;
+
+      color: rgb(251, 255, 0);
+      letter-spacing: 1px;
+      text-transform: capitalize;
       text-align: center;
     }
 
@@ -600,7 +647,7 @@
       animation: fade-up 0.7s 0.25s ease both;
     }
 
-    /* Bottom bar — BECON ticker */
+    /* Bottom bar , BECON ticker */
     .hero-ticker {
       position: absolute;
       bottom: 0;
@@ -620,6 +667,39 @@
       animation: ticker-scroll 18s linear infinite;
       white-space: nowrap;
     }
+
+    .intro-headline {
+      padding-left: 2ex;
+      padding-top: 0.5ex;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(54px, 4vw, 64px);
+      font-weight: 900;
+      font-style: italic;
+      color: var(--crimson);
+      line-height: 1.12;
+      margin-bottom: 28px;
+      letter-spacing: -1px;
+      margin-top: 28px;
+    }
+
+    .intro-body p {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      font-size: 19px;
+      padding-left: 4ex;
+      padding-right: 4ex;
+
+      line-height: 1.45;
+      color: var(--ink-muted);
+      margin-bottom: 18px;
+    }
+
+    .intro-body p strong {
+
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+
 
     .hero-ticker-item {
       display: flex;
@@ -676,6 +756,511 @@
       .hero-photo-badge {
         max-width: 100%;
       }
+    }
+
+    /* ── NEW SECTIONS , minimal additions ── */
+    .section-eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .section-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .btn-outline {
+      display: inline-block;
+      padding: 12px 28px;
+      border: 1px solid var(--crimson);
+      color: var(--crimson);
+      font-family: Georgia, serif;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-outline:hover {
+      background: var(--crimson);
+      color: var(--cream);
+    }
+
+    .btn-solid {
+      display: inline-block;
+      padding: 12px 28px;
+      background: var(--crimson);
+      color: var(--cream);
+      font-family: Georgia, serif;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-solid:hover {
+      background: var(--crimson-deep);
+    }
+
+    .btn-outline-gold {
+      display: inline-block;
+      padding: 12px 28px;
+      border: 1px solid rgba(201, 150, 58, 0.4);
+      color: var(--gold);
+      font-family: Georgia, serif;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-outline-gold:hover {
+      background: rgba(201, 150, 58, 0.1);
+      border-color: var(--gold);
+    }
+
+    /* Grid gutters */
+    .grid-2gap {
+      display: grid;
+      gap: 2px;
+      background: rgba(107, 15, 26, 0.08);
+    }
+
+    .grid-3col {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-4col {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .grid-6col {
+      grid-template-columns: repeat(6, 1fr);
+    }
+
+    .grid-2col {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .grid-cell {
+      background: var(--cream);
+    }
+
+    /* Event cards */
+    .ev-card {
+
+      position: relative;
+
+      overflow: hidden;
+
+      min-height: 270px;
+
+      padding: 2.5rem;
+
+      background: #0b0d15;
+
+      border: 1px solid rgba(255, 255, 255, .08);
+
+      transition:
+        transform .35s,
+        border-color .35s,
+        box-shadow .35s,
+        background .35s;
+
+      cursor: pointer;
+
+      isolation: isolate;
+    }
+
+    .ev-card:hover {
+      transform: translateY(-8px);
+      border-color: #fca311;
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, .23),
+        0 0 0 1px rgba(252, 163, 17, .15);
+      background: #14213d;
+    }
+
+    .ev-card::before {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      background:
+
+        linear-gradient(rgba(0, 0, 0, .78),
+          rgba(0, 0, 0, .82));
+
+      z-index: -1;
+
+      transition: .35s;
+    }
+
+    .ev-card::after {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      background-size: cover;
+
+      background-position: center;
+
+      opacity: 0;
+
+      transition: opacity .4s;
+
+      z-index: -2;
+    }
+
+    .becon-card::after {
+
+      background-image: url("Gallery&Logo/becon/becon_2.webp");
+    }
+
+    .freshers-card::after {
+
+      background-image: url("Gallery&Logo/photos/freshers.webp");
+    }
+
+    .external-card::after {
+
+      background-image: url("Gallery&Logo/photos/mun.webp");
+    }
+
+    .ev-card:hover::before {
+      height: 100%;
+    }
+
+    .ev-num {
+      transition: .4s;
+      opacity: .08;
+    }
+
+    .ev-card:hover {
+
+      transform: translateY(-10px);
+
+      border-color: #fca311;
+
+      box-shadow:
+        0 20px 45px rgba(0, 0, 0, .45);
+
+      background: #14213d;
+    }
+
+    .ev-card:hover::after {
+
+      opacity: .18;
+    }
+
+    .ev-card:hover::before {
+
+      background:
+        linear-gradient(rgba(0, 0, 0, .55),
+          rgba(0, 0, 0, .7));
+    }
+
+    .ev-card span.bar {
+
+      position: absolute;
+
+      left: 0;
+
+      top: 0;
+
+      width: 4px;
+
+      height: 0;
+
+      background: #fca311;
+
+      transition: .35s;
+    }
+
+    .ev-card:hover span.bar {
+
+      height: 100%;
+    }
+
+    .ev-card .accent {
+
+      position: absolute;
+
+      left: 0;
+
+      top: 0;
+
+      width: 4px;
+
+      height: 0;
+
+      background: #fca311;
+
+      transition: .35s;
+    }
+
+    .ev-card:hover .accent {
+
+      height: 100%;
+    }
+
+    .ev-title {
+      font-family: Georgia, serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 10px;
+      transition: color 0.2s;
+    }
+
+    .ev-desc {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--ink-muted);
+      transition: color 0.2s;
+    }
+
+    .ev-link {
+
+      margin-top: 2rem;
+
+      color: #fca311;
+
+      font-weight: 600;
+
+      opacity: .75;
+
+      transition: .3s;
+    }
+
+    .ev-card:hover .ev-link {
+
+      opacity: 1;
+
+      transform: translateX(8px);
+    }
+
+
+    /* Tribunal cards */
+    .trib-tag {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .trib-title {
+      font-family: Georgia, serif;
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .trib-excerpt {
+      font-size: 12px;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .trib-byline {
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .trib-card-light {
+      text-decoration: none;
+      background: var(--cream);
+      padding: 32px 28px;
+      display: block;
+      transition: background 0.2s;
+      color: inherit;
+    }
+
+    .trib-card-light:hover {
+      background: var(--cream-dark);
+    }
+
+    .trib-card-dark {
+      text-decoration: none;
+      background: var(--crimson);
+      padding: 32px 28px;
+      display: block;
+    }
+
+    /* FAQ */
+    .faq-item {
+      border-bottom: 1px solid rgba(107, 15, 26, 0.15);
+    }
+
+    .faq-btn {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: Georgia, serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .faq-icon {
+      font-size: 22px;
+      color: var(--crimson);
+      flex-shrink: 0;
+      margin-left: 16px;
+      line-height: 1;
+    }
+
+    .faq-body {
+      display: none;
+      padding-bottom: 20px;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--ink-muted);
+    }
+
+    /* Achieve cards */
+    .ach-card {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 32px 24px;
+      border-bottom: 2px solid var(--gold);
+    }
+
+    .ach-num {
+      font-family: Georgia, serif;
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .ach-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+
+    .ach-desc {
+      font-size: 12px;
+      color: rgba(250, 246, 238, 0.5);
+      line-height: 1.6;
+    }
+
+    /* Gallery preview */
+    .gal-thumb {
+      overflow: hidden;
+      aspect-ratio: 16/10;
+    }
+
+    .gal-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(15%);
+      transition: filter 0.4s, transform 0.4s;
+    }
+
+    .gal-thumb img:hover {
+      filter: grayscale(0%);
+      transform: scale(1.03);
+    }
+
+    @media (max-width: 900px) {
+      .section-wrap {
+        padding: 52px 20px;
+      }
+
+      .grid-3col,
+      .grid-4col,
+      .grid-6col {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .grid-2col {
+        grid-template-columns: 1fr;
+      }
+
+      .ev-card[style*="span 2"] {
+        grid-column: span 1;
+      }
+    }
+
+    @media (max-width: 560px) {
+
+      .grid-3col,
+      .grid-4col,
+      .grid-6col,
+      .grid-2col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .events-grid {
+      display: grid;
+
+      grid-template-columns: 1.3fr 1fr 1fr;
+
+      grid-template-areas:
+        "becon freshers external"
+        "becon workshops weekly";
+
+      gap: 2rem;
+    }
+
+    .becon {
+      grid-area: becon;
+    }
+
+    .freshers {
+      grid-area: freshers;
+    }
+
+    .external {
+      grid-area: external;
+    }
+
+    .workshops {
+      grid-area: workshops;
+    }
+
+    .weekly {
+      grid-area: weekly;
     }
   </style>
 </head>
@@ -756,36 +1341,40 @@
     <!-- 4. All content -->
     <div class="hero-content">
 
-      <!-- LEFT — branding & stats -->
+      <!-- LEFT , branding & stats -->
       <div class="hero-left">
 
 
 
-
+        <h1 class="sr-only">The Debating Society of IIEST Shibpur | Premier Kolkata MUN & IIEST Club</h1>
         <img class="hero-heading-img" src="main2.png" alt="DEBSOC IIEST">
-
-        <p class="hero-quote">
-          <strong>"Can't debate without offending."</strong><br>
+        <p class="hero-description">
+          The Debating Society of IIEST Shibpur is a student-led community dedicated to debate, Model United Nations,
+          public speaking, and intellectual discourse. Since 2009, we've helped students find their voice on the
+          national stage.
         </p>
+
 
 
       </div>
 
-      <!-- RIGHT — BECON card (entire card is the link) -->
+      <!-- RIGHT , BECON card (entire card is the link) -->
       <div class="hero-right">
 
         <!-- BECON card: click anywhere to go to becon.html -->
         <!-- LOGO: replace BECON_LOGO_FILENAME with your actual file, e.g. becon_logo.png -->
+        <h1 class="sr-only">BECON: Bengal Engineering Conclave Of Nations Model UN at IIEST</h1>
         <a href="becon.html" class="hero-event-card">
           <img src="becon_white_logo-removebg.png" alt="BECON" class="becon-card-logo">
           <div class="becon-card-name">Our Flagship MUN</div>
-
+          <div class="becon-card-name2">Click to View Details</div>
         </a>
 
         <!-- Secondary photo badge -->
         <a href="debsoc_iiest_timeline_with_photos.html" class="hero-event-card">
           <img src="Legacy.webp" alt="About Us/Legacy" class="becon-card-logo">
           <div class="becon-card-name">See Our Story</div>
+          <div class="becon-card-name2">Click to find out</div>
 
         </a>
       </div>
@@ -793,6 +1382,401 @@
 
   </section>
   <!-- ═══ END HERO ═══ -->
+
+  <!-- ═══ 1. WHY DEBSOC ═══ -->
+  <section style="background:#0a0b0e;">
+    <div class="section-wrap">
+      <h2 class="intro-headline" style="padding:0;margin-top:0;margin-bottom:24px;color:var(--cream);">Why join us?</h2>
+
+      <div style="overflow:hidden;">
+        <div
+          style="float:right;margin:4px 0 20px 40px;max-width:240px;border:1px solid rgba(245,230,200,0.15);background:rgba(255,255,255,0.02);">
+          <img src="Gallery&Logo/becon/becon_9.webp" alt="DebSoc members debating" loading="lazy"
+            style="width:100%;display:block;filter:grayscale(20%) contrast(105%) brightness(0.85);">
+          <p
+            style="padding:7px 10px;font-size:11px;color:rgba(250,246,238,0.55);line-height:1.5;margin:0;font-style:italic;">
+            DebSoc members at a session, IIEST Shibpur.
+          </p>
+        </div>
+
+        <p
+          style="font-family:Georgia,serif;font-size:16px;line-height:1.75;color:rgba(250,246,238,0.8);margin:0 0 16px;">
+          The <strong style="color:var(--gold-pale);">Debating Society of IIEST Shibpur</strong> (DebSoc) is the
+          institute's official debating and Model United Nations society. Since 2009, it has trained students in
+          parliamentary debate, public speaking, and diplomacy , sending members to competitions across India.
+        </p>
+        <p
+          style="font-family:Georgia,serif;font-size:16px;line-height:1.75;color:rgba(250,246,238,0.8);margin:0 0 16px;">
+          Members compete on the <strong style="color:var(--gold-pale);">national debating circuit</strong>, reaching
+          elimination rounds at IIT, IIM, and open-circuit tournaments. Weekly sessions focus on rhetoric,
+          argumentation, and case-building , skills that carry well beyond debate halls.
+        </p>
+        <p
+          style="font-family:Georgia,serif;font-size:16px;line-height:1.75;color:rgba(250,246,238,0.8);margin:0 0 16px;">
+          Through <strong style="color:var(--gold-pale);">Model United Nations</strong>, members prepare for and compete
+          at conferences across Kolkata and beyond, anchored by BECON , DebSoc's own annual MUN hosted at IIEST Shibpur
+          campus.
+        </p>
+        <p style="font-family:Georgia,serif;font-size:16px;line-height:1.75;color:rgba(250,246,238,0.8);margin:0;">
+          No prior experience is required. Most members start from scratch.
+        </p>
+      </div>
+
+      <div style="clear:both;padding-top:28px;">
+        <a href="aboutus.html" class="btn-outline-gold"
+          style="color:var(--gold-pale); border-color:rgba(245,230,200,0.3);">Learn More →</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ 2. EVENTS ═══ -->
+  <!-- ═══ 2. EVENTS ═══ -->
+  <section style="background:#12141a;">
+    <div class="section-wrap" style="max-width: 1200px; padding: 60px 24px;">
+
+      <h2 class="intro-headline" style="padding:0; margin-top:0; margin-bottom:40px; color:var(--cream);">
+        What we do.
+      </h2>
+
+      <!-- Asymmetric layout mirroring the layout principles of image_c85404.png -->
+      <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 24px; align-items: stretch;">
+
+        <!-- Column 1: Primary Feature (Takes up Left Half / Vertical Span) -->
+        <a href="becon.html"
+          style="grid-column: 1; grid-row: span 2; background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease;"
+          onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.25)'"
+          onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)'">
+          <div style="width: 100%; height: 260px; overflow: hidden; background: #0f1115;">
+            <img src="Gallery&Logo/becon/becon_5.webp" alt="BECON"
+              style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
+          </div>
+          <div
+            style="padding: 24px; flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+            <div style="font-size: 20px; font-weight: 700; color: var(--cream);">
+              BECON
+            </div>
+            <div
+              style="font-size: 11px; background: rgba(255, 255, 255, 0.06); color: rgba(250, 246, 238, 0.75); padding: 3px 8px; border-radius: 4px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">
+              IIEST Shibpur Campus
+            </div>
+            <div
+              style="font-size: 14px; line-height: 1.6; color: rgba(250, 246, 238, 0.7); margin-top: 6px; font-family: Georgia, serif;">
+              Bengal Engineering Conclave of Nations, our flagship annual MUN. 200+ delegates, multiple committees,
+              intense diplomacy across two days.
+            </div>
+            <div style="margin-top: auto; padding-top: 16px; font-size: 13px; color: var(--gold); font-weight: 500;">
+              March · 2 Days
+            </div>
+          </div>
+        </a>
+
+        <!-- Column 2 & 3: Secondary Small Cards Stacked Next to Feature (Half Size) -->
+
+        <!-- Card 02: Freshers -->
+        <a href="events.html"
+          style="background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease;"
+          onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.25)'"
+          onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)'">
+          <div style="width: 100%; height: 130px; overflow: hidden; background: #0f1115;">
+            <img src="photos/freshers.webp" alt="Freshers Debate"
+              style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
+          </div>
+          <div
+            style="padding: 14px; flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+            <div style="font-size: 15px; font-weight: 700; color: var(--cream);">
+              Freshers' Debate
+            </div>
+            <div
+              style="font-size: 10px; background: rgba(255, 255, 255, 0.06); color: rgba(250, 246, 238, 0.75); padding: 2px 6px; border-radius: 3px; font-weight: 500;">
+              Amenities Center
+            </div>
+            <div
+              style="font-size: 12px; line-height: 1.4; color: rgba(250, 246, 238, 0.65); font-family: Georgia, serif; margin-top: 2px;">
+              The first competitive stage for incoming students. No experience required.
+            </div>
+            <div style="margin-top: auto; padding-top: 8px; font-size: 11px; color: var(--gold);">
+              First Sem
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 03: External MUNs -->
+        <a href="events.html"
+          style="background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease;"
+          onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.25)'"
+          onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)'">
+          <div style="width: 100%; height: 130px; overflow: hidden; background: #0f1115;">
+            <img src="photos/external.webp" alt="External MUNs"
+              style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
+          </div>
+          <div
+            style="padding: 14px; flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+            <div style="font-size: 15px; font-weight: 700; color: var(--cream);">
+              External MUNs
+            </div>
+            <div
+              style="font-size: 10px; background: rgba(255, 255, 255, 0.06); color: rgba(250, 246, 238, 0.75); padding: 2px 6px; border-radius: 3px; font-weight: 500;">
+              National Circuit
+            </div>
+            <div
+              style="font-size: 12px; line-height: 1.4; color: rgba(250, 246, 238, 0.65); font-family: Georgia, serif; margin-top: 2px;">
+              We send trained delegations to prestigious multi-city university circuits.
+            </div>
+            <div style="margin-top: auto; padding-top: 8px; font-size: 11px; color: var(--gold);">
+              Year-round
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 04: Workshops -->
+        <a href="events.html"
+          style="background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease;"
+          onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.25)'"
+          onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)'">
+          <div style="width: 100%; height: 130px; overflow: hidden; background: #0f1115;">
+            <img src="photos/workshop.webp" alt="Workshops"
+              style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
+          </div>
+          <div
+            style="padding: 14px; flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+            <div style="font-size: 15px; font-weight: 700; color: var(--cream);">
+              Workshops
+            </div>
+            <div
+              style="font-size: 10px; background: rgba(255, 255, 255, 0.06); color: rgba(250, 246, 238, 0.75); padding: 2px 6px; border-radius: 3px; font-weight: 500;">
+              Seminar Halls
+            </div>
+            <div
+              style="font-size: 12px; line-height: 1.4; color: rgba(250, 246, 238, 0.65); font-family: Georgia, serif; margin-top: 2px;">
+              Dynamic training blocks covering advanced geo-political case mechanics.
+            </div>
+            <div style="margin-top: auto; padding-top: 8px; font-size: 11px; color: var(--gold);">
+              6 Weeks Track
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 05: Weekly Sessions -->
+        <a href="events.html"
+          style="background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, border-color 0.2s ease;"
+          onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.25)'"
+          onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)'">
+          <div style="width: 100%; height: 130px; overflow: hidden; background: #0f1115;">
+            <img src="Gallery&Logo/Amenities.webp" alt="Weekly Sessions"
+              style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
+          </div>
+          <div
+            style="padding: 14px; flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+            <div style="font-size: 15px; font-weight: 700; color: var(--cream);">
+              Weekly Sessions
+            </div>
+            <div
+              style="font-size: 10px; background: rgba(255, 255, 255, 0.06); color: rgba(250, 246, 238, 0.75); padding: 2px 6px; border-radius: 3px; font-weight: 500;">
+              Amenity Centre
+            </div>
+            <div
+              style="font-size: 12px; line-height: 1.4; color: rgba(250, 246, 238, 0.65); font-family: Georgia, serif; margin-top: 2px;">
+              Regular weekend modules where members break down live layout motions.
+            </div>
+            <div style="margin-top: auto; padding-top: 8px; font-size: 11px; color: var(--gold);">
+              Every Week
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+  <!-- ═══ 3. ACHIEVEMENTS ═══ -->
+  <section style="background:#0a0b0e;overflow:hidden;position:relative;">
+    <div
+      style="position:absolute;top:-80px;right:-80px;width:320px;height:320px;background:rgba(245,230,200,0.04);filter:blur(90px);border-radius:50%;pointer-events:none;">
+    </div>
+    <div class="section-wrap" style="position:relative;z-index:2;">
+      <h2 class="intro-headline" style="color:var(--cream);padding:0;margin-top:0;">Our members have represented IIEST
+        across India.</h2>
+
+      <div class="grid-2gap grid-4col" style="background:transparent;">
+        <div class="ach-card" style="border:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.01);">
+          <div class="ach-num" style="color:var(--gold-pale);">[4]</div>
+          <div class="ach-label" style="color:var(--cream);">Intra MUN conducted</div>
+          <div class="ach-desc" style="color:rgba(250,246,238,0.6);">Conducted 4 highly successful internal MUNs in our
+            university</div>
+        </div>
+        <div class="ach-card" style="border:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.01);">
+          <div class="ach-num" style="color:var(--gold-pale);">[7]</div>
+          <div class="ach-label" style="color:var(--cream);">Best Speaker Awards</div>
+          <div class="ach-desc" style="color:rgba(250,246,238,0.6);">Individual speaker recognition at MUNs and debate
+            circuits outside IIEST.</div>
+        </div>
+        <div class="ach-card" style="border:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.01);">
+          <div class="ach-num" style="color:var(--gold-pale);">[3]</div>
+          <div class="ach-label" style="color:var(--cream);">Best Delegation Awards</div>
+          <div class="ach-desc" style="color:rgba(250,246,238,0.6);">Team recognition at competitive MUN conferences
+            across the Kolkata circuit.</div>
+        </div>
+        <div class="ach-card" style="border:1px solid rgba(245,230,200,0.2);background:rgba(245,230,200,0.03);">
+          <div class="ach-num" style="color:var(--gold-pale);">[1]</div>
+          <div class="ach-label" style="color:var(--cream);">BECON Editions Convened</div>
+          <div class="ach-desc" style="color:rgba(250,246,238,0.65);">Hosting one of Eastern India's latest and highly
+            anticipated student-run MUN conferences.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:36px;">
+        <a href="debsoc_iiest_timeline_with_photos.html" class="btn-outline-gold"
+          style="color:var(--gold-pale); border-color:rgba(245,230,200,0.3);">See Achievements →</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ 4. TEAM ═══ -->
+
+
+
+  <!-- ═══ 5. TRIBUNAL ═══ -->
+  <section style="background:#0a0b0e;border-top:1px solid rgba(245,230,200,0.05);">
+    <div class="section-wrap">
+      <h2 class="intro-headline" style="color:var(--cream);padding:0;margin-top:0;margin-bottom:48px;">Ideas published.
+        Arguments made.</h2>
+
+      <div class="grid-2gap grid-3col" style="background:transparent;">
+        <a href="tribunal.html" class="trib-card-dark"
+          style="background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.05);">
+          <div class="trib-tag" style="color:var(--gold-pale);">Tribunal</div>
+          <div class="trib-title" style="color:var(--cream);">"Feature - EU Designates Iran’s IRGC as
+            Terrorist Organization"</div>
+          <div class="trib-excerpt" style="color:rgba(250,246,238,0.65);">More than 30,000 people may have
+            been killed in Iran in the latest wave
+            of repression, according to some
+            estimates as human rights groups
+            say a “revenge” campaign has been
+            unleashed by the regime.
+            The Iranian Foreign Ministry
+            condemned the decision, saying the
+            move was “illegal, political...</div>
+          <div class="trib-byline" style="color:rgba(245,230,200,0.5);">Karan Mandal · [Jan 2026]</div>
+        </a>
+        <a href="tribunal.html" class="trib-card-dark"
+          style="background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.05);">
+          <div class="trib-tag" style="color:var(--gold-pale);">Analysis</div>
+          <div class="trib-title" style="color:var(--cream);">Are there really any "Friends" in "Realpolitik"?</div>
+          <div class="trib-excerpt" style="color:rgba(250,246,238,0.65);">Why did Russia not support India during Op
+            Sindoor? Why did Russia ask India tocease hostilities and return to the negotiating table when India had
+            clearly expressed that we had no intention of doing so. Is this how afriend acts? The answer...</div>
+          <div class="trib-byline" style="color:rgba(245,230,200,0.5);">Anurag Rajeshkumar Singh · [December 2025]</div>
+        </a>
+        <a href="tribunal.html" class="trib-card-dark"
+          style="background:rgba(245,230,200,0.03);border:1px solid rgba(245,230,200,0.15);">
+          <div class="trib-tag" style="color:var(--gold-pale);">Feature</div>
+          <div class="trib-title" style="color:var(--cream);">"The Gruesome cost of the Sudan Crisis
+            The Human Cost"</div>
+          <div class="trib-excerpt" style="color:rgba(250,246,238,0.7);">Sudan’s war between the SAF and
+            RSF has shattered its social fabric,
+            turning Khartoum into a landscape of
+            checkpoints and sniper fire. The
+            conflict has created the world’s
+            largest displacement crisis, with over
+            11 million uprooted.</div>
+          <div class="trib-byline" style="color:var(--gold-pale);">Team Debsoc · [December 2025]</div>
+        </a>
+      </div>
+
+      <div style="margin-top:36px;">
+        <a href="tribunal.html" class="btn-outline-gold"
+          style="color:var(--gold-pale); border-color:rgba(245,230,200,0.3);">Read Tribunal →</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ 6. GALLERY PREVIEW ═══ -->
+  <section style="background:#12141a;">
+    <div class="section-wrap">
+      <h2 class="intro-headline" style="color:var(--cream);padding:0;margin-top:0;margin-bottom:32px;">In frame.</h2>
+
+      <div class="grid-2gap grid-2col">
+        <div class="gal-thumb" style="border:1px solid rgba(250,246,238,0.05);"><img
+            src="Gallery&Logo/becon/becon_2.webp" alt="DebSoc event" loading="lazy"></div>
+        <div class="gal-thumb" style="border:1px solid rgba(250,246,238,0.05);"><img
+            src="Gallery&Logo/becon/becon_5.webp" alt="DebSoc event" loading="lazy"></div>
+        <div class="gal-thumb" style="border:1px solid rgba(250,246,238,0.05);"><img src="Gallery&Logo/Amenities.webp"
+            alt="DebSoc event" loading="lazy"></div>
+        <div class="gal-thumb" style="border:1px solid rgba(250,246,238,0.05);"><img src="photos/2024_1.webp"
+            alt="DebSoc event" loading="lazy"></div>
+      </div>
+
+      <div style="margin-top:36px;">
+        <a href="gallery.html" class="btn-outline-gold"
+          style="color:var(--gold-pale); border-color:rgba(245,230,200,0.3);">View Gallery →</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ 7. FAQ ═══ -->
+  <section style="background:#0a0b0e;">
+    <div class="section-wrap" style="max-width:760px;">
+      <h2 class="intro-headline" style="color:var(--cream);padding:0;margin-top:0;margin-bottom:48px;">Questions we
+        actually get asked.</h2>
+
+      <div style="border-top:1px solid rgba(245,230,200,0.15);">
+        <div class="faq-item" style="border-bottom:1px solid rgba(245,230,200,0.08);">
+          <button class="faq-btn" onclick="toggleFaq(this)" style="color:var(--cream);">Do I need debating experience to
+            join?<span class="faq-icon" style="color:var(--gold-pale);">+</span></button>
+          <div class="faq-body" style="color:rgba(250,246,238,0.7);">No. Most members join with no formal debate
+            experience. Weekly sessions are structured to bring newcomers up to speed, and the Freshers' Debate is
+            specifically designed for first-timers.</div>
+        </div>
+        <div class="faq-item" style="border-bottom:1px solid rgba(245,230,200,0.08);">
+          <button class="faq-btn" onclick="toggleFaq(this)" style="color:var(--cream);">Can first-year students
+            join?<span class="faq-icon" style="color:var(--gold-pale);">+</span></button>
+          <div class="faq-body" style="color:rgba(250,246,238,0.7);">Yes , first years are actively encouraged to join
+            early. The earlier you start, the more time you have to develop before representing IIEST externally.</div>
+        </div>
+        <div class="faq-item" style="border-bottom:1px solid rgba(245,230,200,0.08);">
+          <button class="faq-btn" onclick="toggleFaq(this)" style="color:var(--cream);">What is the selection
+            process?<span class="faq-icon" style="color:var(--gold-pale);">+</span></button>
+          <div class="faq-body" style="color:rgba(250,246,238,0.7);">There is an induction at the start of each academic
+            year. For external competitions and BECON committees, members are selected based on performance in internal
+            sessions and trials.</div>
+        </div>
+        <div class="faq-item" style="border-bottom:1px solid rgba(245,230,200,0.08);">
+          <button class="faq-btn" onclick="toggleFaq(this)" style="color:var(--cream);">Is MUN mandatory?<span
+              class="faq-icon" style="color:var(--gold-pale);">+</span></button>
+          <div class="faq-body" style="color:rgba(250,246,238,0.7);">No. DebSoc covers both parliamentary debating and
+            MUN. You can focus on one or both , many members specialise in debate while helping run BECON behind the
+            scenes.</div>
+        </div>
+        <div class="faq-item" style="border-bottom:1px solid rgba(245,230,200,0.08);">
+          <button class="faq-btn" onclick="toggleFaq(this)" style="color:var(--cream);">How often do sessions meet?<span
+              class="faq-icon" style="color:var(--gold-pale);">+</span></button>
+          <div class="faq-body" style="color:rgba(250,246,238,0.7);">Weekly, during the academic term. Sessions
+            typically run on weekends and last around 90 minutes to two hours. Consistent attendance is how you improve.
+          </div>
+        </div>
+        <div class="faq-item" style="border-bottom:1px solid rgba(245,230,200,0.08);">
+          <button class="faq-btn" onclick="toggleFaq(this)" style="color:var(--cream);">Can non-IIEST students
+            participate in BECON?<span class="faq-icon" style="color:var(--gold-pale);">+</span></button>
+          <div class="faq-body" style="color:rgba(250,246,238,0.7);">Yes. BECON is an open conference. Delegates from
+            colleges and universities across India are welcome to register. Visit the BECON page for registration
+            details.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    function toggleFaq(btn) {
+      const body = btn.nextElementSibling;
+      const icon = btn.querySelector('.faq-icon');
+      const isOpen = body.style.display === 'block';
+      document.querySelectorAll('.faq-body').forEach(b => b.style.display = 'none');
+      document.querySelectorAll('.faq-icon').forEach(s => s.textContent = '+');
+      if (!isOpen) { body.style.display = 'block'; icon.textContent = '−'; }
+    }
+  </script>
 
 
   <!-- FOOTER -->
@@ -848,7 +1832,7 @@
         </div>
       </div>
       <div class="pt-8 border-t text-center" style="border-color:rgba(218,165,32,0.2);">
-        <p class="text-sm opacity-60" style="color:#FAF7F2;">© 2025 The Debating Society. All rights reserved.</p>
+        <p class="text-sm opacity-60" style="color:#FAF7F2;">© 2026 The Debating Society. All rights reserved.</p>
       </div>
     </div>
   </footer>
