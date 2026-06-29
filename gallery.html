@@ -11,10 +11,10 @@
     --crimson-deep: #4a0816;
     --gold: #C9963A;
     --gold-light: #e8b84b;
-    --cream: #FAF6EE;
-    --cream-dark: #f0e9db;
-    --ink: #1e0a08;
-    --ink-muted: #5c3a30;
+    --cream: #0B0C10;
+    --cream-dark: #12131C;
+    --ink: #FAF7F2;
+    --ink-muted: #D1D5DB;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -22,125 +22,112 @@
   body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
 
   /* ── NAV ── */
- /* ── NAV SHARED STYLES ── */
-/* ── NAV ── */
-nav {
-  position: sticky; top: 0; width: 100%; z-index: 1000;
-  background: linear-gradient(135deg, rgba(128,0,32,0.96) 0%, rgba(92,0,23,0.96) 100%);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(201,150,58,0.14);
-  transition: transform 0.3s ease;
-}
-nav.nav-hidden { transform: translateY(-100%); }
+  nav {
+    position: sticky; top: 0; width: 100%; z-index: 1000;
+    background: linear-gradient(135deg, rgba(128,0,32,0.96) 0%, rgba(92,0,23,0.96) 100%);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(201,150,58,0.14);
+  }
 
-.nav-inner {
-  max-width: 1200px; margin: 0 auto;
-  height: 48px; padding: 0 20px;
-  display: flex; align-items: center; justify-content: space-between;
-}
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    height: 48px; padding: 0 20px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
 
-.nav-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 15px; font-weight: 700; letter-spacing: 0.06em;
-  color: #FAF7F2; text-decoration: none;
-  flex-shrink: 0; opacity: 0.9;
-  transition: opacity 0.2s;
-}
-.nav-logo:hover { opacity: 1; }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px; font-weight: 700; letter-spacing: 0.06em;
+    color: #FAF7F2; text-decoration: none;
+    flex-shrink: 0; opacity: 0.9;
+    transition: opacity 0.2s;
+  }
+  .nav-logo:hover { opacity: 1; }
 
-.nav-links {
-  display: flex; align-items: center; gap: 2px;
-}
+  .nav-links { display: flex; align-items: center; gap: 2px; }
 
-.nav-btn {
-  color: rgba(250,247,242,0.8);
-  font-size: 12px; font-weight: 500;
-  padding: 6px 13px; border-radius: 6px;
-  text-decoration: none;
-  transition: background 0.2s, color 0.2s;
-  border: none; background: transparent;
-  cursor: pointer; font-family: inherit;
-  letter-spacing: 0.03em; white-space: nowrap;
-}
-.nav-btn:hover, .nav-btn.active {
-  background: rgba(250,247,242,0.11);
-  color: #FAF7F2;
-}
-.nav-events-btn {
-  display: flex; align-items: center; gap: 4px;
-}
+  .nav-btn {
+    color: rgba(250,247,242,0.8);
+    font-size: 12px; font-weight: 500;
+    padding: 6px 13px; border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    border: none; background: transparent;
+    cursor: pointer; font-family: inherit;
+    letter-spacing: 0.03em; white-space: nowrap;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    background: rgba(250,247,242,0.11);
+    color: #FAF7F2;
+  }
+  .nav-events-btn { display: flex; align-items: center; gap: 4px; }
 
-.nav-contact-btn {
-  padding: 7px 18px; border-radius: 999px;
-  font-size: 12px; font-weight: 700;
-  background: #DAA520; color: #800020;
-  text-decoration: none; margin-left: 6px;
-  transition: background 0.2s, transform 0.15s;
-  white-space: nowrap;
-}
-.nav-contact-btn:hover { background: #e8c040; transform: translateY(-1px); }
+  .nav-contact-btn {
+    padding: 7px 18px; border-radius: 999px;
+    font-size: 12px; font-weight: 700;
+    background: #DAA520; color: #800020;
+    text-decoration: none; margin-left: 6px;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .nav-contact-btn:hover { background: #e8c040; transform: translateY(-1px); }
 
-/* Events dropdown */
-.nav-events-wrap { position: relative; }
-.nav-events-drop {
-  position: absolute; left: 0; top: calc(100% + 8px);
-  width: 160px; border-radius: 10px;
-  background: #FAF6EE;
-  box-shadow: 0 10px 36px rgba(0,0,0,0.18);
-  opacity: 0; visibility: hidden;
-  transform: translateY(-6px);
-  transition: all 0.2s ease;
-  z-index: 100; overflow: hidden;
-}
-.nav-events-wrap:hover .nav-events-drop,
-.nav-events-wrap:focus-within .nav-events-drop {
-  opacity: 1; visibility: visible; transform: translateY(0);
-}
-.nav-events-drop a {
-  display: block; padding: 11px 16px;
-  font-size: 12px; font-weight: 500;
-  color: #6B0F1A; text-decoration: none;
-  transition: background 0.15s;
-}
-.nav-events-drop a:hover { background: #f0e9db; }
+  /* Dropdown setup */
+  .nav-events-wrap { position: relative; }
+  .nav-events-drop {
+    position: absolute; left: 0; top: calc(100% + 8px);
+    width: 160px; border-radius: 10px;
+    background: var(--cream-dark);
+    box-shadow: 0 10px 36px rgba(0,0,0,0.4);
+    opacity: 0; visibility: hidden;
+    transform: translateY(-6px);
+    transition: all 0.2s ease;
+    z-index: 100; overflow: hidden;
+  }
+  .nav-events-wrap:hover .nav-events-drop,
+  .nav-events-wrap:focus-within .nav-events-drop {
+    opacity: 1; visibility: visible; transform: translateY(0);
+  }
+  .nav-events-drop a {
+    display: block; padding: 11px 16px;
+    font-size: 12px; font-weight: 500;
+    color: #FAF7F2; text-decoration: none;
+    transition: background 0.15s;
+  }
+  .nav-events-drop a:hover { background: rgba(255,255,255,0.06); }
 
-/* Hamburger */
-.nav-hamburger {
-  display: none; flex-direction: column;
-  gap: 5px; cursor: pointer;
-  padding: 8px; background: none; border: none;
-}
-.nav-hamburger span {
-  display: block; width: 22px; height: 2px;
-  background: rgba(250,246,238,0.85); border-radius: 2px;
-  transition: all 0.25s ease;
-}
-.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-hamburger.open span:nth-child(2) { opacity: 0; }
-.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  /* Hamburger Toggle Structure */
+  .nav-hamburger {
+    display: none; flex-direction: column;
+    gap: 5px; cursor: pointer;
+    padding: 8px; background: none; border: none;
+  }
+  .nav-hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: rgba(250,246,238,0.85); border-radius: 2px;
+    transition: all 0.25s ease;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Mobile menu */
-.nav-mobile {
-  display: none; padding: 8px 0 14px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-.nav-mobile.open { display: block; }
+  .nav-mobile {
+    display: none; padding: 8px 0 14px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    background: #800020;
+  }
+  .nav-mobile.open { display: block; }
 
-.mob-link {
-  display: block; padding: 12px 20px;
-  color: rgba(250,247,242,0.8);
-  text-decoration: none; font-size: 14px; font-weight: 500;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  transition: color 0.15s;
-}
-.mob-link:hover, .mob-link.active { color: #DAA520; }
-.mob-link-contact { color: #DAA520 !important; }
+  .mob-link {
+    display: block; padding: 12px 20px;
+    color: rgba(250,247,242,0.8);
+    text-decoration: none; font-size: 14px; font-weight: 500;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: color 0.15s;
+  }
+  .mob-link:hover, .mob-link.active { color: #DAA520; }
+  .mob-link-contact { color: #DAA520 !important; }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 768px) {
-  .nav-links { display: none; }
-  .nav-hamburger { display: flex; }
-}
   /* ── PAGE HEADER ── */
   .page-header {
     padding-top: 44px;
@@ -157,44 +144,24 @@ nav.nav-hidden { transform: translateY(-100%); }
       radial-gradient(ellipse 70% 60% at 80% -10%, rgba(201,150,58,0.18), transparent),
       radial-gradient(ellipse 40% 50% at 10% 110%, rgba(201,150,58,0.10), transparent);
   }
-  /* subtle noise grain */
-  .page-header::after {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    opacity: 0.35; pointer-events: none;
-  }
   .page-header-inner { position: relative; z-index: 2; padding-top: 72px; padding-bottom: 8px; }
-  .page-header-eyebrow {
-    font-size: 9.5px; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--gold); font-weight: 600; margin-bottom: 18px;
-    opacity: 0.9;
-  }
+  
   .page-header h1 {
     font-family: 'Playfair Display', serif;
     font-size: clamp(52px, 8vw, 88px); font-weight: 900;
-    color: var(--cream); line-height: 0.95; letter-spacing: -3px;
+    color: #FAF7F2; line-height: 0.95; letter-spacing: -3px;
     margin-bottom: 0;
   }
-  .header-rule {
-    width: 48px; height: 2px;
-    background: linear-gradient(to right, var(--gold), transparent);
-    margin: 22px auto 0;
-    border-radius: 2px;
-  }
-  .header-wave {
-    position: absolute; bottom: -1px; left: 0; right: 0;
-    line-height: 0;
-  }
+  .header-wave { position: absolute; bottom: -1px; left: 0; right: 0; line-height: 0; }
   .header-wave svg { display: block; width: 100%; }
 
   /* ── FILTER BAR ── */
   .filter-bar {
     background: var(--cream);
     padding: 0 20px;
-    position: sticky; top: 44px; z-index: 50;
-    border-bottom: 1px solid rgba(112,12,12,0.07);
-    box-shadow: 0 2px 16px rgba(30,10,8,0.04);
+    position: sticky; top: 48px; z-index: 50;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.3);
   }
   .filter-bar-inner {
     max-width: 1160px; margin: 0 auto;
@@ -202,12 +169,12 @@ nav.nav-hidden { transform: translateY(-100%); }
     overflow-x: auto; scrollbar-width: none;
   }
   .filter-bar-inner::-webkit-scrollbar { display: none; }
+  
   .filter-tab {
     flex-shrink: 0;
     padding: 14px 20px 15px;
     font-size: 10.5px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
     color: var(--ink-muted); background: transparent; border: none;
-    border-bottom: 2px solid transparent;
     cursor: pointer; transition: all 0.2s ease;
     white-space: nowrap; position: relative;
   }
@@ -217,8 +184,7 @@ nav.nav-hidden { transform: translateY(-100%); }
     background: var(--gold); border-radius: 2px 2px 0 0;
     transform: scaleX(0); transition: transform 0.22s ease;
   }
-  .filter-tab:hover { color: var(--crimson); }
-  .filter-tab.active { color: var(--crimson); }
+  .filter-tab:hover, .filter-tab.active { color: var(--gold-light); }
   .filter-tab.active::after { transform: scaleX(1); }
 
   /* ── GALLERY BODY ── */
@@ -228,10 +194,7 @@ nav.nav-hidden { transform: translateY(-100%); }
   .year-group { margin-bottom: 72px; display: none; }
   .year-group.visible { display: block; }
 
-  .year-label {
-    display: flex; align-items: center; gap: 16px;
-    margin-bottom: 20px;
-  }
+  .year-label { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
   .year-label-text {
     font-family: 'Playfair Display', serif;
     font-size: 11px; font-weight: 700; letter-spacing: 4px;
@@ -243,68 +206,38 @@ nav.nav-hidden { transform: translateY(-100%); }
   }
   .year-label-count {
     font-size: 9.5px; letter-spacing: 1.5px; text-transform: uppercase;
-    color: rgba(92,58,48,0.38); white-space: nowrap;
+    color: var(--ink-muted); opacity: 0.5; white-space: nowrap;
   }
 
   /* ── RESPONSIVE GRID ── */
-  .photo-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-  }
+  .photo-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 
-  /* make every 5th image span 2 cols for variety when there are enough */
-  .photo-grid.has-many .photo-item:nth-child(5n+1) {
-    grid-column: span 2;
-  }
+  .photo-grid.has-many .photo-item:nth-child(5n+1) { grid-column: span 2; aspect-ratio: 16/9; }
 
   .photo-item {
     position: relative; overflow: hidden;
     border-radius: 4px;
-    background: rgba(112,12,12,0.07);
+    background: rgba(255,255,255,0.03);
     cursor: pointer;
     aspect-ratio: 4/3;
-    /* GPU layer */
     will-change: transform;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
   }
-
-  /* wide spans are taller */
-  .photo-grid.has-many .photo-item:nth-child(5n+1) {
-    aspect-ratio: 16/9;
-  }
+  .photo-item.in-view { opacity: 1; transform: translateY(0); }
 
   .photo-item img {
     width: 100%; height: 100%; object-fit: cover;
-    display: block;
+    display: block; position: relative; z-index: 1;
     transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   .photo-item:hover img { transform: scale(1.07); }
 
-  /* shimmer placeholder */
-  .photo-item::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(90deg,
-      rgba(112,12,12,0.06) 25%,
-      rgba(201,150,58,0.08) 50%,
-      rgba(112,12,12,0.06) 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.8s infinite;
-    z-index: 0;
-  }
-  .photo-item img { position: relative; z-index: 1; }
-  .photo-item img.loaded + .photo-item::before,
-  .photo-item.img-loaded::before { animation: none; opacity: 0; }
-
-  @keyframes shimmer {
-    from { background-position: 200% 0; }
-    to   { background-position: -200% 0; }
-  }
-
   /* overlay */
   .photo-item-overlay {
     position: absolute; inset: 0; z-index: 2;
-    background: linear-gradient(to top, rgba(20,4,8,0.65) 0%, rgba(20,4,8,0.15) 50%, transparent 100%);
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
     opacity: 0; transition: opacity 0.32s ease;
     display: flex; align-items: flex-end; justify-content: flex-end;
     padding: 14px;
@@ -317,14 +250,12 @@ nav.nav-hidden { transform: translateY(-100%); }
     transform: scale(0.8) rotate(-15deg);
     transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1);
   }
-  .photo-item:hover .photo-item-expand {
-    transform: scale(1) rotate(0deg);
-  }
+  .photo-item:hover .photo-item-expand { transform: scale(1) rotate(0deg); }
 
   /* ── LIGHTBOX ── */
   .lightbox {
     position: fixed; inset: 0; z-index: 9999;
-    background: rgba(8,1,3,0.97);
+    background: rgba(4,4,6,0.98);
     display: flex; align-items: center; justify-content: center;
     opacity: 0; visibility: hidden;
     transition: opacity 0.28s ease, visibility 0.28s ease;
@@ -339,26 +270,19 @@ nav.nav-hidden { transform: translateY(-100%); }
   .lightbox-img-wrap img {
     max-width: 92vw; max-height: 84vh;
     object-fit: contain; border-radius: 3px;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.8);
     transform: scale(0.93); opacity: 0;
     transition: transform 0.32s cubic-bezier(0.34,1.2,0.64,1), opacity 0.28s ease;
   }
   .lightbox.open .lightbox-img-wrap img { transform: scale(1); opacity: 1; }
 
-  /* top bar */
   .lightbox-top {
-    position: fixed; top: 0; left: 0; right: 0;
-    height: 60px;
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 20px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
-    z-index: 10001;
+    padding: 0 20px; z-index: 10001;
   }
-  .lightbox-counter-top {
-    font-size: 11px; letter-spacing: 2px;
-    color: rgba(255,255,255,0.5);
-    font-family: 'DM Sans', sans-serif;
-  }
+  .lightbox-counter-top { font-size: 11px; letter-spacing: 2px; color: rgba(255,255,255,0.5); }
+  
   .lightbox-close {
     width: 40px; height: 40px; border-radius: 50%;
     background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
@@ -368,62 +292,46 @@ nav.nav-hidden { transform: translateY(-100%); }
   }
   .lightbox-close:hover { background: rgba(255,255,255,0.16); transform: rotate(90deg); }
 
-  /* side nav */
   .lightbox-nav {
     position: fixed; top: 50%; transform: translateY(-50%);
     width: 48px; height: 48px; border-radius: 50%;
     background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
     color: rgba(255,255,255,0.75); cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s; font-size: 20px;
-    z-index: 10001;
+    transition: all 0.2s; font-size: 20px; z-index: 10001;
   }
-  .lightbox-nav:hover {
-    background: rgba(201,150,58,0.22);
-    border-color: rgba(201,150,58,0.45);
-    color: white;
-  }
+  .lightbox-nav:hover { background: rgba(201,150,58,0.22); border-color: rgba(201,150,58,0.45); color: white; }
   .lightbox-prev { left: 16px; }
   .lightbox-next { right: 16px; }
 
-  /* thumbnail strip */
   .lightbox-strip {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    height: 72px;
+    position: fixed; bottom: 0; left: 0; right: 0; height: 72px;
     display: flex; align-items: center; justify-content: center; gap: 5px;
-    padding: 0 16px;
-    background: linear-gradient(to top, rgba(0,0,0,0.55), transparent);
-    overflow-x: auto; scrollbar-width: none;
-    z-index: 10001;
+    padding: 0 16px; overflow-x: auto; scrollbar-width: none; z-index: 10001;
   }
   .lightbox-strip::-webkit-scrollbar { display: none; }
   .lightbox-thumb {
     flex-shrink: 0; width: 52px; height: 40px;
     border-radius: 3px; overflow: hidden; cursor: pointer;
-    opacity: 0.45; border: 1.5px solid transparent;
-    transition: all 0.2s;
+    opacity: 0.45; border: 1.5px solid transparent; transition: all 0.2s;
   }
   .lightbox-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .lightbox-thumb.active { opacity: 1; border-color: var(--gold); }
-  .lightbox-thumb:hover { opacity: 0.85; }
 
   /* ── FOOTER ── */
-  .site-footer {
-    background: linear-gradient(180deg, #300810 0%, #160205 100%);
-    padding: 64px 24px 32px;
-  }
+  .site-footer { background: linear-gradient(180deg, #300810 0%, #160205 100%); padding: 64px 24px 32px; }
   .footer-inner { max-width: 1160px; margin: 0 auto; }
   .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; }
   .footer-brand { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
   .footer-logo { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; }
-  .footer-brand-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--cream); }
+  .footer-brand-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: #FAF7F2; }
   .footer-brand-sub { font-size: 9.5px; letter-spacing: 2px; text-transform: uppercase; color: rgba(250,246,238,0.4); margin-top: 4px; }
   .footer-desc { font-size: 13px; line-height: 1.9; color: rgba(250,246,238,0.55); max-width: 360px; }
   .footer-col-heading { font-size: 9.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
   .footer-links-list { list-style: none; }
   .footer-links-list li+li { margin-top: 11px; }
   .footer-links-list a { color: rgba(250,246,238,0.55); text-decoration: none; font-size: 13px; transition: color 0.2s; }
-  .footer-links-list a:hover { color: var(--cream); }
+  .footer-links-list a:hover { color: #FAF7F2; }
   .social-icons { display: flex; gap: 10px; }
   .social-icon {
     width: 40px; height: 40px; border-radius: 10px;
@@ -434,17 +342,6 @@ nav.nav-hidden { transform: translateY(-100%); }
   .social-icon:hover { background: rgba(201,150,58,0.14); transform: translateY(-2px); border-color: rgba(201,150,58,0.4); }
   .footer-divider { height: 1px; background: linear-gradient(to right, transparent, rgba(201,150,58,0.18), transparent); margin: 44px 0 22px; }
   .footer-bottom { text-align: center; font-size: 11px; letter-spacing: 1px; color: rgba(250,246,238,0.3); }
-
-  /* ── SCROLL REVEAL ── */
-  .photo-item {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  .photo-item.in-view {
-    opacity: 1;
-    transform: translateY(0);
-  }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
@@ -457,7 +354,6 @@ nav.nav-hidden { transform: translateY(-100%); }
     .footer-grid { grid-template-columns: 1fr; gap: 36px; }
     .nav-links { display: none; }
     .nav-hamburger { display: flex; }
-    .nav-inner { justify-content: space-between; }
     .lightbox-strip { height: 60px; }
     .lightbox-thumb { width: 42px; height: 32px; }
     .lightbox-nav { width: 38px; height: 38px; font-size: 16px; }
@@ -465,31 +361,25 @@ nav.nav-hidden { transform: translateY(-100%); }
     .lightbox-next { right: 8px; }
   }
   @media (max-width: 420px) {
-    .photo-grid { grid-template-columns: 1fr 1fr; gap: 5px; }
     .gallery-body { padding: 36px 14px 80px; }
     .page-header h1 { letter-spacing: -2px; }
   }
 
-  /* reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .photo-item { transition: none; opacity: 1; transform: none; }
-    .photo-item img { transition: none; }
-    .lightbox-img-wrap img { transition: none; }
+    .photo-item img, .lightbox-img-wrap img { transition: none; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<!-- NAV -->
 <nav id="navbar">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">DebSoc</a>
 
-    <!-- DESKTOP -->
     <div class="nav-links">
-      <a href="index.html"       class="nav-btn">Home</a>
-      <a href="aboutus.html"     class="nav-btn">About Us</a>
+      <a href="index.html" class="nav-btn">Home</a>
+      <a href="aboutus.html" class="nav-btn">About Us</a>
       <div class="nav-events-wrap">
         <button class="nav-btn nav-events-btn">Events
           <svg width="10" height="10" fill="currentColor" viewBox="0 0 20 20">
@@ -501,46 +391,40 @@ nav.nav-hidden { transform: translateY(-100%); }
           <a href="events.html">Main Events</a>
         </div>
       </div>
-      <a href="gallery.html"     class="nav-btn active">Gallery</a>
-      <a href="tribunal.html"    class="nav-btn">Tribunal</a>
-      <a href="teampage.html"    class="nav-btn">Team</a>
+      <a href="gallery.html" class="nav-btn active">Gallery</a>
+      <a href="tribunal.html" class="nav-btn">Tribunal</a>
+      <a href="teampage.html" class="nav-btn">Team</a>
       <a href="contactpage.html" class="nav-contact-btn">Contact</a>
     </div>
 
-    <!-- HAMBURGER -->
     <button class="nav-hamburger" id="hamburger-btn" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </div>
 
-  <!-- MOBILE MENU -->
   <div class="nav-mobile" id="mobile-menu">
-    <a href="index.html"       class="mob-link">Home</a>
-    <a href="aboutus.html"     class="mob-link">About Us</a>
-    <a href="becon.html"       class="mob-link">BECON #1.0</a>
-    <a href="events.html"      class="mob-link">Main Events</a>
-    <a href="gallery.html"     class="mob-link active">Gallery</a>
-    <a href="tribunal.html"    class="mob-link">Tribunal</a>
-    <a href="teampage.html"    class="mob-link">Team</a>
+    <a href="index.html" class="mob-link">Home</a>
+    <a href="aboutus.html" class="mob-link">About Us</a>
+    <a href="becon.html" class="mob-link">BECON #1.0</a>
+    <a href="events.html" class="mob-link">Main Events</a>
+    <a href="gallery.html" class="mob-link active">Gallery</a>
+    <a href="tribunal.html" class="mob-link">Tribunal</a>
+    <a href="teampage.html" class="mob-link">Team</a>
     <a href="contactpage.html" class="mob-link mob-link-contact">Contact</a>
   </div>
 </nav>
 
-<!-- PAGE HEADER -->
 <div class="page-header">
   <div class="page-header-inner">
-   
     <h1>Gallery</h1>
-    
   </div>
   <div class="header-wave">
     <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path d="M0 48 C360 0 1080 0 1440 48 L1440 48 L0 48Z" fill="#FAF6EE"/>
+      <path d="M0 48 C360 0 1080 0 1440 48 L1440 48 L0 48Z" fill="#0B0C10"/>
     </svg>
   </div>
 </div>
 
-<!-- FILTER BAR -->
 <div class="filter-bar">
   <div class="filter-bar-inner">
     <button class="filter-tab active" data-filter="all">All</button>
@@ -560,10 +444,8 @@ nav.nav-hidden { transform: translateY(-100%); }
   </div>
 </div>
 
-<!-- GALLERY BODY -->
 <div class="gallery-body">
 
-  <!-- BECON -->
   <div class="year-group visible" data-group="becon">
     <div class="year-label">
       <span class="year-label-text">BECON 2026</span>
@@ -582,7 +464,6 @@ nav.nav-hidden { transform: translateY(-100%); }
     </div>
   </div>
 
-  <!-- 2026 -->
   <div class="year-group visible" data-group="2026">
     <div class="year-label">
       <span class="year-label-text">2026</span>
@@ -597,7 +478,6 @@ nav.nav-hidden { transform: translateY(-100%); }
     </div>
   </div>
 
-  <!-- 2025 -->
   <div class="year-group visible" data-group="2025">
     <div class="year-label">
       <span class="year-label-text">2025</span>
@@ -612,7 +492,6 @@ nav.nav-hidden { transform: translateY(-100%); }
     </div>
   </div>
 
-  <!-- 2024 -->
   <div class="year-group visible" data-group="2024">
     <div class="year-label">
       <span class="year-label-text">2024</span>
@@ -625,13 +504,11 @@ nav.nav-hidden { transform: translateY(-100%); }
     </div>
   </div>
 
-  <!-- 2023 -->
   <div class="year-group visible" data-group="2023">
     <div class="year-label"><span class="year-label-text">2023</span><div class="year-label-line"></div><span class="year-label-count">1 photo</span></div>
     <div class="photo-grid"><div class="photo-item" data-src="photos/2023_1.webp"><img src="photos/2023_1.webp" alt="2023" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-expand"><svg width="14" height="14" stroke="white" stroke-width="2.2" fill="none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div></div>
   </div>
 
-  <!-- 2020 -->
   <div class="year-group visible" data-group="2020">
     <div class="year-label"><span class="year-label-text">2020</span><div class="year-label-line"></div><span class="year-label-count">2 photos</span></div>
     <div class="photo-grid">
@@ -640,7 +517,6 @@ nav.nav-hidden { transform: translateY(-100%); }
     </div>
   </div>
 
-  <!-- 2019 -->
   <div class="year-group visible" data-group="2019">
     <div class="year-label"><span class="year-label-text">2019</span><div class="year-label-line"></div><span class="year-label-count">2 photos</span></div>
     <div class="photo-grid">
@@ -649,7 +525,6 @@ nav.nav-hidden { transform: translateY(-100%); }
     </div>
   </div>
 
-  <!-- 2018 -->
   <div class="year-group visible" data-group="2018">
     <div class="year-label"><span class="year-label-text">2018</span><div class="year-label-line"></div><span class="year-label-count">2 photos</span></div>
     <div class="photo-grid">
@@ -658,13 +533,11 @@ nav.nav-hidden { transform: translateY(-100%); }
     </div>
   </div>
 
-  <!-- 2017 -->
   <div class="year-group visible" data-group="2017">
     <div class="year-label"><span class="year-label-text">2017</span><div class="year-label-line"></div><span class="year-label-count">1 photo</span></div>
     <div class="photo-grid"><div class="photo-item" data-src="photos/2017_1.webp"><img src="photos/2017_1.webp" alt="2017" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-expand"><svg width="14" height="14" stroke="white" stroke-width="2.2" fill="none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div></div>
   </div>
 
-  <!-- 2016 -->
   <div class="year-group visible" data-group="2016">
     <div class="year-label"><span class="year-label-text">2016</span><div class="year-label-line"></div><span class="year-label-count">2 photos</span></div>
     <div class="photo-grid">
@@ -673,27 +546,23 @@ nav.nav-hidden { transform: translateY(-100%); }
     </div>
   </div>
 
-  <!-- 2015 -->
   <div class="year-group visible" data-group="2015">
     <div class="year-label"><span class="year-label-text">2015</span><div class="year-label-line"></div><span class="year-label-count">1 photo</span></div>
     <div class="photo-grid"><div class="photo-item" data-src="photos/2015_1.webp"><img src="photos/2015_1.webp" alt="2015" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-expand"><svg width="14" height="14" stroke="white" stroke-width="2.2" fill="none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div></div>
   </div>
 
-  <!-- 2014 -->
   <div class="year-group visible" data-group="2014">
     <div class="year-label"><span class="year-label-text">2014</span><div class="year-label-line"></div><span class="year-label-count">1 photo</span></div>
     <div class="photo-grid"><div class="photo-item" data-src="photos/2014_1.webp"><img src="photos/2014_1.webp" alt="2014" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-expand"><svg width="14" height="14" stroke="white" stroke-width="2.2" fill="none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div></div>
   </div>
 
-  <!-- 2013 -->
   <div class="year-group visible" data-group="2013">
     <div class="year-label"><span class="year-label-text">2013</span><div class="year-label-line"></div><span class="year-label-count">1 photo</span></div>
     <div class="photo-grid"><div class="photo-item" data-src="photos/2013_1.webp"><img src="photos/2013_1.webp" alt="2013" loading="lazy"><div class="photo-item-overlay"><div class="photo-item-expand"><svg width="14" height="14" stroke="white" stroke-width="2.2" fill="none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div></div>
   </div>
 
-</div><!-- /gallery-body -->
+</div>
 
-<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <div class="lightbox-top">
     <span class="lightbox-counter-top" id="lightboxCounter"></span>
@@ -707,7 +576,6 @@ nav.nav-hidden { transform: translateY(-100%); }
   <div class="lightbox-strip" id="lightboxStrip"></div>
 </div>
 
-<!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-grid">
@@ -753,7 +621,6 @@ nav.nav-hidden { transform: translateY(-100%); }
 </footer>
 
 <script>
-  // Nav: hamburger toggle
 const hamburgerBtn = document.getElementById('hamburger-btn');
 const mobileMenu  = document.getElementById('mobile-menu');
 hamburgerBtn.addEventListener('click', () => {
@@ -768,9 +635,6 @@ document.addEventListener('click', e => {
   }
 });
 
-// Nav: hide on scroll down
-
-
   // ── SCROLL REVEAL ──
   let observer;
   function initObserver() {
@@ -779,7 +643,6 @@ document.addEventListener('click', e => {
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
           const el = entry.target;
-          // staggered by DOM order within grid
           const siblings = Array.from(el.closest('.photo-grid').querySelectorAll('.photo-item'));
           const idx = siblings.indexOf(el);
           setTimeout(() => el.classList.add('in-view'), idx * 45);
@@ -838,11 +701,9 @@ document.addEventListener('click', e => {
       lbImg.style.transform = 'scale(1)';
     };
     document.getElementById('lightboxCounter').textContent = (currentIndex + 1) + ' / ' + allItems.length;
-    // update strip active
     document.querySelectorAll('.lightbox-thumb').forEach((t, i) => {
       t.classList.toggle('active', i === currentIndex);
     });
-    // scroll strip to active
     const activeThumb = document.querySelectorAll('.lightbox-thumb')[currentIndex];
     if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
   }
@@ -857,7 +718,6 @@ document.addEventListener('click', e => {
     showLightboxImage();
   }
 
-  // attach click on all items
   document.querySelectorAll('.photo-item').forEach(item => {
     item.addEventListener('click', () => openLightbox(item));
   });
@@ -877,7 +737,6 @@ document.addEventListener('click', e => {
     if (e.key === 'Escape') closeLightbox();
   });
 
-  // ── TOUCH SWIPE on lightbox ──
   let touchStartX = 0;
   document.getElementById('lightbox').addEventListener('touchstart', e => {
     touchStartX = e.changedTouches[0].clientX;

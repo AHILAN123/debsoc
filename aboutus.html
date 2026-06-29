@@ -9,16 +9,12 @@
  
   <style>
     :root {
-      --crimson: #700c0c;
+      --cream: #0B0C10;
+      --ink-muted: #D1D5DB;
+      --gold-pale: #F3E5AB;
       --crimson-deep: #700c0c;
-      --crimson-soft: #8c1425;
       --gold: #C9963A;
       --gold-light: #e8b84b;
-      --gold-pale: #f5e6c8;
-      --cream: #FAF6EE;
-      --cream-dark: #f0e9db;
-      --ink: #1e0a08;
-      --ink-muted: #5c3a30;
     }
 
     * {
@@ -30,7 +26,6 @@
     body {
       font-family: Georgia, 'Times New Roman', Times, serif;
       background: var(--cream);
-      color: var(--ink);
       overflow-x: hidden;
     }
 
@@ -61,104 +56,20 @@
     }
 
     /* ── PAGE HERO ── */
-    /* ── PAGE HERO ── */
-.page-hero {
-  background: var(--crimson-deep);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 440px;
-}
-
-.page-hero img {
-  max-width: 750px;
-  width: 95%;
-  height: auto;
-  display: block;
-  object-fit: contain;
-}
-
-    /* ── ORNATE DIVIDER ── */
-    .ornate-divider {
+    .page-hero {
+      background: var(--crimson-deep);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 14px;
-      margin: 72px auto 56px;
-      max-width: 560px;
-      padding: 0 24px;
+      min-height: 440px;
     }
 
-    .ornate-divider-line {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-    }
-
-    .ornate-divider-center {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-
-    .ornate-divider-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--crimson);
-      letter-spacing: 1px;
-      white-space: nowrap;
-    }
-
-    .ornate-diamond {
-      width: 8px;
-      height: 8px;
-      background: var(--gold);
-      transform: rotate(45deg);
-      flex-shrink: 0;
-    }
-
-    /* ══ WHAT WE DO STAT STRIP ══ */
-    .stat-strip {
-      background: var(--crimson-deep);
-      padding: 48px 32px;
-    }
-
-    .stat-strip-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-    }
-
-    .stat-item {
-      text-align: center;
-      padding: 12px 24px;
-      border-right: 1px solid rgba(201, 150, 58, 0.22);
-    }
-
-    .stat-item:last-child {
-      border-right: none;
-    }
-
-    .stat-number {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(42px, 5vw, 64px);
-      font-weight: 900;
-      color: var(--gold);
-      line-height: 1;
+    .page-hero img {
+      max-width: 750px;
+      width: 95%;
+      height: auto;
       display: block;
-      margin-bottom: 8px;
-    }
-
-    .stat-label {
-      font-size: 11px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: rgba(250, 246, 238, 0.6);
-      font-weight: 500;
+      object-fit: contain;
     }
 
     /* ══ INTRO EDITORIAL SPLIT ══ */
@@ -176,33 +87,13 @@
       margin-bottom: 80px;
     }
 
-    .intro-text-block {}
-
-    .intro-eyebrow {
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--gold);
-      font-weight: 600;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .intro-eyebrow::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to right, var(--gold-pale), transparent);
-    }
-
     .intro-headline {
       font-family: 'Times New Roman', Times, serif;
       font-size: clamp(34px, 4vw, 52px);
       font-weight: 900;
       font-style: italic;
-      color: var(--crimson);
+      text-align: center;
+      color: white;
       line-height: 1.12;
       margin-bottom: 28px;
       letter-spacing: -1px;
@@ -218,120 +109,7 @@
     }
 
     .intro-body p strong {
-      color: var(--ink);
-      font-weight: 600;
-    }
-
-
-
-
-    /* ══ WHAT YOU'LL DO HERE FEATURE CARDS ══ */
-    .features-section {
-      background: linear-gradient(to bottom, var(--cream-dark), var(--cream));
-      padding: 80px 32px;
-    }
-
-    .features-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      border: 1px solid rgba(112, 12, 12, 0.1);
-      border-radius: 6px;
-      overflow: hidden;
-      margin-top: 48px;
-    }
-
-    .feature-card {
-      padding: 44px 36px;
-      background: var(--cream);
-      border-right: 1px solid rgba(112, 12, 12, 0.08);
-      transition: background 0.25s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .feature-card:last-child {
-      border-right: none;
-    }
-
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--gold);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.35s ease;
-    }
-
-    .feature-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .feature-card:hover {
-      background: #fdf8f2;
-    }
-
-    .feature-icon {
-      width: 48px;
-      height: 48px;
-      margin-bottom: 24px;
-      color: var(--crimson);
-      opacity: 0.8;
-    }
-
-    .feature-title {
-      font-family: 'Times New Roman', Times, serif;
-      font-size: 21px;
-      font-weight: 700;
-      color: var(--crimson);
-      margin-bottom: 14px;
-      line-height: 1.2;
-    }
-
-    .feature-desc {
-      font-family: Georgia, 'Times New Roman', Times, serif;
-      font-size: 17px;
-      line-height: 1.75;
-      color: var(--ink-muted);
-    }
-
-    .story-section {
-      max-width: 800px;
-      margin: 0 auto 80px;
-      padding: 0 32px;
-    }
-
-    .story-image-stack {
-      position: relative;
-      height: 520px;
-    }
-
-
-
-
-
-
-   
-
-    .story-text p {
-      font-family: Georgia, 'Times New Roman', Times, serif;
-      font-size: 19px;
-      line-height: 1.9;
-      color: var(--ink-muted);
-      margin-bottom: 22px;
-    }
-
-    .story-text p strong {
-      color: var(--ink);
+      color: var(--gold-pale);
       font-weight: 600;
     }
 
@@ -373,7 +151,7 @@
       font-size: clamp(32px, 5vw, 52px);
       font-weight: 900;
       font-style: italic;
-      color: var(--cream);
+      color: #FFFFFF;
       line-height: 1.15;
       margin-bottom: 14px;
     }
@@ -451,7 +229,7 @@
       padding: 17px 36px;
       border-radius: 4px;
       background: transparent;
-      color: var(--cream);
+      color: #FFFFFF;
       font-family: 'DM Sans', sans-serif;
       font-size: 13px;
       font-weight: 600;
@@ -477,164 +255,12 @@
       transform: translateX(3px);
     }
 
-    /* ── FOOTER ── */
-    .site-footer {
-      position: relative;
-      background: radial-gradient(circle at top right, rgba(201, 150, 58, 0.08), transparent 30%), linear-gradient(180deg, #320812 0%, #180307 100%);
-      padding: 80px 24px 32px;
-      overflow: hidden;
-    }
-
-    .footer-glow {
-      position: absolute;
-      top: -120px;
-      right: -120px;
-      width: 300px;
-      height: 300px;
-      background: rgba(201, 150, 58, 0.08);
-      filter: blur(90px);
-      border-radius: 50%;
-    }
-
-    .footer-inner {
-      position: relative;
-      z-index: 2;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 60px;
-    }
-
-    .footer-brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 22px;
-    }
-
-    .footer-logo {
-      width: 52px;
-      height: 52px;
-      border-radius: 10px;
-      object-fit: cover;
-    }
-
-    .footer-brand-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 30px;
-      font-weight: 700;
-      color: var(--cream);
-      line-height: 1;
-      letter-spacing: 1px;
-    }
-
-    .footer-brand-sub {
-      margin-top: 4px;
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(250, 246, 238, 0.55);
-    }
-
-    .footer-desc {
-      max-width: 420px;
-      font-size: 14px;
-      line-height: 1.9;
-      color: rgba(250, 246, 238, 0.68);
-    }
-
-    .footer-col-heading {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 20px;
-    }
-
-    .footer-links-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .footer-links-list li+li {
-      margin-top: 12px;
-    }
-
-    .footer-links-list a {
-      color: rgba(250, 246, 238, 0.65);
-      text-decoration: none;
-      font-size: 14px;
-      transition: all 0.2s ease;
-    }
-
-    .footer-links-list a:hover {
-      color: var(--cream);
-      padding-left: 4px;
-    }
-
-    .social-icons {
-      display: flex;
-      gap: 14px;
-    }
-
-    .social-icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(201, 150, 58, 0.18);
-      color: var(--gold);
-      backdrop-filter: blur(10px);
-      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-      text-decoration: none;
-    }
-
-    .social-icon:hover {
-      transform: translateY(-3px);
-      background: rgba(201, 150, 58, 0.12);
-      border-color: rgba(201, 150, 58, 0.4);
-    }
-
-    .footer-divider {
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(201, 150, 58, 0.25), transparent);
-      margin: 50px 0 24px;
-    }
-
-    .footer-bottom {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      font-size: 12px;
-      letter-spacing: 1px;
-      color: rgba(250, 246, 238, 0.42);
-    }
-
-    .footer-bottom-dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: rgba(201, 150, 58, 0.4);
-    }
-
     /* ── ANIMATIONS ── */
     @keyframes fade-up {
       from {
         opacity: 0;
         transform: translateY(28px);
       }
-
       to {
         opacity: 1;
         transform: translateY(0);
@@ -658,56 +284,13 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
-      .stat-strip-inner {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .stat-item:nth-child(2) {
-        border-right: none;
-      }
-
       .intro-grid {
         grid-template-columns: 1fr;
         gap: 48px;
       }
-
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .feature-card {
-        border-right: none;
-        border-bottom: 1px solid rgba(112, 12, 12, 0.08);
-      }
-
-      .story-section {
-        grid-template-columns: 1fr;
-        gap: 48px;
-      }
-
-      .story-image-stack {
-        height: 340px;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 42px;
-      }
     }
 
     @media (max-width: 640px) {
-      .stat-strip-inner {
-        grid-template-columns: 1fr;
-      }
-
-      .stat-item {
-        padding: 10px 12px;
-      }
-
-      .intro-collage {
-        grid-template-rows: 200px 130px 160px;
-      }
-
       .cta-buttons {
         flex-direction: column;
         align-items: stretch;
@@ -723,7 +306,6 @@
 
 <body>
 
-  <!-- NAV -->
   <nav class="w-full px-4 md:px-6 py-3 sticky top-0 z-50 backdrop-blur-md transition-all"
        style="background: linear-gradient(135deg, rgba(128, 0, 32, 0.95) 0%, rgba(92, 0, 23, 0.95) 100%);">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 lg:gap-4">
@@ -740,7 +322,6 @@
         </div>
       </div>
 
-      <!-- DESKTOP MENU -->
       <div class="hidden md:flex items-center gap-6">
         <a href="index.html" class="nav-btn">Home</a>
         <a href="aboutus.html" class="nav-btn active-nav">About Us</a>
@@ -767,12 +348,11 @@
 
         <a href="contactpage.html"
           class="px-5 py-2 rounded-full text-sm font-semibold transition hover:scale-105"
-          style="background:#DAA520;color:#800020;">
+          style="background:#DAA520;color:#700c0c;">
           Contact
         </a>
       </div>
 
-      <!-- HAMBURGER -->
       <button id="hamburger-btn" onclick="toggleMobileMenu()" class="md:hidden text-white">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -781,7 +361,6 @@
 
     </div>
 
-    <!-- MOBILE MENU -->
     <div id="mobile-menu"
       class="hidden absolute top-full right-4 mt-2 w-56 flex flex-col p-2 gap-1 rounded-xl shadow-2xl border border-white/10 md:hidden z-50"
       style="background:#800020;">
@@ -794,26 +373,20 @@
       <a href="teampage.html" class="px-4 py-3 text-sm text-white">Team</a>
       <a href="contactpage.html"
         class="block px-4 py-3 text-sm mt-2 rounded-full text-center"
-        style="background:#DAA520;color:#800020;margin:0 1rem;">
+        style="background:#DAA520;color:#700c0c;margin:0 1rem;">
         Contact
       </a>
     </div>
 
   </nav>
 
-  <!-- ══ PAGE HERO ══ -->
   <section class="page-hero fade-in">
     <img src="Gallery&Logo/debating_society.png" alt="The Debating Society of IIEST Shibpur">
   </section>
 
-
-  <!-- ══ OUR STORY INTRO SPLIT ══ -->
-
-
   <div class="intro-section">
     <div class="intro-grid">
 
-      <!-- Text -->
       <div class="intro-text-block reveal">
 
         <h2 class="intro-headline">Why Debsoc?&nbsp;</h2>
@@ -863,9 +436,6 @@
         </div>
       </div>
 
-
-
-      <!-- ══ CTA EXPLORE MORE ══ -->
       <div class="cta-section">
         <div class="cta-inner reveal">
           <div class="cta-eyebrow">Go Deeper</div>
@@ -895,8 +465,8 @@
           </div>
         </div>
       </div>
+      
       <div class="intro-text-block reveal">
-
         <h2 class="intro-headline">To The Batch of 2030</h2>
         <div class="intro-body">
           <p>
@@ -945,28 +515,27 @@
       </div>
       
 
-      <!-- FOOTER -->
-       <footer class="px-6 py-12" style="background-color:#1a0008;">
+      <footer class="px-6 py-12" style="background-color:#1a0008;">
     <div class="max-w-6xl mx-auto">
       <div class="grid md:grid-cols-4 gap-8 mb-8">
         <div class="md:col-span-2">
           <div class="flex items-center gap-3 mb-4">
             <img src="debsoclogo.webp" alt="DEBSOC Logo" class="h-12 w-auto object-contain">
-            <span class="font-display font-bold text-lg footer-heading" style="color:#FAF7F2;">DebSoc<span class="dot-right"></span></span>
+            <span class="font-display font-bold text-lg" style="color:#FFFFFF;">DebSoc</span>
           </div>
           <p class="text-sm opacity-70 max-w-xs" style="color:#FAF7F2;">A community dedicated to the synthesis of technical precision and humanistic inquiry. Through debates and formal discourse, we equip the scholars with the cognitive agility to dissect multifaceted issues and defend truth through reasoned conviction.</p>
         </div>
         <div>
-          <h4 class="font-semibold mb-4 footer-heading" style="color:#DAA520;">Quick Links<span class="dot-right"></span></h4>
+          <h4 class="font-semibold mb-4" style="color:#DAA520;">Quick Links</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="index.html"    class="opacity-70 hover:opacity-100 transition-opacity" style="color:#FAF7F2;">Home</a></li>
-            <li><a href="events.html"      class="opacity-70 hover:opacity-100 transition-opacity" style="color:#FAF7F2;">Events</a></li>
-            <li><a href="tribunal.html"    class="opacity-70 hover:opacity-100 transition-opacity" style="color:#FAF7F2;">Tribunal</a></li>
+            <li><a href="index.html" class="opacity-70 hover:opacity-100 transition-opacity" style="color:#FAF7F2;">Home</a></li>
+            <li><a href="events.html" class="opacity-70 hover:opacity-100 transition-opacity" style="color:#FAF7F2;">Events</a></li>
+            <li><a href="tribunal.html" class="opacity-70 hover:opacity-100 transition-opacity" style="color:#FAF7F2;">Tribunal</a></li>
             <li><a href="contactpage.html" class="opacity-70 hover:opacity-100 transition-opacity" style="color:#FAF7F2;">Contact</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="font-semibold mb-4 footer-heading" style="color:#DAA520;">Connect<span class="dot-right"></span></h4>
+          <h4 class="font-semibold mb-4" style="color:#DAA520;">Connect</h4>
           <div class="flex gap-3">
             <a href="https://www.instagram.com/debsoc_iiests" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all" style="background-color:rgba(218,165,32,0.2);">
               <svg class="w-5 h-5" fill="#DAA520" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -978,7 +547,7 @@
         </div>
       </div>
       <div class="pt-8 border-t text-center" style="border-color:rgba(218,165,32,0.2);">
-        <p class="text-sm opacity-60" style="color:#FAF7F2;">© 2025 The Debating Society. All rights reserved.</p>
+        <p class="text-sm opacity-60" style="color:#FAF7F2;">© 2026 The Debating Society. All rights reserved.</p>
       </div>
     </div>
   </footer>

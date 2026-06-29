@@ -8,111 +8,90 @@
 <style>
   :root {
     --crimson: #800020;
-    --deep: #1a0008;
     --gold: #DAA520;
-    --cream: #FAF7F2;
+    --cream: #0B0C10;
+    --card-bg: #12131C;
+    --text-primary: #FAF7F2;
+    --text-muted: #D1D5DB;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--cream); font-family: 'Inter', sans-serif; color: #000; overflow-x: hidden; }
+  body { background: var(--cream); font-family: 'Inter', sans-serif; color: var(--text-primary); overflow-x: hidden; }
 
   /* ── NAV ── */
   nav {
     position: sticky; top: 0; width: 100%; z-index: 1000;
-    background: rgb(255, 125, 125);
+    background: linear-gradient(135deg, rgba(128,0,32,0.96) 0%, rgba(92,0,23,0.96) 100%);
     backdrop-filter: blur(18px);
-    border-bottom: 4px solid rgb(255, 255, 255);
-    transition: transform 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
-  nav.nav-hidden { transform: translateY(-100%); }
   .nav-inner {
     max-width: 1200px; margin: 0 auto;
     height: 48px; padding: 0 20px;
     display: flex; align-items: center; justify-content: space-between;
   }
   .nav-logo {
-    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 15px; font-weight: 700; letter-spacing: 0.06em;
     color: #FAF7F2; text-decoration: none; flex-shrink: 0; opacity: 0.9;
-    transition: opacity 0.2s;
   }
-  .nav-logo:hover { opacity: 1; }
   .nav-links { display: flex; align-items: center; gap: 2px; }
   .nav-btn {
     color: rgba(250,247,242,0.8); font-size: 12px; font-weight: 500;
     padding: 6px 13px; border-radius: 6px; text-decoration: none;
     transition: background 0.2s, color 0.2s; border: none; background: transparent;
-    cursor: pointer; font-family:Georgia, 'Times New Roman', Times, serif; letter-spacing: 0.03em; white-space: nowrap;
+    cursor: pointer; font-family: Georgia, 'Times New Roman', Times, serif; letter-spacing: 0.03em; white-space: nowrap;
   }
-  .nav-btn:hover, .nav-btn.active { background: rgba(250,247,242,0.11); color: #FAF7F2; }
+  .nav-btn:hover { background: rgba(250,247,242,0.11); color: #FAF7F2; }
   .nav-events-btn { display: flex; align-items: center; gap: 4px; }
- 
-  .nav-contact-btn:hover { background: #e8c040; transform: translateY(-1px); }
+  
   .nav-events-wrap { position: relative; }
   .nav-events-drop {
     position: absolute; left: 0; top: calc(100% + 8px); width: 160px;
     border-radius: 10px; background: #FAF6EE;
-    box-shadow: 0 10px 36px rgba(0,0,0,0.18);
+    box-shadow: 0 10px 36px rgba(0,0,0,0.5);
     opacity: 0; visibility: hidden; transform: translateY(-6px);
     transition: all 0.2s ease; z-index: 100; overflow: hidden;
   }
-  .nav-events-wrap:hover .nav-events-drop,
-  .nav-events-wrap:focus-within .nav-events-drop { opacity: 1; visibility: visible; transform: translateY(0); }
+  .nav-events-wrap:hover .nav-events-drop { opacity: 1; visibility: visible; transform: translateY(0); }
   .nav-events-drop a {
     display: block; padding: 11px 16px; font-size: 12px; font-weight: 500;
     color: #6B0F1A; text-decoration: none; transition: background 0.15s;
   }
   .nav-events-drop a:hover { background: #f0e9db; }
+  
   .nav-hamburger {
     display: none; flex-direction: column; gap: 5px; cursor: pointer;
     padding: 8px; background: none; border: none;
   }
   .nav-hamburger span {
     display: block; width: 22px; height: 2px;
-    background: rgba(250,246,238,0.85); border-radius: 2px; transition: all 0.25s ease;
+    background: rgba(250,246,238,0.85); border-radius: 2px;
   }
-  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-  .nav-mobile { display: none; padding: 8px 0 14px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .nav-mobile { display: none; padding: 8px 0 14px; border-top: 1px solid rgba(255,255,255,0.06); background: rgba(92,0,23,0.98); }
   .nav-mobile.open { display: block; }
   .mob-link {
     display: block; padding: 12px 20px; color: rgba(250,247,242,0.8);
     text-decoration: none; font-size: 14px; font-weight: 500;
-    border-bottom: 1px solid rgba(255,255,255,0.05); transition: color 0.15s;
   }
-  .mob-link:hover, .mob-link.active { color: #DAA520; }
-  .mob-link-contact { color: #DAA520 !important; }
   @media (max-width: 768px) { .nav-links { display: none; } .nav-hamburger { display: flex; } }
-
-  /* ── HERO — timeline style ── */
-  
-  .page-top-meta {
-    font-family:Georgia, 'Times New Roman', Times, serif;
-    margin-top: 1rem;
-    font-size: 1rem; font-weight: 500; letter-spacing: 0.04em;
-    color: rgba(0,0,0,0.49);
-  }
 
   /* ── COMMITTEE TABS ── */
   .tab-bar {
     display: flex; gap: 0;
-    border-bottom: 4px solid #000;
-    background: #fff;
+    border-bottom: 4px solid var(--text-primary);
+    background: var(--cream);
     position: sticky; top: 48px; z-index: 100;
   }
   .tab-btn {
-    font-family: 'Inter', sans-serif;
-    font-size: 11px; font-weight: 900;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 16px 32px;
-    border: none; border-right: 2px solid #000;
-    background: transparent; color: #000;
+    font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 900;
+    letter-spacing: 0.12em; text-transform: uppercase; padding: 16px 32px;
+    border: none; border-right: 2px solid var(--text-primary);
+    background: transparent; color: var(--text-primary);
     cursor: pointer; transition: background 0.15s;
   }
-  .tab-btn:last-child { border-right: none; }
-  .tab-btn:hover { background: #f4f4f4; }
-  .tab-btn.active { background: #000; color: #fff; }
+  .tab-btn:hover { background: rgba(255,255,255,0.05); }
+  .tab-btn.active { background: var(--text-primary); color: var(--cream); }
 
   /* ── COMMITTEE SECTION ── */
   .committee-section { display: none; padding: 0 2rem 5rem; }
@@ -120,95 +99,73 @@
 
   /* ── COMMITTEE HEADER ── */
   .committee-header {
-    padding: 3rem 0 2rem;
-    border-bottom: 4px solid #000;
-    margin-bottom: 3rem;
-   
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 3rem 0 2rem; border-bottom: 4px solid var(--text-primary); margin-bottom: 3rem;
     display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px;
   }
   .committee-name {
     font-size: clamp(3rem, 7vw, 5.5rem);
-    font-weight: 900; letter-spacing: -0.05em; color: #000; line-height: 0.9;
+    font-weight: 900; letter-spacing: -0.05em; color: var(--text-primary); line-height: 0.9;
   }
-  .committee-name span { color: var(--crimson); }
+  .committee-name span { color: #e8b84b; }
   .committee-desc {
     font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em;
-    text-transform: uppercase; color: rgba(0,0,0,0.4);
+    text-transform: uppercase; color: var(--text-muted); opacity: 0.6;
   }
 
-  /* ── PHOTO STRIP — identical to timeline ── */
-  .photo-strip-wrap {
-    margin: 0 -2rem 3rem;
-    padding: 0 2rem;
-  }
+  /* ── PHOTO STRIP ── */
+  .photo-strip-wrap { margin: 0 -2rem 3rem; padding: 0 2rem; }
   .photo-strip {
-    display: flex; gap: 1.5rem;
-    overflow-x: auto; -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 1.25rem;
-    scrollbar-width: none;
+    display: flex; gap: 1.5rem; overflow-x: auto;
+    padding-bottom: 1.25rem; scrollbar-width: none;
   }
   .photo-strip::-webkit-scrollbar { display: none; }
   .photo-slide {
     flex-shrink: 0; width: 340px; height: 240px;
-    border: 3px solid #000;
-    box-shadow: 6px 6px 0 #000;
-    scroll-snap-align: start;
-    overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 3px solid var(--text-primary);
+    box-shadow: 6px 6px 0 rgba(255,255,255,0.15);
+    overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease;
     background: #111;
   }
   .photo-slide:hover {
     transform: translate(-4px, -4px);
-    box-shadow: 10px 10px 0 #000;
+    box-shadow: 10px 10px 0 rgba(255,255,255,0.2);
   }
   .photo-slide img {
     width: 100%; height: 100%; object-fit: cover; display: block;
-    filter: grayscale(100%) contrast(1.15);
-    transition: filter 0.35s ease;
   }
-  .photo-slide:hover img { filter: grayscale(0%) contrast(1); }
   .photo-hint {
     font-size: 0.78rem; font-weight: 900; text-transform: uppercase;
-    letter-spacing: 0.08em; color: #000;
-    margin-top: 0.75rem; text-align: right;
+    letter-spacing: 0.08em; color: var(--text-muted); margin-top: 0.75rem; text-align: right;
   }
 
   /* ── AWARD TIERS ── */
   .award-tier { margin-bottom: 3rem; }
-
   .tier-label {
-    font-size: 0.7rem; font-weight: 900; letter-spacing: 0.15em;
-    text-transform: uppercase;
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 1rem; color: #000;
+    font-size: 0.7rem; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; color: var(--text-primary);
   }
   .tier-label-pill {
     padding: 4px 14px; font-size: 0.65rem; font-weight: 900;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    border: 2px solid #000; white-space: nowrap;
+    letter-spacing: 0.12em; text-transform: uppercase; border: 2px solid var(--text-primary); white-space: nowrap;
   }
-  .tier-label-pill.gold   { background: #FFD700; color: #000; border-color: #000; }
-  .tier-label-pill.silver { background: #C0C0C0; color: #000; border-color: #000; }
-  .tier-label-pill.bronze { background: var(--gold); color: #000; border-color: #000; }
-  .tier-label-pill.crimson{ background: var(--crimson); color: #fff; border-color: #000; }
-  .tier-label-pill.purple { background: #5b21b6; color: #fff; border-color: #000; }
-  .tier-label-pill.blue   { background: #0369a1; color: #fff; border-color: #000; }
-  .tier-label::after { content: ''; flex: 1; height: 2px; background: #000; }
+  .tier-label-pill.gold   { background: #FFD700; color: #000; }
+  .tier-label-pill.silver { background: #C0C0C0; color: #000; }
+  .tier-label-pill.bronze { background: var(--gold); color: #000; }
+  .tier-label-pill.crimson{ background: var(--crimson); color: #fff; }
+  .tier-label-pill.purple { background: #5b21b6; color: #fff; }
+  .tier-label-pill.blue   { background: #0369a1; color: #fff; }
+  .tier-label::after { content: ''; flex: 1; height: 2px; background: var(--text-primary); }
 
-  /* ── AWARD CARD — brutalist ── */
+  /* ── AWARD CARD ── */
   .award-card {
-    background: #fff; border: 2px solid #000;
-    box-shadow: 5px 5px 0 #000;
-    padding: 18px 22px;
-    display: flex; align-items: flex-start; gap: 16px;
-    margin-bottom: 10px;
+    background: var(--card-bg); border: 2px solid var(--text-primary);
+    box-shadow: 5px 5px 0 rgba(255,255,255,0.1); padding: 18px 22px;
+    display: flex; align-items: flex-start; gap: 16px; margin-bottom: 10px;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .award-card:hover {
     transform: translate(-3px, -3px);
-    box-shadow: 8px 8px 0 #000;
+    box-shadow: 8px 8px 0 rgba(255,255,255,0.15);
   }
   .award-card.gold-card   { border-left: 8px solid #FFD700; }
   .award-card.silver-card { border-left: 8px solid #C0C0C0; }
@@ -216,72 +173,48 @@
   .award-card.crimson-card{ border-left: 8px solid var(--crimson); }
 
   .award-icon {
-    width: 42px; height: 42px; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; border: 2px solid #000;
-    background: #f4f4f4;
+    width: 42px; height: 42px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 22px; border: 2px solid var(--text-primary); background: rgba(255,255,255,0.05);
   }
   .award-body { flex: 1; }
-  .award-rank {
-    font-size: 0.62rem; font-weight: 900; letter-spacing: 0.14em;
-    text-transform: uppercase; color: rgba(0,0,0,0.45);
-    margin-bottom: 4px;
-  }
-  .award-name {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 1.1rem; font-weight: 700; color: #000; line-height: 1.3;
-  }
-  .award-role {
-    font-size: 0.78rem; font-weight: 500; color: rgba(0,0,0,0.45);
-    margin-top: 3px; letter-spacing: 0.03em;
-  }
+  .award-rank { font-size: 0.62rem; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); opacity: 0.6; margin-bottom: 4px; }
+  .award-name { font-family: Georgia, 'Times New Roman', Times, serif; font-size: 1.1rem; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+  .award-role { font-size: 0.78rem; font-weight: 500; color: var(--text-muted); margin-top: 3px; letter-spacing: 0.03em; }
 
   /* ── MENTION GROUP ── */
   .mention-group {
-    background: #fff; border: 2px solid #000;
-    box-shadow: 5px 5px 0 #000; padding: 20px 22px;
-    margin-bottom: 10px;
+    background: var(--card-bg); border: 2px solid var(--text-primary);
+    box-shadow: 5px 5px 0 rgba(255,255,255,0.1); padding: 20px 22px; margin-bottom: 10px;
   }
-  .mention-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 0;
-  }
+  .mention-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
   .mention-name {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 0.95rem; color: #000;
-    padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.08);
-    display: flex; align-items: center; gap: 10px;
+    font-family: Georgia, 'Times New Roman', Times, serif; font-size: 0.95rem; color: var(--text-primary);
+    padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px;
   }
-  .mention-name:last-child { border-bottom: none; }
-  .mention-name::before {
-    content: ''; width: 6px; height: 6px; flex-shrink: 0;
-    background: #000; border-radius: 0;
-  }
+  .mention-name::before { content: ''; width: 6px; height: 6px; flex-shrink: 0; background: var(--gold); }
 
   /* ── FOOTER ── */
-  .site-footer { background: #1a0008; padding: 64px 24px 32px; }
+  .site-footer { background: #1a0008; padding: 64px 24px 32px; border-top: 1px solid rgba(255,255,255,0.05); }
   .footer-inner { max-width: 1160px; margin: 0 auto; }
-  .footer-grid { font-family: 'Times New Roman', Times, serif;display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; }
+  .footer-grid { font-family: 'Times New Roman', Times, serif; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; }
   .footer-brand { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
   .footer-logo { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; }
-  .footer-brand-name { font-family: Georgia, 'Times New Roman', Times, serif; font-size: 26px; font-weight: 700; color: var(--cream); }
-  .footer-brand-sub { font-family: 'Times New Roman', Times, serif;font-size: 9.5px; letter-spacing: 2px; text-transform: uppercase; color: rgba(250,246,238,0.4); margin-top: 4px; }
-  .footer-desc {font-family: 'Times New Roman', Times, serif; font-size: 13px; line-height: 1.9; color: rgba(250,246,238,0.55); max-width: 360px; }
+  .footer-brand-name { font-family: Georgia, 'Times New Roman', Times, serif; font-size: 26px; font-weight: 700; color: var(--text-primary); }
+  .footer-brand-sub { font-size: 9.5px; letter-spacing: 2px; text-transform: uppercase; color: rgba(250,246,238,0.4); margin-top: 4px; }
+  .footer-desc { font-size: 13px; line-height: 1.9; color: rgba(250,246,238,0.55); max-width: 360px; }
   .footer-col-heading { font-size: 9.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
-  .footer-links-list { font-family: 'Times New Roman', Times, serif;list-style: none; }
+  .footer-links-list { list-style: none; }
   .footer-links-list li+li { margin-top: 11px; }
-  .footer-links-list a {font-family: 'Times New Roman', Times, serif; color: rgba(250,246,238,0.55); text-decoration: none; font-size: 13px; transition: color 0.2s; }
-  .footer-links-list a:hover { color: var(--cream); }
+  .footer-links-list a { color: rgba(250,246,238,0.55); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .footer-links-list a:hover { color: var(--text-primary); }
   .social-icons { display: flex; gap: 10px; }
   .social-icon {
     width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(201,150,58,0.2);
-    color: var(--gold); text-decoration: none; transition: all 0.22s;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(201,150,58,0.2); color: var(--gold); text-decoration: none;
   }
-  .social-icon:hover { background: rgba(201,150,58,0.14); transform: translateY(-2px); }
   .footer-divider { height: 1px; background: linear-gradient(to right, transparent, rgba(201,150,58,0.18), transparent); margin: 44px 0 22px; }
   .footer-bottom { text-align: center; font-size: 11px; letter-spacing: 1px; color: rgba(250,246,238,0.3); }
+
   @media (max-width: 768px) {
     .footer-grid { grid-template-columns: 1fr; gap: 36px; }
     .committee-section { padding: 0 1.25rem 4rem; }
@@ -289,8 +222,9 @@
     .photo-slide { width: 270px; height: 190px; }
     .committee-header { padding: 2rem 0 1.5rem; }
     .committee-name { font-size: 2.8rem; }
+    .tab-bar { overflow-x: auto; scrollbar-width: none; }
+    .tab-bar::-webkit-scrollbar { display: none; }
     .tab-btn { padding: 14px 20px; font-size: 10px; }
-    .page-top { padding: 2.5rem 1.25rem; }
     .mention-grid { grid-template-columns: 1fr; }
   }
 </style>
@@ -332,11 +266,9 @@
     <a href="gallery.html" class="mob-link">Gallery</a>
     <a href="tribunal.html" class="mob-link">Tribunal</a>
     <a href="teampage.html" class="mob-link">Team</a>
-    <a href="contactpage.html" class="mob-link mob-link-contact">Contact</a>
+    <a href="contactpage.html" class="mob-link">Contact</a>
   </div>
 </nav>
-
-<!-- PAGE HEADER -->
 
 <!-- COMMITTEE TABS -->
 <div class="tab-bar">
@@ -344,9 +276,8 @@
   <button class="tab-btn" onclick="switchTab('disec', this)">DISEC</button>
 </div>
 
-<!-- ═══ LOK SABHA ═══ -->
+<!-- LOK SABHA -->
 <div id="lok-sabha" class="committee-section active">
-
   <div class="committee-header">
     <div>
       <div class="committee-name">LOK<br><span>SABHA</span></div>
@@ -354,7 +285,6 @@
     <div class="committee-desc">Indian Parliament </div>
   </div>
 
-  <!-- Photo strip -->
   <div class="photo-strip-wrap">
     <div class="photo-strip">
       <div class="photo-slide"><img src="Gallery&Logo/becon/ls_1.webp" alt="Lok Sabha" loading="lazy"></div>
@@ -371,7 +301,6 @@
     <div class="photo-hint">scroll for more →</div>
   </div>
 
-  <!-- Best Parliamentarian -->
   <div class="award-tier">
     <div class="tier-label"><span class="tier-label-pill gold">Best Parliamentarian</span></div>
     <div class="award-card gold-card">
@@ -384,7 +313,6 @@
     </div>
   </div>
 
-  <!-- High Commendation -->
   <div class="award-tier">
     <div class="tier-label"><span class="tier-label-pill silver">High Commendation</span></div>
     <div class="award-card silver-card">
@@ -405,7 +333,6 @@
     </div>
   </div>
 
-  <!-- Special Mention -->
   <div class="award-tier">
     <div class="tier-label"><span class="tier-label-pill bronze">Special Mention</span></div>
     <div class="award-card bronze-card">
@@ -426,7 +353,6 @@
     </div>
   </div>
 
-  <!-- Outstanding Parliamentarian -->
   <div class="award-tier">
     <div class="tier-label"><span class="tier-label-pill crimson">Outstanding Parliamentarian</span></div>
     <div class="award-card crimson-card">
@@ -455,43 +381,38 @@
     </div>
   </div>
 
-  <!-- Honorable Mention -->
   <div class="award-tier">
     <div class="tier-label"><span class="tier-label-pill purple">Honorable Mention</span></div>
     <div class="mention-group">
       <div class="mention-grid">
-        <div class="mention-name">Sampriti Karmakar <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Supriya Sule</span></div>
-        <div class="mention-name">Arindam Mukherjee <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Shantanu Thakur</span></div>
-        <div class="mention-name">Pritysha Ghosh &amp; Argha Sar <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Dipender Singh Hooda</span></div>
+        <div class="mention-name">Sampriti Karmakar <span class="ml-1.5 opacity-50 text-xs">as Supriya Sule</span></div>
+        <div class="mention-name">Arindam Mukherjee <span class="ml-1.5 opacity-50 text-xs">as Shantanu Thakur</span></div>
+        <div class="mention-name">Pritysha Ghosh &amp; Argha Sar <span class="ml-1.5 opacity-50 text-xs">as Dipender Singh Hooda</span></div>
       </div>
     </div>
   </div>
 
-  <!-- Verbal Mention -->
   <div class="award-tier">
     <div class="tier-label"><span class="tier-label-pill blue">Verbal Mention</span></div>
     <div class="mention-group">
       <div class="mention-grid">
-        <div class="mention-name">Akshat Lohia <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Asaduddin Owaisi</span></div>
-        <div class="mention-name">Aqsa Nadeem &amp; Aaman Ahmad <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Rahul Gandhi</span></div>
-        <div class="mention-name">Sagnik Das <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Abhisek Banerjee</span></div>
-        <div class="mention-name">Sreshtha Jhingon <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Mahua Moitra</span></div>
-        <div class="mention-name">Sanchayita Poddar <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Dr. Shashi Tharoor</span></div>
-        <div class="mention-name">Srijani Singha <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Dr. Sukanta Majumdar</span></div>
-        <div class="mention-name">Shrijato Banerjee <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Narendra Modi</span></div>
-        <div class="mention-name">Anjishnu Bhattacharya <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Amra Ram</span></div>
-        <div class="mention-name">Tushar Agarwal <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Gaurav Gogoi</span></div>
-        <div class="mention-name">Abhirup Chatterjee <span style="opacity:0.45;margin-left:6px;font-size:0.82rem;">as Capt. Anurag Singh Thakur</span></div>
+        <div class="mention-name">Akshat Lohia <span class="ml-1.5 opacity-50 text-xs">as Asaduddin Owaisi</span></div>
+        <div class="mention-name">Aqsa Nadeem &amp; Aaman Ahmad <span class="ml-1.5 opacity-50 text-xs">as Rahul Gandhi</span></div>
+        <div class="mention-name">Sagnik Das <span class="ml-1.5 opacity-50 text-xs">as Abhisek Banerjee</span></div>
+        <div class="mention-name">Sreshtha Jhingon <span class="ml-1.5 opacity-50 text-xs">as Mahua Moitra</span></div>
+        <div class="mention-name">Sanchayita Poddar <span class="ml-1.5 opacity-50 text-xs">as Dr. Shashi Tharoor</span></div>
+        <div class="mention-name">Srijani Singha <span class="ml-1.5 opacity-50 text-xs">as Dr. Sukanta Majumdar</span></div>
+        <div class="mention-name">Shrijato Banerjee <span class="ml-1.5 opacity-50 text-xs">as Narendra Modi</span></div>
+        <div class="mention-name">Anjishnu Bhattacharya <span class="ml-1.5 opacity-50 text-xs">as Amra Ram</span></div>
+        <div class="mention-name">Tushar Agarwal <span class="ml-1.5 opacity-50 text-xs">as Gaurav Gogoi</span></div>
+        <div class="mention-name">Abhirup Chatterjee <span class="ml-1.5 opacity-50 text-xs">as Capt. Anurag Singh Thakur</span></div>
       </div>
     </div>
   </div>
-
 </div>
-<!-- END LOK SABHA -->
 
-<!-- ═══ DISEC ═══ -->
+<!-- DISEC -->
 <div id="disec" class="committee-section">
-
   <div class="committee-header">
     <div>
       <div class="committee-name">DIS<span>EC</span></div>
@@ -499,7 +420,6 @@
     <div class="committee-desc">Disarmament &amp; International Security Committee</div>
   </div>
 
-  <!-- Photo strip -->
   <div class="photo-strip-wrap">
     <div class="photo-strip">
       <div class="photo-slide"><img src="Gallery&Logo/becon/disec_1.webp" alt="DISEC" loading="lazy"></div>
@@ -514,7 +434,6 @@
     <div class="photo-hint">scroll for more →</div>
   </div>
 
-  <!-- Best Delegate -->
   <div class="award-tier">
     <div class="tier-label"><span class="tier-label-pill gold">Best Delegate</span></div>
     <div class="award-card gold-card">
@@ -527,7 +446,6 @@
     </div>
   </div>
 
-  <!-- High Commendation -->
   <div class="award-tier">
     <div class="tier-label"><span class="tier-label-pill silver">High Commendation</span></div>
     <div class="award-card silver-card">
@@ -548,7 +466,6 @@
     </div>
   </div>
 
-  <!-- Special Mention -->
   <div class="award-tier">
     <div class="tier-label"><span class="tier-label-pill bronze">Special Mention</span></div>
     <div class="award-card bronze-card">
@@ -569,7 +486,6 @@
     </div>
   </div>
 
-  <!-- Honourable Mention -->
   <div class="award-tier">
     <div class="tier-label"><span class="tier-label-pill crimson">Honourable Mention</span></div>
     <div class="award-card crimson-card">
@@ -597,9 +513,7 @@
       </div>
     </div>
   </div>
-
 </div>
-<!-- END DISEC -->
 
 <!-- FOOTER -->
 <footer class="site-footer">
@@ -647,7 +561,6 @@
 </footer>
 
 <script>
-  // Nav hamburger
   const hamburgerBtn = document.getElementById('hamburger-btn');
   const mobileMenu = document.getElementById('mobile-menu');
   hamburgerBtn.addEventListener('click', () => {
@@ -662,18 +575,6 @@
     }
   });
 
-  // Nav hide on scroll
-  /*let lastScrollY = window.scrollY;
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    if (y <= 10) navbar.classList.remove('nav-hidden');
-    else if (y > lastScrollY + 4) navbar.classList.add('nav-hidden');
-    else if (y < lastScrollY - 4) navbar.classList.remove('nav-hidden');
-    lastScrollY = y;
-  }, { passive: true });*/
-
-  // Committee tab switch
   function switchTab(id, btn) {
     document.querySelectorAll('.committee-section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -684,3 +585,4 @@
 </script>
 </body>
 </html>
+
