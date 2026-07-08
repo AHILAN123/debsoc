@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tribunal — Where Opinions Stand Trial | DebSoc, IIEST Shibpur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   TOKENS
+   ========================================================================== */
+:root{
+  --ink:#14120f;
+  --panel:#1b1815;
+  --panel-raised:#221e19;
+  --parchment:#e9e3d3;
+  --parchment-dim:#c9c2ac;
+  --muted:#a79f8c;
+  --docket-red:#a32638;
+  --docket-red-bright:#c93348;
+  --verdict-gold:#c7a44a;
+  --wire-green:#5c7d64;
+  --rule:#3a352c;
+  --rule-soft:#2a251f;
+
+  --f-display:'Fraunces', serif;
+  --f-body:'Source Serif 4', serif;
+  --f-mono:'Space Mono', monospace;
+
+  --measure:680px;
+  --wide:1040px;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -5%, rgba(163,38,56,0.06), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 20%, rgba(199,164,74,0.05), transparent 60%),
+    var(--ink);
+  color:var(--parchment);
+  font-family:var(--f-body);
+  font-size:17px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+::selection{background:var(--docket-red); color:var(--parchment);}
+
+a{color:inherit;}
+
+img{width:100%; height:auto; display:block; filter:grayscale(20%) sepia(6%) contrast(102%) brightness(0.94);}
+
+.wrap{max-width:var(--wide); margin:0 auto; padding:0 1.5rem;}
+.measure{max-width:var(--measure); margin-left:auto; margin-right:auto;}
+
+/* ==========================================================================
+   REVEAL / MOTION UTILITIES
+   ========================================================================== */
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1);
+}
+.reveal.in-view{opacity:1; transform:translateY(0);}
+
+.reveal-stagger > *{
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity 0.7s cubic-bezier(.2,.7,.2,1), transform 0.7s cubic-bezier(.2,.7,.2,1);
+}
+.reveal-stagger.in-view > *{opacity:1; transform:translateY(0);}
+.reveal-stagger.in-view > *:nth-child(1){transition-delay:.05s;}
+.reveal-stagger.in-view > *:nth-child(2){transition-delay:.15s;}
+.reveal-stagger.in-view > *:nth-child(3){transition-delay:.25s;}
+.reveal-stagger.in-view > *:nth-child(4){transition-delay:.35s;}
+.reveal-stagger.in-view > *:nth-child(5){transition-delay:.45s;}
+
+img[loading="lazy"]{
+  opacity:0;
+  transition:opacity 0.8s ease;
+}
+img.loaded{opacity:1;}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  .reveal, .reveal-stagger > *, img[loading="lazy"], .stamp, .typewriter .tw-cursor{
+    transition:none !important; animation:none !important; opacity:1 !important; transform:none !important;
+  }
+}
+
+/* ==========================================================================
+   TYPEWRITER
+   ========================================================================== */
+.typewriter{
+  display:inline;
+  border-right:2px solid var(--docket-red-bright);
+  white-space:pre-wrap;
+  padding-right:2px;
+}
+.typewriter.tw-done{border-right-color:transparent;}
+
+/* ==========================================================================
+   DOCKET STAMP (signature element)
+   ========================================================================== */
+.stamp{
+  display:inline-block;
+  font-family:var(--f-mono);
+  font-size:0.72rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--docket-red-bright);
+  border:2px solid var(--docket-red-bright);
+  border-radius:3px;
+  padding:0.3rem 0.65rem;
+  transform:rotate(-6deg) scale(0.4);
+  opacity:0;
+  transition:transform 0.55s cubic-bezier(.34,1.56,.64,1), opacity 0.4s ease;
+  mix-blend-mode:screen;
+}
+.stamp.gold{color:var(--verdict-gold); border-color:var(--verdict-gold);}
+.stamp.green{color:var(--wire-green); border-color:var(--wire-green);}
+.reveal.in-view .stamp, .in-view .stamp{
+  transform:rotate(-6deg) scale(1);
+  opacity:0.92;
+}
+
+/* ==========================================================================
+   TOP DOCKET BAR
+   ========================================================================== */
+.docket-bar{
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  padding:0.7rem 0;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:0.4rem;
+  font-family:var(--f-mono);
+  font-size:0.7rem;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.docket-bar span.hot{color:var(--docket-red-bright);}
+
+/* ==========================================================================
+   MASTHEAD
+   ========================================================================== */
+.masthead{
+  text-align:center;
+  padding:3.5rem 0 2rem;
+}
+.masthead .kicker{
+  font-family:var(--f-mono);
+  font-size:0.72rem;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:var(--docket-red-bright);
+  margin-bottom:1rem;
+}
+.masthead h2{
+  font-family:var(--f-display);
+  font-weight:500;
+  font-size:clamp(2.2rem, 5vw, 4rem);
+  letter-spacing:1px;
+  line-height:0.95;
+  color:var(--parchment);
+}
+.masthead .tagline{
+  font-family:var(--f-display);
+  font-style:italic;
+  font-weight:500;
+  font-size:1.05rem;
+  color:var(--parchment-dim);
+  margin-top:0.9rem;
+  letter-spacing:0.5px;
+}
+.masthead .tagline::before,
+.masthead .tagline::after{
+  content:"—";
+  color:var(--rule);
+  margin:0 0.6rem;
+}
+
+.rule{
+  border:none;
+  border-top:1px solid var(--rule);
+  margin:2.4rem 0;
+}
+.rule.double{
+  border-top:3px double var(--rule);
+}
+
+/* Signing off banner */
+.signoff{
+  text-align:center;
+  padding:1.6rem 1rem;
+  margin:0 0 2.5rem;
+  background:linear-gradient(180deg, rgba(163,38,56,0.09), transparent);
+  border-top:1px solid var(--rule-soft);
+  border-bottom:1px solid var(--rule-soft);
+}
+.signoff .eyebrow{
+  font-family:var(--f-mono);
+  font-size:0.68rem;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--verdict-gold);
+  margin-bottom:0.5rem;
+}
+.signoff h2{
+  font-family:var(--f-display);
+  font-size:clamp(1.6rem, 5vw, 2.6rem);
+  font-weight:600;
+  min-height:1.3em;
+}
+
+/* ==========================================================================
+   SECTION HEADERS
+   ========================================================================== */
+.section-head{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  margin:0 0 2rem;
+}
+.section-head .num{
+  font-family:var(--f-mono);
+  font-size:0.75rem;
+  color:var(--docket-red-bright);
+  border:1px solid var(--docket-red-bright);
+  border-radius:50%;
+  width:2.1rem; height:2.1rem;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.section-head h2{
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:clamp(1.4rem, 3.5vw, 2rem);
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--parchment);
+}
+.section-head .line{
+  flex:1;
+  height:1px;
+  background:var(--rule);
+}
+
+/* page label used sparingly, like a case-file page tab */
+.page-tab{
+  display:inline-flex;
+  align-items:center;
+  gap:0.5rem;
+  font-family:var(--f-mono);
+  font-size:0.68rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin:3.5rem 0 0.6rem;
+}
+.page-tab::before{content:"§";color:var(--docket-red-bright);}
+
+/* ==========================================================================
+   FEATURE (EXHIBIT A — Bangladesh)
+   ========================================================================== */
+.feature{
+  padding:0 0 1rem;
+}
+.feature .exhibit-tag{
+  font-family:var(--f-mono);
+  font-size:0.68rem;
+  letter-spacing:2px;
+  color:var(--muted);
+  text-transform:uppercase;
+  margin-bottom:0.7rem;
+}
+.feature h3.headline{
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:clamp(1.7rem, 4.5vw, 2.5rem);
+  line-height:1.15;
+  max-width:850px;
+  margin-bottom:0.5rem;
+}
+.feature .subhead{
+  font-family:var(--f-display);
+  font-style:italic;
+  font-weight:500;
+  color:var(--parchment-dim);
+  font-size:1.15rem;
+  max-width:750px;
+  margin-bottom:1.8rem;
+}
+.feature-grid{
+  display:grid;
+  grid-template-columns:1.15fr 0.85fr;
+  gap:2.2rem;
+  align-items:start;
+}
+@media (max-width:760px){ .feature-grid{grid-template-columns:1fr;} }
+
+.exhibit-photo{
+  position:relative;
+  border:1px solid var(--rule);
+  padding:0.5rem;
+  background:var(--panel);
+}
+.exhibit-photo .cap{
+  display:flex;
+  justify-content:space-between;
+  font-family:var(--f-mono);
+  font-size:0.65rem;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--muted);
+  padding:0.5rem 0.2rem 0.1rem;
+}
+.exhibit-photo .stamp-corner{
+  position:absolute;
+  top:-10px; right:-10px;
+}
+
+p{
+  color:var(--parchment-dim);
+  margin-bottom:1.15rem;
+}
+.feature p:first-of-type::first-letter{
+  font-family:var(--f-display);
+  font-size:3.4rem;
+  font-weight:700;
+  float:left;
+  line-height:0.8;
+  padding:0.1rem 0.5rem 0 0;
+  color:var(--docket-red-bright);
+}
+
+blockquote{
+  border-left:3px solid var(--docket-red-bright);
+  padding:0.3rem 0 0.3rem 1.2rem;
+  margin:1.6rem 0;
+  font-family:var(--f-display);
+  font-style:italic;
+  color:var(--parchment);
+  font-size:1.08rem;
+}
+blockquote cite{
+  display:block;
+  font-family:var(--f-mono);
+  font-style:normal;
+  font-size:0.68rem;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:0.6rem;
+}
+
+.source-note{
+  font-family:var(--f-mono);
+  font-size:0.68rem;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* ==========================================================================
+   BRIEFS GRID (Geopolitics page)
+   ========================================================================== */
+.briefs-grid{
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:2.5rem;
+  margin-bottom:2.5rem;
+}
+@media (max-width:760px){ .briefs-grid{grid-template-columns:1fr;} }
+
+.brief{
+  border-bottom:1px solid var(--rule-soft);
+  padding-bottom:1.8rem;
+  margin-bottom:1.8rem;
+}
+.brief:last-child{border-bottom:none;}
+.brief h3{
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:1.35rem;
+  margin-bottom:0.6rem;
+  line-height:1.25;
+}
+.brief p{font-size:0.98rem;}
+
+.brief-photo{margin:1rem 0 1.2rem;}
+
+/* history sidebar card */
+.history-card{
+  background:var(--panel);
+  border:1px solid var(--rule);
+  padding:1.6rem;
+  position:relative;
+  overflow:hidden;
+}
+.history-card::before{
+  content:"THIS WEEK";
+  position:absolute;
+  top:0.6rem; right:-2.2rem;
+  transform:rotate(45deg);
+  font-family:var(--f-mono);
+  font-size:0.6rem;
+  letter-spacing:2px;
+  color:var(--rule);
+  width:8rem;
+  text-align:center;
+}
+.history-card .eyebrow{
+  font-family:var(--f-mono);
+  font-size:0.68rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--verdict-gold);
+  margin-bottom:0.7rem;
+}
+.history-card h4{
+  font-family:var(--f-display);
+  font-size:1.25rem;
+  font-weight:600;
+  margin-bottom:0.8rem;
+}
+.history-card p{font-size:0.94rem; margin-bottom:0;}
+
+/* ==========================================================================
+   OPINION JUNCTION — coloured docket panels
+   ========================================================================== */
+.junction-head{
+  text-align:center;
+  margin:1rem 0 3rem;
+}
+.junction-head .small{
+  font-family:var(--f-mono);
+  font-size:0.7rem;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.junction-head h2{
+  font-family:var(--f-display);
+  font-weight:700;
+  font-size:clamp(2rem,6vw,3.2rem);
+}
+.junction-head h2 em{
+  font-style:italic;
+  color:var(--docket-red-bright);
+}
+
+.hot-take{
+  border:1px solid var(--docket-red);
+  background:linear-gradient(180deg, rgba(163,38,56,0.08), transparent);
+  padding:2rem;
+  margin-bottom:2.5rem;
+  position:relative;
+}
+.hot-take .label{
+  display:flex; align-items:center; gap:0.8rem;
+  font-family:var(--f-mono);
+  font-size:0.7rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--docket-red-bright);
+  margin-bottom:1rem;
+}
+.hot-take .label .digit{
+  font-family:var(--f-display);
+  font-size:2.4rem;
+  font-weight:700;
+  color:var(--docket-red-bright);
+  line-height:1;
+}
+.hot-take p{
+  font-family:var(--f-display);
+  font-size:1.15rem;
+  color:var(--parchment);
+  min-height:6em;
+}
+
+.panel-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:1.6rem;
+  margin-bottom:2.5rem;
+}
+@media (max-width:760px){ .panel-grid{grid-template-columns:1fr;} }
+
+.panel{
+  border:1px solid var(--rule);
+  padding:1.6rem;
+  background:var(--panel);
+}
+.panel.wire{border-color:rgba(92,125,100,0.5); background:linear-gradient(180deg, rgba(92,125,100,0.08), var(--panel));}
+.panel.gold-b{border-color:rgba(199,164,74,0.5); background:linear-gradient(180deg, rgba(199,164,74,0.07), var(--panel));}
+.panel.red-b{border-color:rgba(163,38,56,0.5); background:linear-gradient(180deg, rgba(163,38,56,0.08), var(--panel));}
+
+.panel .tag{
+  font-family:var(--f-mono);
+  font-size:0.65rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:0.9rem;
+  display:block;
+}
+.panel h4{
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:1.15rem;
+  margin-bottom:0.5rem;
+  line-height:1.3;
+}
+.panel p{font-size:0.92rem; margin-bottom:0.9rem;}
+.panel .sub{margin-top:1.1rem; padding-top:1.1rem; border-top:1px dashed var(--rule);}
+
+.debate-dock{
+  border:1px solid rgba(199,164,74,0.5);
+  padding:2rem;
+  text-align:center;
+  margin-bottom:2.5rem;
+  background:linear-gradient(180deg, rgba(199,164,74,0.06), transparent);
+}
+.debate-dock .tag{font-family:var(--f-mono); font-size:0.68rem; letter-spacing:3px; color:var(--verdict-gold); text-transform:uppercase;}
+.debate-dock h3{
+  font-family:var(--f-display);
+  font-weight:700;
+  font-style:italic;
+  font-size:clamp(1.3rem,3.5vw,1.9rem);
+  margin:0.8rem 0 1rem;
+  max-width:700px;
+  margin-left:auto; margin-right:auto;
+}
+.debate-dock .keywords{
+  font-family:var(--f-mono);
+  font-size:0.72rem;
+  color:var(--muted);
+  letter-spacing:0.5px;
+  max-width:600px;
+  margin:0 auto 1.4rem;
+}
+.debate-dock .cta{
+  display:inline-block;
+  border:1px solid var(--verdict-gold);
+  color:var(--verdict-gold);
+  font-family:var(--f-mono);
+  font-size:0.75rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  padding:0.7rem 1.4rem;
+  text-decoration:none;
+  transition:background .3s ease, color .3s ease;
+}
+.debate-dock .cta:hover{background:var(--verdict-gold); color:var(--ink);}
+
+.word-fortnight{
+  border:1px solid var(--rule);
+  padding:1.8rem;
+  margin-bottom:2.5rem;
+}
+.word-fortnight .eyebrow{
+  font-family:var(--f-mono);
+  font-size:0.68rem;
+  letter-spacing:2px;
+  color:var(--muted);
+  text-transform:uppercase;
+  margin-bottom:0.4rem;
+}
+.word-fortnight h3{
+  font-family:var(--f-display);
+  font-weight:700;
+  font-size:1.6rem;
+  color:var(--verdict-gold);
+  margin-bottom:0.8rem;
+  letter-spacing:0.5px;
+}
+.word-fortnight .def{font-size:0.95rem; text-transform:uppercase; letter-spacing:0.3px; color:var(--parchment-dim); margin-bottom:1rem;}
+.word-fortnight .ex{
+  font-family:var(--f-display);
+  font-style:italic;
+  font-size:0.98rem;
+  color:var(--parchment);
+  border-left:2px solid var(--verdict-gold);
+  padding-left:1rem;
+}
+
+/* DemoSpot data section */
+.demospot{
+  border:1px solid var(--rule);
+  padding:2rem;
+  margin-bottom:1rem;
+}
+.demospot .head{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  flex-wrap:wrap;
+  gap:0.5rem;
+  margin-bottom:1.5rem;
+}
+.demospot .head h3{
+  font-family:var(--f-display);
+  font-weight:700;
+  font-size:1.5rem;
+}
+.demospot .head .badge{
+  font-family:var(--f-mono);
+  font-size:0.68rem;
+  letter-spacing:2px;
+  color:var(--wire-green);
+  border:1px solid var(--wire-green);
+  padding:0.3rem 0.6rem;
+  text-transform:uppercase;
+}
+.stat-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.2rem;
+  margin:1.6rem 0 1.8rem;
+}
+@media (max-width:640px){ .stat-row{grid-template-columns:1fr;} }
+.stat-row .stat{
+  border-left:2px solid var(--docket-red-bright);
+  padding-left:0.9rem;
+}
+.stat-row .stat .num{
+  font-family:var(--f-display);
+  font-weight:700;
+  font-size:1.7rem;
+  color:var(--parchment);
+  display:block;
+}
+.stat-row .stat .lbl{
+  font-family:var(--f-mono);
+  font-size:0.65rem;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* ==========================================================================
+   ANALYSIS EXTENDED (Page 4)
+   ========================================================================== */
+.analysis-head{
+  text-align:center;
+  margin-bottom:0.6rem;
+}
+.analysis-head .kicker{
+  font-family:var(--f-mono);
+  font-size:0.68rem;
+  letter-spacing:3px;
+  color:var(--docket-red-bright);
+  text-transform:uppercase;
+}
+.analysis-head h2{
+  font-family:var(--f-display);
+  font-weight:700;
+  font-style:italic;
+  font-size:clamp(2rem,6vw,3.4rem);
+}
+.analysis-sub{
+  text-align:center;
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:1.3rem;
+  color:var(--parchment-dim);
+  max-width:600px;
+  margin:0.5rem auto 2.5rem;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.data-columns{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2.2rem;
+  margin-bottom:2.5rem;
+}
+@media (max-width:760px){ .data-columns{grid-template-columns:1fr;} }
+.data-col{border:1px solid var(--rule); padding:1.8rem;}
+.data-col.accent{border-color:rgba(163,38,56,0.5); background:linear-gradient(180deg, rgba(163,38,56,0.06), transparent);}
+.data-col h4{
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:1.15rem;
+  margin-bottom:1rem;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+.data-col .big-num{
+  font-family:var(--f-display);
+  font-weight:700;
+  font-size:2.6rem;
+  color:var(--docket-red-bright);
+  line-height:1;
+  margin-bottom:0.4rem;
+}
+.data-col .caption{font-family:var(--f-mono); font-size:0.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:1.1rem;}
+.buyers-list{
+  display:flex; flex-wrap:wrap; gap:0.5rem;
+  margin-top:0.5rem;
+}
+.buyers-list span{
+  font-family:var(--f-mono);
+  font-size:0.72rem;
+  border:1px solid var(--rule);
+  padding:0.3rem 0.6rem;
+  color:var(--parchment-dim);
+}
+
+.essay{
+  margin-top:3rem;
+  border-top:1px solid var(--rule);
+  padding-top:2.5rem;
+}
+.essay .exhibit-tag{
+  font-family:var(--f-mono);
+  font-size:0.68rem;
+  letter-spacing:2px;
+  color:var(--muted);
+  text-transform:uppercase;
+  margin-bottom:0.6rem;
+}
+.essay h3{
+  font-family:var(--f-display);
+  font-weight:700;
+  font-style:italic;
+  font-size:clamp(1.6rem,4vw,2.3rem);
+  max-width:750px;
+  margin-bottom:1.8rem;
+  line-height:1.2;
+}
+.essay .byline{
+  font-family:var(--f-mono);
+  font-size:0.75rem;
+  letter-spacing:1px;
+  color:var(--verdict-gold);
+  text-transform:uppercase;
+  margin-bottom:1.8rem;
+  display:block;
+}
+.essay p{font-size:1.02rem; max-width:var(--measure);}
+.essay p:first-of-type::first-letter{
+  font-family:var(--f-display);
+  font-size:3.4rem;
+  font-weight:700;
+  float:left;
+  line-height:0.8;
+  padding:0.1rem 0.5rem 0 0;
+  color:var(--docket-red-bright);
+}
+.essay .to-be-continued{
+  font-family:var(--f-mono);
+  font-size:0.72rem;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--docket-red-bright);
+  border:1px dashed var(--docket-red-bright);
+  display:inline-block;
+  padding:0.5rem 1rem;
+  margin-top:1rem;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+footer{
+  margin-top:4rem;
+  border-top:3px double var(--rule);
+  padding:2.5rem 0 3rem;
+  text-align:center;
+}
+footer .cta-line{
+  font-family:var(--f-display);
+  font-style:italic;
+  font-size:1.3rem;
+  margin-bottom:0.6rem;
+}
+footer .sub-line{
+  font-family:var(--f-mono);
+  font-size:0.78rem;
+  color:var(--muted);
+  letter-spacing:0.5px;
+  margin-bottom:1.8rem;
+}
+footer .sub-line a{color:var(--verdict-gold); text-decoration:none; border-bottom:1px dotted var(--verdict-gold);}
+footer .closing-stamp{
+  display:inline-block;
+  font-family:var(--f-mono);
+  font-size:0.75rem;
+  letter-spacing:3px;
+  color:var(--muted);
+  border:1px solid var(--rule);
+  padding:0.5rem 1.2rem;
+  transform:rotate(-2deg);
+}
+
+@media (max-width:600px){
+  body{font-size:15.5px;}
+  .wrap{padding:0 1.1rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ============ DOCKET BAR ============ -->
+  <div class="docket-bar">
+    <a href="index.html"><span>Debsoc &middot; IIEST Shibpur</span></a>
+    <span class="hot">Docket No. 2025&ndash;12</span>
+    <span>December 2025</span>
+  </div>
+
+  <!-- ============ MASTHEAD ============ -->
+  <header class="masthead reveal">
+    <div class="kicker">Volume II</div>
+    <h2>Tribunal</h2>
+    <p class="tagline">Where Opinions Stand Trial</p>
+  </header>
+
+  <div class="signoff reveal">
+    <h4><span class="typewriter" data-tw="Signing Off, 2025."></span></h4>
+  </div>
+
+  <!-- ============ FEATURE: BANGLADESH ============ -->
+  <section class="feature reveal">
+    <div class="exhibit-tag">Feature &mdash; Exhibit A</div>
+    <h3 class="headline">Political Turmoil in Bangladesh</h3>
+    <p class="subhead">We condemn Das&rsquo; killing, reject anti-India narrative in Bangladesh: MEA</p>
+
+    <div class="feature-grid">
+      <div>
+        <p>The remarks came in response to a number of questions on the recent spurt in violence against the minority Hindu community of Bangladesh, especially after the death of Islamist leader Sharif Osman Hadi on December&nbsp;18,&nbsp;2025. In the aftermath of Mr.&nbsp;Hadi&rsquo;s death, several reports of arson attacks against the minority community, and the brutal lynching of Dipu Chandra Das in Mymensingh and Amrit Mandal in Rajbari near Dhaka, have been reported in the media.</p>
+
+        <blockquote>
+          &ldquo;We condemn the recent killing of a Hindu youth in Mymensingh. More than 2,900 incidents of violence against minorities have been documented by sources during the tenure of the interim government.&rdquo;
+          <cite>Randhir Jaiswal, MEA Spokesperson &middot; Weekly Media Briefing</cite>
+        </blockquote>
+
+        <p class="source-note">Referenced coverage: Reuters &mdash; &ldquo;Presses fall silent after mobs torch offices of Bangladesh&rsquo;s top newspapers&rdquo; &middot; Mint &mdash; &ldquo;Bangladesh sidesteps India&rsquo;s concerns over &lsquo;hostilities&rsquo; against Hindu minorities, calls them &lsquo;isolated incidents&rsquo;&rdquo;</p>
+      </div>
+
+      <div class="exhibit-photo">
+        <img src="photos/brics-photo.png" alt="Multilateral summit roundtable" loading="lazy">
+        <div class="cap">
+          <span>Exhibit A&ndash;1</span>
+          <span>Regional Diplomacy</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule double">
+
+  <!-- ============ PAGE 2: GEOPOLITICS ============ -->
+  <div class="page-tab">Page 02 &middot; Geopolitics File</div>
+  <div class="section-head reveal">
+    <span class="num">1</span>
+    <h2>Geopolitics: India &amp; the World</h2>
+    <span class="line"></span>
+  </div>
+
+  <div class="briefs-grid">
+    <div>
+      <div class="brief reveal">
+        <h3>India&ndash;Middle East&ndash;Europe Economic Corridor (IMEC): Vision or Vaporware?</h3>
+        <div class="brief-photo exhibit-photo">
+          <img src="photos/imec-map.png" alt="Map of the proposed IMEC route from India through the Gulf to Europe" loading="lazy">
+          <div class="cap"><span>Exhibit B&ndash;1</span><span>Proposed Route</span></div>
+        </div>
+        <p>Announced as a game-changing trade corridor linking India to Europe via the Middle East, IMEC promises faster connectivity. However, regional instability and unclear funding raise doubts over whether it will move beyond diplomatic intent.</p>
+      </div>
+
+      <div class="brief reveal">
+        <h3>BRICS Expansion: Challenge to the Dollar, or Symbolic Flex?</h3>
+        <p>With new members joining BRICS, the bloc projects itself as a counterweight to Western economic dominance. Yet internal economic asymmetries and limited currency coordination suggest the expansion may be more symbolic than transformational &mdash; for now.</p>
+      </div>
+    </div>
+
+    <div class="history-card reveal">
+      <div class="eyebrow">This Week in History</div>
+      <h4>Shaheedi Hafta</h4>
+      <p>Also known as Martyrdom Week, observed annually from 20&ndash;27&nbsp;December to commemorate the supreme sacrifices of the family of Guru Gobind Singh Ji, the tenth Sikh Guru &mdash; including his four sons, the Sahibzade, and his mother, Mata Gujri Ji.</p>
+    </div>
+  </div>
+
+  <div class="briefs-grid">
+    <div class="brief reveal">
+      <h3>Red Sea Crisis &amp; Shipping Insurance: Why Everything Is Getting Costlier</h3>
+      <p>Attacks on commercial vessels in the Red Sea have forced shipping companies to reroute via longer paths, sharply increasing insurance premiums and freight costs. The disruption highlights how regional conflicts directly impact global inflation and consumer prices.</p>
+    </div>
+
+    <div class="brief reveal">
+      <h3>India Can Lift Exports to Russia from $5bn to $35bn</h3>
+      <div class="brief-photo exhibit-photo">
+        <img src="photos/flags-photo.png" alt="Crossed Russian and Indian flags" loading="lazy">
+        <div class="cap"><span>Exhibit B&ndash;2</span><span>Bilateral Trade</span></div>
+      </div>
+      <p>India could boost exports to Russia seven-fold &mdash; from $5&nbsp;billion to $35&nbsp;billion by 2030 &mdash; by expanding access in food, pharma, textiles, and machinery, says GTRI. The projection aligns with Moscow&rsquo;s $100&nbsp;billion trade goal amid President Putin&rsquo;s Delhi visit.</p>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- ============ PAGE 3: OPINION JUNCTION ============ -->
+  <div class="page-tab">Page 03 &middot; Opinion Docket</div>
+  <div class="junction-head reveal">
+    <div class="small">The Opinion</div>
+    <h2>Junction<em>.</em></h2>
+  </div>
+
+  <div class="hot-take reveal">
+    <div class="label"><span class="digit">01</span> Hot Take</div>
+    <p><span class="typewriter" data-tw="Can a democracy truly claim equality before the law when activists working for a cause are swiftly arrested and denied bail, while the Unnao rape convict &mdash; despite a life sentence &mdash; receives bail or relief on procedural grounds, aided by political influence? Such contrasts raise serious concerns about judicial consistency, accountability, and justice in sensitive cases."></span></p>
+    <span class="stamp">Verdict Pending</span>
+  </div>
+
+  <div class="panel-grid reveal-stagger">
+    <div class="panel wire">
+      <span class="tag">Curated Intel &middot; What to Watch</span>
+      <h4>Judicial Accountability vs. Judicial Independence</h4>
+      <p>This highlights the tension between judicial independence and accountability within a democratic system.</p>
+      <div class="sub">
+        <span class="tag">What to Read</span>
+        <h4 style="font-size:1.02rem;">India Post&ndash;Modi: How Prepared Is Indian Politics for Leadership Transition?</h4>
+        <p style="margin-bottom:0;">Analysts say India is beginning to look beyond Modi, raising questions of succession and political stability.</p>
+      </div>
+    </div>
+
+    <div class="panel red-b">
+      <span class="tag">The Debate Dock &mdash; Motion</span>
+      <h4>Is India&rsquo;s foreign policy driven more by strategic autonomy or strategic silence?</h4>
+      <p style="margin-bottom:0;">A recurring question across this issue&rsquo;s briefs &mdash; from pretenses in the Russia relationship to arms exports as leverage.</p>
+    </div>
+  </div>
+
+  <div class="debate-dock reveal">
+    <span class="tag">Deb&middot;ate&middot;Dock</span>
+    <h3>Foreign policy, global politics, neutrality, protecting national interest, moral ambiguity, weakening global leadership.</h3>
+    <p class="keywords">Send us your submission via Instagram DM, specifying &ldquo;For&rdquo; or &ldquo;Against.&rdquo; Get featured in the next newsletter.</p>
+    <a class="cta" href="https://www.instagram.com/debsoc_iiests?igsh=MWphZmNmZ3ZheWc5aQ==" target="_blank" rel="noopener">Submit on Instagram &rarr;</a>
+  </div>
+
+  <div class="word-fortnight reveal">
+    <div class="eyebrow">Word of the Fortnight</div>
+    <h3>Populist Fiscalism</h3>
+    <p class="def">An economic approach that prioritizes short-term government spending and tax cuts to win popular support, often disregarding long-term fiscal stability and budgetary constraints.</p>
+    <p class="ex">&ldquo;The new administration&rsquo;s budget reflects populist fiscalism, prioritizing generous subsidies and tax cuts aimed at winning public favor despite concerns about long-term deficits.&rdquo;</p>
+  </div>
+
+  <div class="demospot reveal">
+    <div class="head">
+      <h3>Arms&ndash;Affair: DemoSpot</h3>
+      <span class="badge">India&rsquo;s Strategic Rise</span>
+    </div>
+    <p>India&rsquo;s defence export trajectory, exhibit-stamped for the record &mdash; from a modest ₹686&nbsp;crore in 2014 to a record-setting close for FY&nbsp;2024&ndash;25.</p>
+    <div class="stat-row">
+      <div class="stat"><span class="num">₹23,622 Cr</span><span class="lbl">FY 2024&ndash;25, Highest Ever</span></div>
+      <div class="stat"><span class="num">30&times;</span><span class="lbl">Growth Since 2014</span></div>
+      <div class="stat"><span class="num">80</span><span class="lbl">Countries Served</span></div>
+    </div>
+    <div class="exhibit-photo">
+      <img src="photos/defense-chart.png" alt="Chart of India's defence export growth 2014 to 2025, sectoral contribution and global reach" loading="lazy">
+      <div class="cap"><span>Exhibit C</span><span>Source: Ministry of Defence, GoI</span></div>
+    </div>
+  </div>
+
+  <hr class="rule double">
+
+  <!-- ============ PAGE 4: ANALYSIS EXTENDED ============ -->
+  <div class="page-tab">Page 04 &middot; Analysis Extended</div>
+  <div class="analysis-head reveal">
+    <div class="kicker">Issue&rsquo;s Focus: DemoSpot</div>
+    <h2>Made in India, Deployed Worldwide</h2>
+  </div>
+  <p class="analysis-sub reveal">An overview of India&rsquo;s defence-export rise, and why it matters</p>
+
+  <div class="data-columns">
+    <div class="data-col accent reveal">
+      <h4>Official Data</h4>
+      <div class="big-num">30&times;</div>
+      <div class="caption">Growth in defence exports since 2014</div>
+      <p style="margin-bottom:0.6rem;">₹23,622&nbsp;crore worth of defence exports were recorded in FY&nbsp;2024&ndash;25 &mdash; the highest ever for India. Indian defence equipment is now exported to about 80&nbsp;countries across Asia, Africa, Europe, and the Middle East.</p>
+      <p class="source-note" style="margin-bottom:0;">Source: Ministry of Defence, GoI &middot; PIB</p>
+    </div>
+
+    <div class="data-col reveal">
+      <h4>Why This Matters</h4>
+      <p>Defence exports are now a strategic economic sector for India. Arms trade growth often correlates with regional instability and rising defence demand. Governments benefit through revenue generation, geopolitical leverage, and defence-industrial growth.</p>
+      <p style="margin-bottom:0.6rem;"><strong>Who buys arms globally?</strong> The top global arms exporters remain:</p>
+      <div class="buyers-list">
+        <span>United States</span><span>Russia</span><span>France</span><span>China</span><span>Germany</span>
+      </div>
+      <p class="source-note" style="margin-top:1rem; margin-bottom:0;">Source: SIPRI &middot; Government of India Defence Export Data</p>
+    </div>
+  </div>
+
+  <!-- ============ ESSAY ============ -->
+  <div class="essay">
+    <div class="exhibit-tag">Analysis &mdash; Exhibit D</div>
+    <h3 class="reveal">&ldquo;Friends&rdquo; in Realpolitik: How India Keeps Its Alliances Transactional</h3>
+    <span class="byline">Anurag R Singh &middot; Secretary, DebSoc</span>
+
+    <p>This piece is written to help readers develop a worldview, independent of this article, to view Indian relationships in the international community. One thing you would notice in the title is a contradiction &mdash; &ldquo;friends&rdquo; in &ldquo;realpolitik.&rdquo; But isn&rsquo;t realpolitik about not having friends, and being totally transactional to ensure a nation&rsquo;s interests? How is India supposed to have friends while it indulges in openly transactional foreign policy? I will try my level best to explain my analytical logic for this, which might help others do the same.</p>
+
+    <p>When I say friends of India, I think all readers have only one name in mind &mdash; Russia (and formerly the USSR). This is such a commonly explored topic that even people not particularly interested in geopolitics are aware of this close-bound friendship. That is why I will explore two other &ldquo;friendships&rdquo; later; but before that, let me resolve some commonly held doubts about our relationship with Russia.</p>
+
+    <p>First and foremost: a doubt exists in people&rsquo;s minds as to why Russia did not support India during Op Sindoor. Why did Russia ask India to cease hostilities and return to the negotiating table when India had clearly expressed no intention of doing so? Is this how a friend acts? The answer lies in the fact that what a nation says is not exactly what it wants. Remember, India has been one of the leading voices asking for cessation of the conflict in Ukraine. Why is that? Ukraine has been a leading arms supplier to Pakistan &mdash; it is not in India&rsquo;s interest to have Ukraine keep up this military partnership, so why does India ask for the violence to stop? The answer is pretenses. A nation is supposed to keep up pretenses, because you can&rsquo;t show your motives out in the open. I could refer you all to Augustus Caesar and how he became the &ldquo;First Citizen.&rdquo; He concealed his ambition &mdash; the very thing that got his predecessor Julius assassinated &mdash; and always maintained a fa&ccedil;ade of a republican. In the end, it was the Roman Republic itself that granted him his goal of becoming Emperor (the First Citizen, rather).</p>
+
+    <p>Remember, no single reason is a good enough parameter to define such a multi-modal system, so pretenses are one of the reasons but not the only one. Why India does this, and what it has to gain (or has already gained) from this conflict, is entirely a different matter and not really relevant to this piece.</p>
+
+    <p>Now, let us get into the reveal of the two &ldquo;friends&rdquo; mentioned earlier. This is so easily decrypted that any student of international relations already knows the two names I am about to take: France and Israel. Let us set aside the military relationships for now, because they are quite obvious &mdash; what I want readers to understand is how these nations have found this niche of transactional relations, which is win-win for both them and us.</p>
+
+    <p>I assume this article is already quite lengthy for our publication, so I shall reserve the reasons for naming these two countries for our next issue. Thank you for your time, and see you around.</p>
+
+    <span class="to-be-continued">Filed &mdash; Part I of II &middot; Continued Next Issue</span>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="reveal">
+    <p class="cta-line">Get featured in Tribunal&rsquo;s next issue?</p>
+    <p class="sub-line">Send your suggestions, articles, and opinions via our <a href="https://www.instagram.com/debsoc_iiests?igsh=MWphZmNmZ3ZheWc5aQ==" target="_blank" rel="noopener">Instagram</a> handle.</p>
+    <span class="closing-stamp">Filed &middot; End of Issue &middot; Debsoc, IIEST Shibpur</span>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Lazy-load fade-in for images ---------- */
+  document.querySelectorAll('img[loading="lazy"]').forEach(function(img){
+    if (img.complete && img.naturalWidth) { img.classList.add('loaded'); }
+    else {
+      img.addEventListener('load', function(){ img.classList.add('loaded'); });
+    }
+  });
+
+  /* ---------- Typewriter effect ---------- */
+  function typeWriter(el){
+    var text = el.getAttribute('data-tw') || '';
+    el.textContent = '';
+    el.classList.remove('tw-done');
+    var i = 0;
+    var speed = Math.max(8, Math.min(22, 900 / text.length));
+    function step(){
+      if (i <= text.length){
+        el.textContent = text.slice(0, i);
+        i++;
+        setTimeout(step, speed);
+      } else {
+        el.classList.add('tw-done');
+      }
+    }
+    step();
+  }
+
+  var typedOnce = new WeakSet();
+
+  /* ---------- IntersectionObserver: reveal + typewriter trigger ---------- */
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add('in-view');
+
+          var tw = entry.target.querySelector('.typewriter');
+          if (tw && !typedOnce.has(tw)){
+            typedOnce.add(tw);
+            if (reduceMotion){
+              tw.textContent = tw.getAttribute('data-tw');
+              tw.classList.add('tw-done');
+            } else {
+              setTimeout(function(){ typeWriter(tw); }, 250);
+            }
+          }
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){
+      io.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){
+      el.classList.add('in-view');
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
