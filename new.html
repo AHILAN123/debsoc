@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DebSoc — Links</title>
+<style>
+  :root{
+    --ink:#050505;
+    --red:#d51d25;
+    --red-dim:#86141a;
+    --gold:#d5a653;
+    --cream:#faf6ee;
+    --cream-dim:#fcf9f9;
+    --hair:rgba(250,246,238,0.16);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;min-height:100%;background:var(--ink);color:var(--cream);}
+  body{font-family:'Times New Roman', Times, Georgia, serif;overflow-x:hidden;}
+
+  .reel{position:relative;background:#000;padding:9px 0;}
+  .reel::before, .reel::after{
+    content:""; position:absolute; left:0; right:0; height:7px;
+    background-image:repeating-linear-gradient(to right, var(--cream-dim) 0 5px, transparent 5px 15px);
+    opacity:0.99;
+  }
+  .reel::before{ top:0; }
+  .reel::after{ bottom:0; }
+
+  /* ---- top layout wrapper: stacked on phone, side-by-side on desktop ---- */
+  .top-layout{ display:flex; flex-direction:column; }
+  .reel-track{ order:-1; }
+  .hero-frame{ order:0; }
+
+  .reel-track{
+    display:flex;gap:3px;overflow-x:auto;padding:7px 0;
+    scrollbar-width:none;
+    background:#000;
+    border-bottom:1px solid var(--hair);
+    cursor:grab;user-select:none;touch-action:pan-y;
+    overscroll-behavior-x:contain;
+  }
+  .reel-track.is-dragging{cursor:grabbing;scroll-behavior:auto;}
+  .reel-track::-webkit-scrollbar{ display:none; }
+  .reel-frame{
+    position:relative;flex:0 0 clamp(112px,16vw,180px);aspect-ratio:4/3;
+    border-right:1px solid rgba(255,255,255,0.99);
+    overflow:hidden;
+    cursor:pointer;
+  }
+  .reel-frame img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:grayscale(.45) contrast(1.08) brightness(1.01);
+    pointer-events:none;
+    transition:filter .3s ease;
+  }
+  .reel-frame.is-colored img{ filter:none; }
+  .reel-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(213,29,37,.2),transparent 55%);pointer-events:none;}
+  .reel-expand{
+    position:absolute; top:4px; right:4px; z-index:2;
+    width:22px; height:22px; display:flex; align-items:center; justify-content:center;
+    background:rgba(0,0,0,0.55); border:1px solid rgba(255,255,255,0.3);
+    color:var(--cream); font-size:13px; line-height:1; cursor:pointer;
+  }
+  .reel-expand:hover{ background:rgba(213,29,37,0.7); }
+
+  .lightbox{
+    position:fixed; inset:0; z-index:50;
+    background:rgba(0,0,0,0.9);
+    display:none; align-items:center; justify-content:center;
+    padding:40px;
+  }
+  .lightbox.is-open{ display:flex; }
+  .lightbox img{
+    max-width:100%; max-height:100%;
+    box-shadow:0 0 0 1px var(--hair);
+  }
+  .lightbox-close{
+    position:absolute; top:18px; right:22px;
+    color:var(--cream); font-size:28px; line-height:1; cursor:pointer;
+    background:none; border:none;
+  }
+
+  .stack{margin:0 auto;padding:clamp(28px,6vw,70px) 20px 90px;display:flex;flex-direction:column;gap:28px;}
+
+  .hero-frame{
+    position:relative;background:#440000;width:100%;
+    margin:0;padding:0;top:0;left:0;
+  }
+  .hero-body{padding:clamp(0px,5vw,42px);height:100%;}
+  .zine-embed{
+    border:1px solid var(--hair);background:#000;overflow:hidden;
+    height:calc(100vh - 150px);min-height:620px;
+  }
+  .zine-embed iframe{width:100%;height:100%;border:0;display:block;}
+  .frame{
+    position:relative;border:1px solid var(--hair);background:#0a0a0a;text-decoration:none;color:inherit;
+    display:flex;align-items:center;justify-content:space-between;padding:22px 26px;transition:border-color .2s ease,background .2s ease;
+  }
+  .frame:hover{ border-color:var(--red-dim); background:#0d0d0d; }
+  .frame h2{
+    font-size:clamp(22px,4vw,30px);letter-spacing:.02em;text-transform:uppercase;margin:0;color:var(--cream);
+  }
+  .arrow{ font-size:20px; color:var(--red); transition:transform .2s ease; }
+  .frame:hover .arrow{ transform:translateX(4px); }
+
+  @media (max-width:600px){
+    .stack{padding-left:14px;padding-right:14px;}
+    .zine-embed{height:calc(100vh - 170px);min-height:440px;}
+    .frame{padding:18px 20px;}
+  }
+
+  /* ---- desktop: tribunal + reel side by side, reel pinned to the far right ---- */
+  @media (min-width:901px){
+    .top-layout{
+      display:grid;
+      grid-template-columns: 1fr 250px;
+      align-items:stretch;
+      height:calc(100vh - 18px);
+      min-height:640px;
+    }
+    .hero-frame{ order:1; height:100%; min-width:0; }
+    .hero-body{ height:100%; }
+    .zine-embed{ height:100%; }
+    .reel-track{
+      order:2;
+      height:100%;
+      flex-direction:column; overflow-x:hidden; overflow-y:auto;
+      padding:0; border-bottom:none; border-left:1px solid var(--hair);
+      touch-action:pan-x;
+    }
+    .reel-frame{
+      flex:0 0 auto; width:100%; aspect-ratio:4/3;
+      border-right:none; border-bottom:1px solid rgba(255,255,255,0.99);
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="reel"></div>
+
+<div class="top-layout">
+  <article class="hero-frame">
+    <div class="hero-body">
+      <div class="zine-embed">
+        <iframe allow="autoplay; fullscreen; clipboard-write" scrolling="no"
+          src="https://heyzine.com/flip-book/2e319b8dcc.html"
+          title="Tribunal Zine"></iframe>
+      </div>
+    </div>
+  </article>
+
+  <div class="reel-track" aria-label="DebSoc photo gallery">
+        <div class="reel-frame"><img src="Gallery%26Logo/DebsocMee5Mar.webp" alt="DebSoc meeting"></div>
+        
+    <div class="reel-frame"><img src="photos/2026_4.webp" alt="DISEC event"></div>
+    <div class="reel-frame"><img src="photos/2018_2.webp" alt="Lok Sabha event"></div>
+    <div class="reel-frame"><img src="Gallery%26Logo/Vicharagini.webp" alt="Vicharagini event"></div>
+    <div class="reel-frame"><img src="Gallery%26Logo/becon/becon_1.webp" alt="Becon event"></div>
+    <div class="reel-frame"><img src="photos/2026_2.webp" alt="DebSoc members"></div>
+    <div class="reel-frame"><img src="Gallery%26Logo/becon/disec_6.webp" alt="DebSoc conference"></div>
+    <div class="reel-frame"><img src="Gallery%26Logo/becon/becon_4.webp" alt="DebSoc event"></div>
+
+    <div class="reel-frame"><img src="photos/2020_1.webp" alt="DebSoc event"></div>
+    <div class="reel-frame"><img src="photos/2025_3.webp" alt="Alcheringa event"></div>
+    <div class="reel-frame"><img src="Gallery%26Logo/Amenities.webp" alt="DebSoc event"></div>
+    <div class="reel-frame"><img src="Gallery%26Logo/ASHdebsoc.webp" alt="DebSoc event"></div>
+    <div class="reel-frame"><img src="Gallery%26Logo/Memorialdebate.webp" alt="Memorial debate"></div>
+    <div class="reel-frame"><img src="photos/2026_2.webp" alt="DebSoc members"></div>
+    <div class="reel-frame"><img src="Gallery%26Logo/becon/disec_2.webp" alt="DebSoc conference"></div>
+    <div class="reel-frame"><img src="Gallery%26Logo/becon/becon_2.webp" alt="Becon event"></div>
+    <div class="reel-frame"><img src="photos/2016_2.webp" alt="DISEC event"></div>
+    <div class="reel-frame"><img src="photos/2013_1.webp" alt="Lok Sabha event"></div>
+  </div>
+</div>
+
+<main class="stack">
+
+  <a class="frame" href="https://www.instagram.com/debsoc_iiests/" target="_blank" rel="noopener">
+    <h2>Instagram</h2>
+    <span class="arrow">→</span>
+  </a>
+
+  <a class="frame" href="https://www.debsociiests.in/debsoc_iiest_timeline_with_photos" target="_blank" rel="noopener">
+    <h2>History</h2>
+    <span class="arrow">→</span>
+  </a>
+
+</main>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  const reel = document.querySelector('.reel-track');
+  let isDragging = false;
+  let didDrag = false;
+  let startX = 0, startY = 0;
+  let startScroll = 0;
+  let pressedFrame = null;
+  const DRAG_THRESHOLD = 6;
+
+  function isVertical(){
+    return getComputedStyle(reel).flexDirection === 'column';
+  }
+
+  reel.addEventListener('pointerdown', (event) => {
+    if (event.target.closest('.reel-expand')) { pressedFrame = null; return; }
+    isDragging = true;
+    didDrag = false;
+    pressedFrame = event.target.closest('.reel-frame');
+    startX = event.clientX;
+    startY = event.clientY;
+    startScroll = isVertical() ? reel.scrollTop : reel.scrollLeft;
+    reel.classList.add('is-dragging');
+    reel.setPointerCapture(event.pointerId);
+  });
+  reel.addEventListener('pointermove', (event) => {
+    if (!isDragging) return;
+    const delta = isVertical() ? (event.clientY - startY) : (event.clientX - startX);
+    if (Math.abs(delta) > DRAG_THRESHOLD) didDrag = true;
+    if (isVertical()) reel.scrollTop = startScroll - delta;
+    else reel.scrollLeft = startScroll - delta;
+  });
+  const stopDragging = () => {
+    isDragging = false;
+    reel.classList.remove('is-dragging');
+  };
+  reel.addEventListener('pointerup', stopDragging);
+  reel.addEventListener('pointercancel', stopDragging);
+
+  reel.addEventListener('click', () => {
+    if (didDrag || !pressedFrame) return;
+    pressedFrame.classList.toggle('is-colored');
+  });
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  function openLightbox(src, alt){
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || '';
+    lightbox.classList.add('is-open');
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('is-open');
+    lightboxImg.src = '';
+  }
+
+  reel.querySelectorAll('.reel-frame').forEach((frame) => {
+    const img = frame.querySelector('img');
+    const btn = document.createElement('button');
+    btn.className = 'reel-expand';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Open image');
+    btn.textContent = '⤢';
+    btn.addEventListener('click', (event) => {
+      event.stopPropagation();
+      openLightbox(img.src, img.alt);
+    });
+    frame.appendChild(btn);
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeLightbox();
+  });
+</script>
+</body>
+</html>
