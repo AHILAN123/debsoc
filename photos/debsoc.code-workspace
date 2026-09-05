@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		}
+	],
+	"settings": {
+		"prisma.pinToPrisma6": true
+	}
+}

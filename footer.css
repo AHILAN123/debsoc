@@ -1,0 +1,131 @@
+/* Shared DebSoc footer: late-90s web directory, with modern responsive sizing. */
+.retro-footer {
+  --retro-black: #000000;
+  --retro-panel: #000000;
+  --retro-border: #4e0000;
+  --retro-red: #990011;
+  --retro-red-bright: #c41424;
+  --retro-white: #e7e4dc;
+  position: relative;
+  z-index: 10;
+  margin-top: 48px;
+  padding: 28px 18px 14px;
+  overflow: hidden;
+  color: var(--retro-white);
+  font-family: "Courier New", Courier, monospace;
+  background-color: var(--retro-black);
+  background-image: radial-gradient(rgba(153, 0, 17, 0.48) 1px, transparent 1px);
+  background-size: 10px 10px;
+  border-top: 3px solid var(--retro-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), inset 0 -3px 0 #000;
+}
+.retro-footer::before {
+  content: "  DEBSOC WEB ZONE  ";
+  display: block;
+  margin: 0 auto 18px;
+  max-width: 1160px;
+  padding: 7px 10px;
+  overflow: hidden;
+  color: var(--retro-red-bright);
+  background: var(--retro-panel);
+  border: 1px solid var(--retro-red);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-align: center;
+  white-space: nowrap;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.8);
+}
+.retro-footer-inner { max-width: 1160px; margin: 0 auto; }
+.retro-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.35fr) minmax(250px, 1.65fr) minmax(130px, 1fr) minmax(130px, 1fr);
+  gap: 24px;
+  padding: 18px;
+  background: #000000;
+  border: 1px solid var(--retro-border);
+}
+.retro-footer-image-wrap { display: flex; align-items: center; min-width: 0; }
+.retro-footer-image {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  height: 250px;
+  object-fit: contain;
+  object-position: center;
+  border: 0;
+}
+.retro-footer-description { display: flex; align-items: center; min-width: 0; }
+.retro-footer-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.retro-footer-logo {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  padding: 3px;
+  background: var(--retro-white);
+  border: 2px solid var(--retro-red);
+}
+.retro-footer-brand-name {
+  color: var(--retro-white);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 22px;
+  font-weight: 700;
+  text-shadow: 1px 1px #000;
+}
+.retro-footer-desc { max-width: 390px; margin: 0; color: var(--retro-white); font-size: 12px; line-height: 1.65; }
+.retro-footer-title {
+  margin: 0 0 10px;
+  color: var(--retro-red-bright);
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px #000;
+}
+.retro-footer-links { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+.retro-footer a { color: var(--retro-white); font-size: 12px; text-decoration: underline; }
+.retro-footer a:hover, .retro-footer a:focus-visible { color: var(--retro-white); background: rgba(153, 0, 17, 0.45); outline: 1px solid var(--retro-red-bright); }
+.retro-footer-socials { display: flex; flex-wrap: wrap; gap: 8px; }
+.retro-footer-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  min-height: 30px;
+  padding: 5px 8px;
+  color: var(--retro-white) !important;
+  background: #000000;
+  border: 2px solid var(--retro-red);
+  font-size: 12px !important;
+  font-weight: 700;
+  text-decoration: none !important;
+}
+.retro-footer-social:active { border-style: inset; }
+.retro-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 10px 12px;
+  color: var(--retro-white);
+  background: #000;
+  border: 1px solid var(--retro-border);
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+}
+.retro-footer-status { color: #b56a73; }
+@media (max-width: 700px) {
+  .retro-footer-grid { grid-template-columns: 1fr 1fr; }
+  .retro-footer-image-wrap,
+  .retro-footer-description { grid-column: 1 / -1; }
+  .retro-footer-image { max-width: 320px; }
+  .retro-footer-bottom { flex-direction: column; }
+}
+@media (max-width: 420px) {
+  .retro-footer { padding: 22px 10px 10px; }
+  .retro-footer-grid { grid-template-columns: 1fr; padding: 14px; }
+  .retro-footer-image-wrap,
+  .retro-footer-description { grid-column: auto; }
+  .retro-footer-image { max-width: 100%; height: auto; }
+  .retro-footer::before { font-size: 10px; letter-spacing: 1px; }
+}

@@ -113,146 +113,108 @@
       font-weight: 600;
     }
 
-    /* ══ CTA BUTTONS SECTION ══ */
+    /* ══ CYBER TIMELINE FEATURE ══ */
     .cta-section {
-      padding: 80px 32px;
-      background: linear-gradient(135deg, var(--crimson-deep) 0%, #4a0816 100%);
-      text-align: center;
+      padding: clamp(48px, 8vw, 96px) 24px;
+      background: #000;
+      text-align: left;
       position: relative;
       overflow: hidden;
+      border-top: 1px solid rgba(201, 150, 58, 0.35);
+      border-bottom: 1px solid rgba(201, 150, 58, 0.35);
+      font-family: "Courier New", Courier, monospace;
     }
 
     .cta-section::before {
-      content: '';
+      content: 'DEBSOC // ARCHIVE ACCESS // 001';
       position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 30% 50%, rgba(201, 150, 58, 0.08) 0%, transparent 60%),
-        radial-gradient(ellipse at 70% 50%, rgba(201, 150, 58, 0.05) 0%, transparent 60%);
+      top: 18px;
+      left: 24px;
+      color: rgba(201, 150, 58, 0.6);
+      font-size: 10px;
+      letter-spacing: 0.18em;
     }
 
     .cta-inner {
+      display: grid;
+      grid-template-columns: minmax(230px, 0.8fr) minmax(0, 1.4fr);
+      align-items: center;
+      gap: clamp(28px, 7vw, 100px);
       position: relative;
       z-index: 2;
-      max-width: 720px;
+      max-width: 1120px;
       margin: 0 auto;
+      padding-top: 18px;
     }
 
+    .cta-art-link { display: block; justify-self: center; line-height: 0; }
+    .cta-art {
+      display: block;
+      width: min(100%, 390px);
+      max-height: 510px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 22px rgba(201, 150, 58, 0.14));
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .cta-art-link:hover .cta-art,
+    .cta-art-link:focus-visible .cta-art {
+      transform: translateY(-6px) rotate(-1deg);
+      filter: drop-shadow(0 0 30px rgba(201, 150, 58, 0.3));
+    }
+    .cta-copy { max-width: 620px; }
     .cta-eyebrow {
-      font-size: 10px;
-      letter-spacing: 3px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--gold);
       font-weight: 600;
-      margin-bottom: 20px;
-    }
-
-    .cta-headline {
-      font-family:Georgia, 'Times New Roman', Times, serif;
-      font-size: clamp(32px, 5vw, 52px);
-      font-weight: 900;
-      font-style: italic;
-      color: #FFFFFF;
-      line-height: 1.15;
       margin-bottom: 14px;
     }
 
+    .cta-headline {
+      font-family: "Courier New", Courier, monospace;
+      font-size: clamp(28px, 5vw, 58px);
+      font-weight: 900;
+      color: var(--gold-light);
+      line-height: 1.05;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      text-shadow: 3px 3px 0 rgba(128, 0, 32, 0.55);
+    }
+
     .cta-sub {
-      font-family:Georgia, 'Times New Roman', Times, serif;
-      font-size: 20px;
-      color: rgba(250, 246, 238, 0.65);
-      margin-bottom: 48px;
-      font-style: italic;
+      max-width: 570px;
+      margin: 0 0 30px;
+      color: rgba(243, 229, 171, 0.78);
+      font-size: 14px;
+      line-height: 1.8;
     }
 
     .cta-buttons {
       display: flex;
-      align-items: center;
       justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
     }
 
-    /* Primary CTA button */
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 18px 36px;
-      border-radius: 4px;
-      background: var(--gold);
-      color: #2a0710;
-      font-family:Georgia, 'Times New Roman', Times, serif; 
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 24px rgba(201, 150, 58, 0.3);
-      position: relative;
-      overflow: hidden;
+      display: block;
+      width: fit-content;
+      max-width: 100%;
+      transition: transform 0.2s ease, filter 0.2s ease;
     }
-
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.15), transparent);
-      transform: translateX(-100%);
-      transition: transform 0.4s ease;
+    .btn-primary img {
+      display: block;
+      width: auto;
+      height: min(140px, 18vh);
+      max-width: 100%;
+      object-fit: contain;
     }
-
-    .btn-primary:hover::before {
-      transform: translateX(100%);
-    }
-
-    .btn-primary:hover {
-      background: var(--gold-light);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(201, 150, 58, 0.45);
-    }
-
-    .btn-primary svg {
-      flex-shrink: 0;
-      transition: transform 0.2s ease;
-    }
-
-    .btn-primary:hover svg {
-      transform: translateX(3px);
-    }
-
-    /* Secondary CTA button */
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 17px 36px;
-      border-radius: 4px;
-      background: transparent;
-      color: #FFFFFF;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: 1.5px solid rgba(250, 246, 238, 0.35);
-      transition: all 0.25s ease;
-    }
-
-    .btn-secondary:hover {
-      border-color: rgba(250, 246, 238, 0.7);
-      background: rgba(250, 246, 238, 0.06);
-      transform: translateY(-2px);
-    }
-
-    .btn-secondary svg {
-      flex-shrink: 0;
-      transition: transform 0.2s ease;
-    }
-
-    .btn-secondary:hover svg {
-      transform: translateX(3px);
+    .btn-primary:hover,
+    .btn-primary:focus-visible {
+      transform: translateY(-3px);
+      filter: drop-shadow(0 5px 0 rgba(201, 150, 58, 0.25));
+      outline: none;
     }
 
     /* ── ANIMATIONS ── */
@@ -291,94 +253,23 @@
     }
 
     @media (max-width: 640px) {
-      .cta-buttons {
-        flex-direction: column;
-        align-items: stretch;
+      .cta-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
       }
-
-      .btn-primary,
-      .btn-secondary {
+      .cta-art-link { order: -1; }
+      .cta-copy { margin: 0 auto; }
+      .cta-buttons {
         justify-content: center;
       }
+      .cta-art { max-height: 390px; }
     }
   </style>
 </head>
 
 <body>
 
-  <nav class="w-full px-4 md:px-6 py-3 sticky top-0 z-50 backdrop-blur-md transition-all"
-       style="background: linear-gradient(135deg, rgba(128, 0, 32, 0.95) 0%, rgba(92, 0, 23, 0.95) 100%);">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 lg:gap-4">
-
-      <div class="flex items-center gap-2 md:gap-3 flex-shrink-0">
-        <img src="debsoclogo.webp" alt="Logo" class="h-9 md:h-10 w-auto object-contain">
-        <div class="font-display tracking-wide" style="color:#FAF7F2;">
-          <div class="hidden md:block text-[14px] lg:text-[16px] font-semibold uppercase leading-tight whitespace-nowrap">
-            THE DEBATING SOCIETY<br>
-            <span class="text-[12px] lg:text-[14px] font-normal opacity-90 tracking-normal">OF IIEST SHIBPUR</span>
-          </div>
-          <div class="md:hidden text-[15px] font-semibold uppercase whitespace-nowrap">THE DEBATING SOCIETY
-            <br>OF IIEST SHIBPUR</div>
-        </div>
-      </div>
-
-      <div class="hidden md:flex items-center gap-6">
-        <a href="index.html" class="nav-btn">Home</a>
-        <a href="aboutus.html" class="nav-btn active-nav">About Us</a>
-
-        <div class="relative group">
-          <button class="nav-btn flex items-center gap-1">
-            Events
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clip-rule="evenodd"/>
-            </svg>
-          </button>
-          <div class="absolute left-0 mt-1 w-40 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all"
-            style="background:#FAF7F2;">
-            <a href="becon.html" class="block px-4 py-2 text-sm hover:opacity-70 text-[#800020]">BECON #1.0</a>
-            <a href="events.html" class="block px-4 py-2 text-sm hover:opacity-70 text-[#800020]">MAIN EVENTS</a>
-          </div>
-        </div>
-
-        <a href="gallery.html" class="nav-btn">Gallery</a>
-        <a href="tribunal.html" class="nav-btn">Tribunal</a>
-        <a href="teampage.html" class="nav-btn">Team</a>
-
-        <a href="contactpage.html"
-          class="px-5 py-2 rounded-full text-sm font-semibold transition hover:scale-105"
-          style="background:#DAA520;color:#700c0c;">
-          Contact
-        </a>
-      </div>
-
-      <button id="hamburger-btn" onclick="toggleMobileMenu()" class="md:hidden text-white">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
-
-    </div>
-
-    <div id="mobile-menu"
-      class="hidden absolute top-full right-4 mt-2 w-56 flex flex-col p-2 gap-1 rounded-xl shadow-2xl border border-white/10 md:hidden z-50"
-      style="background:#800020;">
-      <a href="index.html" class="px-4 py-3 text-sm text-white">Home</a>
-      <a href="aboutus.html" class="px-4 py-3 text-sm text-white">About Us</a>
-      <a href="events.html" class="px-4 py-3 text-sm text-white">Main Events</a>
-      <a href="becon.html" class="px-4 py-3 text-sm text-white">Becon #1.0</a>
-      <a href="gallery.html" class="px-4 py-3 text-sm text-white">Gallery</a>
-      <a href="tribunal.html" class="px-4 py-3 text-sm text-white">Tribunal</a>
-      <a href="teampage.html" class="px-4 py-3 text-sm text-white">Team</a>
-      <a href="contactpage.html"
-        class="block px-4 py-3 text-sm mt-2 rounded-full text-center"
-        style="background:#DAA520;color:#700c0c;margin:0 1rem;">
-        Contact
-      </a>
-    </div>
-
-  </nav>
+  
 
   <section class="page-hero fade-in">
     <img src="Gallery&Logo/debating_society.png" alt="The Debating Society of IIEST Shibpur">
@@ -438,30 +329,18 @@
 
       <div class="cta-section">
         <div class="cta-inner reveal">
-          <div class="cta-eyebrow">Go Deeper</div>
-          <h2 class="cta-headline">There's more to explore.</h2>
-          <p class="cta-sub">Trace our journey through the years, or see the faces and moments behind the society.</p>
-          <div class="cta-buttons">
-            <a href="debsoc_iiest_timeline_with_photos.html" class="btn-primary">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              Our Full Timeline
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </a>
-            <a href="gallery.html" class="btn-secondary">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              Browse the Gallery
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </a>
+          <a class="cta-art-link" href="debsoc_iiest_timeline_with_photos.html" aria-label="Open the full DebSoc timeline">
+            <img class="cta-art" src="photos/sach_ipod.jpg" alt="Retro yellow iPod illustration">
+          </a>
+          <div class="cta-copy">
+            <div class="cta-eyebrow">DEBSOC // ARCHIVE ACCESS</div>
+            <h2 class="cta-headline">Next: the full story.</h2>
+            <p class="cta-sub">There's a lot more behind everything you see here. The events, the things, the milestones, and all that we are still working towards, it's all part of this. So this is your chance to go through it all. Start at the very very beginning, this is us, this is YOU! <br>[eta Amader Club, Nijer Club!]</p>
+            <div class="cta-buttons">
+              <a class="btn-primary" href="debsoc_iiest_timeline_with_photos.html" aria-label="Open the full DebSoc timeline">
+                <img src="photos/button.png" alt="Next">
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -573,6 +452,8 @@
         reveals.forEach(el => observer.observe(el));
       </script>
 
+<script src="footer.js"></script>
+<script src="nav.js"></script>
 </body>
 
 </html>
