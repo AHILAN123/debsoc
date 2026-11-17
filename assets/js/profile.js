@@ -64,6 +64,22 @@ const setupProfileNavigation = () => {
   });
 };
 
+const THEME_KEY = "debsoc_profile_theme";
+
+const setupThemeToggle = () => {
+  const toggle = document.getElementById("theme-toggle");
+  const root = document.documentElement;
+  const render = () => toggle.setAttribute("aria-pressed", String(root.dataset.theme === "dark"));
+  render();
+  toggle.addEventListener("click", () => {
+    const dark = root.dataset.theme !== "dark";
+    if (dark) root.dataset.theme = "dark";
+    else delete root.dataset.theme;
+    try { localStorage.setItem(THEME_KEY, dark ? "dark" : "light"); } catch {}
+    render();
+  });
+};
+
 const setEditStatus = (message, isError = false) => {
   const status = document.getElementById("profile-edit-status");
   status.textContent = message;
@@ -100,6 +116,8 @@ const setupSelfEditing = (profile) => {
   const redeemForm = document.getElementById("redeem-form");
   editButton.classList.remove("hidden");
   redeemSection.classList.remove("hidden");
+  // Visibility only; the admin API still enforces the role server-side.
+  if (viewer.role === "ADMIN") document.getElementById("admin-dashboard-link").classList.remove("hidden");
   fillEditForm(profile);
   if (editButton.dataset.bound === "true") return;
   editButton.dataset.bound = "true";
@@ -391,6 +409,7 @@ const loadProfile = async () => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  setupThemeToggle();
   setupProfileNavigation();
   loadProfile();
 });

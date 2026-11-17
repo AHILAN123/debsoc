@@ -162,9 +162,9 @@
       margin-bottom:0;
     }
 
-    /* Below roughly 80% of a typical desktop browser width, stack the
-       text after the complete visual column and immediately before FAQ. */
-    @media (max-width:1280px){
+    /* Laptops at 125-150% display scaling report ~1280px, so keep the side-by-side
+       rail there and only stack the text after the visuals on tablets and phones. */
+    @media (max-width:1024px){
       .content-rail{
         display:block;
         width:min(var(--max),calc(100% - 40px));

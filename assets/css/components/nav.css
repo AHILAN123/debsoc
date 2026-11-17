@@ -1,15 +1,16 @@
 @font-face {
-  font-family: "Press";
-  src: url("../../fonts/press-start-2p-v16-latin-regular.woff2") format("woff2");
+  font-family: "Bebas Neue";
+  src: url("../../fonts/bebas-neue-latin-400-normal.woff2") format("woff2");
   font-display: swap;
 }
 
-/* Shared DebSoc navigation: compact, responsive, and pixel-accented. */
+/* Shared DebSoc navigation: compact, responsive, poster-style caps. */
 .site-nav {
   --nav-bg: rgba(16, 16, 16, 0.97);
   --nav-panel: #111;
   --nav-coral: #ff3d5a;
   --nav-cream: #f1efe8;
+  --nav-font: "Bebas Neue", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -18,7 +19,7 @@
   background: var(--nav-bg);
   border-bottom: 1px solid rgba(255, 61, 90, 0.45);
   box-shadow: 0 5px 18px rgba(0, 0, 0, 0.35);
-  font-family: "Press", "Courier New", monospace;
+  font-family: var(--nav-font);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
@@ -45,15 +46,16 @@
   align-items: center;
   gap: 6px;
   min-height: 38px;
-  padding: 9px 13px;
+  padding: 9px 14px 8px;
   color: rgba(241, 239, 232, 0.86);
   background: transparent;
   border: 1px solid rgba(241, 239, 232, 0.14);
   border-radius: 0;
   font: inherit;
-  font-size: 9px;
-  line-height: 1.6;
-  letter-spacing: .03em;
+  font-size: 19px;
+  line-height: 1;
+  letter-spacing: .07em;
+  white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
   transition: color .18s ease, background .18s ease, border-color .18s ease, transform .18s ease;
@@ -78,6 +80,13 @@
   border-bottom: 1px solid currentColor;
   transform: rotate(45deg) translateY(-2px);
 }
+.site-nav-auth-container,
+.site-nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.site-nav-auth-container { padding-left: 12px; border-left: 1px solid rgba(255, 61, 90, 0.35); }
 .site-nav-events { position: relative; }
 .site-nav-dropdown {
   position: absolute;
@@ -107,9 +116,10 @@
   padding: 13px 12px;
   color: var(--nav-cream);
   border-bottom: 1px solid rgba(241, 239, 232, 0.1);
-  font-family: "Press", "Courier New", monospace;
-  font-size: 8px;
-  line-height: 1.7;
+  font-family: var(--nav-font);
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: .07em;
   text-decoration: none;
 }
 .site-nav-dropdown a:last-child { border-bottom: 0; }
@@ -156,9 +166,10 @@
   padding: 11px 13px;
   color: var(--nav-cream);
   border-left: 2px solid transparent;
-  font-family: "Press", "Courier New", monospace;
-  font-size: 8px;
-  line-height: 1.8;
+  font-family: var(--nav-font);
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: .07em;
   text-decoration: none;
 }
 .site-nav-mobile a:hover,
@@ -174,14 +185,19 @@
   padding: 7px 13px 3px;
   color: var(--nav-coral);
   border-top: 1px solid rgba(255, 61, 90, 0.28);
-  font-family: "Press", "Courier New", monospace;
-  font-size: 8px;
-  letter-spacing: .04em;
+  font-family: var(--nav-font);
+  font-size: 16px;
+  letter-spacing: .1em;
   text-transform: uppercase;
 }
+.site-nav-mobile-auth-container,
+.site-nav-mobile-auth { display: grid; gap: 3px; }
+.site-nav-mobile-auth-container { margin-top: 7px; padding-top: 7px; border-top: 1px solid rgba(255, 61, 90, 0.28); }
+.site-nav-mobile .site-nav-link { justify-content: flex-start; border-color: transparent; }
 @media (max-width: 860px) {
   .site-nav-inner { min-height: 58px; padding: 9px 18px; }
-  .site-nav-links { display: none; }
+  .site-nav-links,
+  .site-nav-auth-container { display: none; }
   .site-nav-menu-button { display: block; }
   .site-nav-mobile { padding-left: 18px; padding-right: 18px; }
 }

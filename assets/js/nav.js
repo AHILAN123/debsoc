@@ -136,15 +136,9 @@ const eventLinks = [
               <a
                 href="${profileUrl}"
                 class="site-nav-link"
+                title="Your profile"
               >
                 @${username}
-              </a>
-
-              <a
-                href="${profileUrl}"
-                class="site-nav-link"
-              >
-                Profile
               </a>
 
               <button
@@ -181,14 +175,7 @@ const eventLinks = [
                 href="${profileUrl}"
                 class="site-nav-link"
               >
-                @${username}
-              </a>
-
-              <a
-                href="${profileUrl}"
-                class="site-nav-link"
-              >
-                My Profile
+                @${username} &middot; My Profile
               </a>
 
               <button

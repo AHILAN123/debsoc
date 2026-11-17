@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile | DebSoc IIEST Shibpur</title>
   <link rel="icon" href="favicon.ico">
+  <script>try { if (localStorage.getItem("debsoc_profile_theme") === "dark") document.documentElement.dataset.theme = "dark"; } catch (e) {}</script>
   <link rel="stylesheet" href="assets/css/vendor/tailwind.css">
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +21,12 @@
 
       <div class="tb">
         <span>DebSoc Explorer &mdash; IIEST Shibpur</span>
-        <span class="wbtns" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+        <span class="tb-actions">
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false">
+            <span class="tt-box" aria-hidden="true"></span>Dark mode
+          </button>
+          <span class="wbtns" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+        </span>
       </div>
 
       <div class="stack">
@@ -84,6 +90,7 @@
               <p class="h">:D links</p>
               <div id="social-links"></div>
               <button id="edit-profile-btn" type="button" class="btn hidden">Edit Profile</button>
+              <a id="admin-dashboard-link" class="btn hidden" href="admin/admin.html">Admin Dashboard</a>
             </div>
           </div>
 
