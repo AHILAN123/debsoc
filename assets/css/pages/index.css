@@ -162,9 +162,9 @@
       margin-bottom:0;
     }
 
-    /* Laptops at 125-150% display scaling report ~1280px, so keep the side-by-side
-       rail there and only stack the text after the visuals on tablets and phones. */
-    @media (max-width:1024px){
+    /* Laptops with display scaling plus browser zoom report ~1000px, so keep the
+       side-by-side rail until the hero itself goes single-column at 900px. */
+    @media (max-width:900px){
       .content-rail{
         display:block;
         width:min(var(--max),calc(100% - 40px));

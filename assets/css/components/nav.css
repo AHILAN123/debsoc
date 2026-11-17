@@ -1,16 +1,10 @@
-@font-face {
-  font-family: "Bebas Neue";
-  src: url("../../fonts/bebas-neue-latin-400-normal.woff2") format("woff2");
-  font-display: swap;
-}
-
-/* Shared DebSoc navigation: compact, responsive, poster-style caps. */
+/* Shared DebSoc navigation: compact, responsive, serif to match the body text. */
 .site-nav {
   --nav-bg: rgba(16, 16, 16, 0.97);
   --nav-panel: #111;
   --nav-coral: #ff3d5a;
   --nav-cream: #f1efe8;
-  --nav-font: "Bebas Neue", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --nav-font: "Times New Roman", Times, serif;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -27,17 +21,17 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 12px;
+  gap: 10px;
   max-width: 1240px;
-  min-height: 70px;
+  min-height: 56px;
   margin: 0 auto;
-  padding: 10px 24px;
+  padding: 8px 24px;
 }
 .site-nav-links {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 7px;
+  gap: 5px;
   margin-left: auto;
 }
 .site-nav-link,
@@ -45,16 +39,16 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 38px;
-  padding: 9px 14px 8px;
+  min-height: 30px;
+  padding: 5px 10px;
   color: rgba(241, 239, 232, 0.86);
   background: transparent;
   border: 1px solid rgba(241, 239, 232, 0.14);
   border-radius: 0;
   font: inherit;
-  font-size: 19px;
-  line-height: 1;
-  letter-spacing: .07em;
+  font-size: 15px;
+  line-height: 1.1;
+  letter-spacing: .01em;
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
@@ -84,9 +78,9 @@
 .site-nav-auth {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 5px;
 }
-.site-nav-auth-container { padding-left: 12px; border-left: 1px solid rgba(255, 61, 90, 0.35); }
+.site-nav-auth-container { padding-left: 10px; border-left: 1px solid rgba(255, 61, 90, 0.35); }
 .site-nav-events { position: relative; }
 .site-nav-dropdown {
   position: absolute;
@@ -117,9 +111,8 @@
   color: var(--nav-cream);
   border-bottom: 1px solid rgba(241, 239, 232, 0.1);
   font-family: var(--nav-font);
-  font-size: 18px;
-  line-height: 1;
-  letter-spacing: .07em;
+  font-size: 15px;
+  line-height: 1.1;
   text-decoration: none;
 }
 .site-nav-dropdown a:last-child { border-bottom: 0; }
@@ -167,9 +160,8 @@
   color: var(--nav-cream);
   border-left: 2px solid transparent;
   font-family: var(--nav-font);
-  font-size: 20px;
-  line-height: 1;
-  letter-spacing: .07em;
+  font-size: 17px;
+  line-height: 1.1;
   text-decoration: none;
 }
 .site-nav-mobile a:hover,
@@ -186,8 +178,8 @@
   color: var(--nav-coral);
   border-top: 1px solid rgba(255, 61, 90, 0.28);
   font-family: var(--nav-font);
-  font-size: 16px;
-  letter-spacing: .1em;
+  font-size: 13px;
+  letter-spacing: .08em;
   text-transform: uppercase;
 }
 .site-nav-mobile-auth-container,
