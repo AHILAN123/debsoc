@@ -1,3 +1,19 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    { "source": "/aboutus", "destination": "/about", "permanent": true },
+    { "source": "/aboutus.html", "destination": "/about", "permanent": true },
+    { "source": "/contactpage", "destination": "/contact", "permanent": true },
+    { "source": "/contactpage.html", "destination": "/contact", "permanent": true },
+    { "source": "/teampage", "destination": "/team", "permanent": true },
+    { "source": "/teampage.html", "destination": "/team", "permanent": true },
+    { "source": "/debsoc_iiest_timeline_with_photos", "destination": "/timeline", "permanent": true },
+    { "source": "/debsoc_iiest_timeline_with_photos.html", "destination": "/timeline", "permanent": true },
+    { "source": "/viewcommittee", "destination": "/committees", "permanent": true },
+    { "source": "/viewcommittee.html", "destination": "/committees", "permanent": true },
+    { "source": "/new", "destination": "/links", "permanent": true },
+    { "source": "/new.html", "destination": "/links", "permanent": true },
+    { "source": "/tribunal2", "destination": "/tribunal-edition", "permanent": true },
+    { "source": "/tribunal2.html", "destination": "/tribunal-edition", "permanent": true }
+  ]
 }

@@ -1,0 +1,360 @@
+/*
+  BECON / POSTER SYSTEM v3
+  =========================
+  Restructured from a hero+sidebar grid into three alternating
+  "zigzag" rows per poster:
+    Row 1 — text (title)      | image (hero photo)
+    Row 2 — image (duo photo) | text (description)
+    Row 3 — text (glimpses)   | image (photo stack)
+  Same visual language (torn duo-photo, ticker bands, red/blue
+  palette swap) as before, just reflowed so every row alternates
+  which side carries the text vs the image — matching the rhythm
+  the glimpses section already had.
+*/
+
+@font-face{
+  font-family:"Press";
+  src:url("../fonts/press-start-2p-v16-latin-regular.woff2") format("woff2");
+  font-display:swap;
+}
+
+:root{
+  --black:#141414;
+  --black-soft:#1d1d1d;
+  --cream:#f1efe8;
+  --white:#fffdf7;
+  --red:#c0392b;
+  --red-dark:#7e1d18;
+  --maroon:#3a0f0c;
+  --blue:#4750c9;
+  --blue-dark:#33379a;
+  --purple-duo:#6f5fa8;
+  --serif:Georgia,"Times New Roman",serif;
+  --display:Impact,"Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --sans:"Helvetica Neue",Arial,sans-serif;
+  --pixel:"Press","Courier New",monospace;
+}
+
+*{box-sizing:border-box}
+html{background:var(--black);scroll-behavior:smooth}
+body{margin:0;background:var(--black);color:var(--cream);overflow-x:hidden;font-family:var(--serif)}
+img{display:block;max-width:100%;width:100%;height:100%;object-fit:cover}
+button{font:inherit}
+a{color:inherit}
+#site-nav{position:relative;z-index:30}
+
+/* ==========================================================
+   POSTER shell
+   ========================================================== */
+
+.poster{position:relative;background:var(--cream);border-bottom:4px solid var(--black)}
+.poster-rule{height:9px;background:var(--red)}
+.poster--disec .poster-rule{background:var(--blue)}
+
+.poster-number{
+  position:absolute;top:16px;right:20px;z-index:5;
+  color:var(--white);
+  font:9px/1.4 var(--pixel);
+  letter-spacing:.04em;
+  mix-blend-mode:difference;
+}
+.poster--lok .hero-title{
+  background:var(--maroon);
+}
+
+.poster--lok .hero-title::before{
+  content:"LOK SABHA";
+  position:absolute;
+  right:-22%;
+  bottom:-8%;
+
+  font-family:var(--display);
+  font-size:clamp(130px,15vw,250px);
+  font-weight:900;
+  line-height:.7;
+  letter-spacing:-.07em;
+
+  color:rgba(255,255,255,.055);
+  white-space:nowrap;
+
+  transform:rotate(-90deg);
+}
+/* ==========================================================
+   LOK SABHA
+   ========================================================== */
+
+
+.poster--lok .hero-title::after{
+  content:"02  /  PARLIAMENT  /  INDIA";
+  position:absolute;
+  top:22px;
+  left:6%;
+
+  font-family:var(--pixel);
+  font-size:clamp(7px,.55vw,10px);
+  letter-spacing:.08em;
+
+  color:rgba(255,255,255,.72);
+}
+.poster--lok .hero-title .poster-title{
+  font-size:clamp(68px,8.2vw,140px)!important;
+  line-height:.78!important;
+}
+
+/* ==========================================================
+   ZIGZAG ROWS — the core layout primitive
+   ========================================================== */
+
+.zrow{display:grid;align-items:stretch;min-height:0;}
+.zrow-col{position:relative;overflow:hidden}
+
+/* Row 1 — intro: title (narrower) | hero photo (wider) */
+.zrow--intro{grid-template-columns:38% 62%}
+
+/* Row 2 — desc: duo photo (wider) | paragraph (narrower) */
+.zrow--desc{grid-template-columns:56% 44%;min-height:auto}
+
+/* Row 3 — glimpse: text block (wider) | photo stack (narrower) */
+.zrow--glimpse{grid-template-columns:60% 40%;min-height:auto}
+
+/* ---- Row 1 pieces ---- */
+
+.hero-title{
+  padding:34px 6% 20px;
+  background:var(--maroon);
+  display:flex;align-items:flex-end;
+}
+.poster--disec .hero-title{background:var(--blue-dark)}
+
+.hero-title .poster-title{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  margin:0!important;
+  font-family:var(--display)!important;
+  font-weight:900!important;
+  text-transform:uppercase!important;
+  color:var(--white)!important;
+  font-size:clamp(34px,6.4vw,74px)!important;
+  line-height:.92!important;
+  letter-spacing:-.02em!important;
+  text-shadow:0 2px 12px rgba(0,0,0,.4);
+}
+.hero-photo{
+  background:var(--black);
+  position:relative;
+  min-height:0;
+}
+.hero-photo::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,rgba(58,15,12,.5) 0%,rgba(58,15,12,0) 20%);
+}
+.poster--disec .hero-photo::before{
+  background:linear-gradient(90deg,rgba(51,55,154,.5) 0%,rgba(51,55,154,0) 20%);
+}
+.hero-photo img{
+  width:100%;
+  height:100%;
+  min-height:0;
+  object-fit:cover;
+
+  filter:contrast(1.12) brightness(.94);
+}
+
+/* ---- Row 2 pieces ---- */
+
+.duo-photo{
+  background:var(--purple-duo);
+  clip-path:polygon(0 0,4% 6%,9% 1%,14% 7%,19% 0,25% 6%,31% 1%,37% 7%,43% 0,49% 6%,55% 1%,61% 7%,67% 0,73% 6%,79% 1%,85% 7%,91% 0,96% 6%,100% 0,100% 100%,0 100%);
+  filter:drop-shadow(0 14px 18px rgba(0,0,0,.5));
+}
+.duo-photo img{filter:grayscale(.3) sepia(.45) hue-rotate(210deg) saturate(2.4) brightness(.95)}
+.poster--disec .duo-photo{background:var(--red-dark)}
+.poster--disec .duo-photo img{filter:grayscale(.2) sepia(.3) hue-rotate(-10deg) saturate(2) brightness(.9)}
+.poster--disec .hero-photo::before{
+  background:
+    linear-gradient(
+      90deg,
+      rgba(51,55,154,.65) 0%,
+      rgba(51,55,154,.18) 14%,
+      rgba(51,55,154,0) 30%
+    );
+}
+
+.info-block{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:20px;
+  padding:34px 6%;
+  background:var(--black);
+}
+
+.info-block p{
+  margin:0;
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:700;
+  font-size:clamp(14px,1.3vw,19px);
+  line-height:1.55;
+  color:var(--white);
+  text-align:justify;
+}
+
+.speaker-photo{width:48%;align-self:flex-start;overflow:hidden}
+.speaker-photo img{filter:grayscale(1) contrast(1.1) drop-shadow(0 8px 12px rgba(0,0,0,.4))}
+
+/* ---- Row 3 pieces ---- */
+
+.glimpse-text{display:flex;flex-direction:column;background:var(--cream)}
+
+.glimpse-bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:18px 4%;
+  background:var(--red);
+}
+.poster--disec .glimpse-bar{background:var(--blue)}
+
+.glimpse-bar h2{
+  margin:0;
+  font-family:var(--sans);
+  font-weight:800;
+  letter-spacing:.01em;
+  text-transform:uppercase;
+  color:var(--white);
+  font-size:clamp(18px,2.1vw,28px);
+}
+
+.glimpse-icons{display:flex;gap:10px;flex:none}
+.glimpse-icons span{
+  width:34px;height:34px;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid rgba(255,255,255,.85);
+  border-radius:6px;
+  color:var(--white);
+}
+.glimpse-icons svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+
+.glimpse-content{padding:26px 4% 8px;flex:1}
+
+.quote-bubble{
+  display:inline-block;
+  background:var(--blue);
+  color:var(--white);
+  font-family:var(--serif);
+  font-weight:700;
+  font-style:italic;
+  font-size:clamp(15px,1.5vw,19px);
+  padding:12px 20px;
+  border-radius:4px;
+  margin:0 0 10px;
+  box-shadow:0 6px 14px rgba(0,0,0,.25);
+}
+.poster--disec .quote-bubble{background:var(--red)}
+
+.quote-plain{
+  margin:0 0 6px;
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:700;
+  font-size:clamp(14px,1.2vw,17px);
+  color:var(--black);
+}
+
+/* ticker field — layered word-repeat texture */
+
+.ticker-field{
+  position:relative;overflow:hidden;height:220px;margin:14px 0;
+  box-shadow:inset 0 12px 20px -12px rgba(0,0,0,.2),
+             inset 0 -12px 20px -12px rgba(0,0,0,.2);
+}
+
+.ticker-diagonal{
+  position:absolute;inset:-30% -15%;z-index:0;
+  transform:rotate(-12deg);
+  display:flex;flex-direction:column;gap:28px;
+}
+.ticker-diagonal p{
+  margin:0;
+  font-family:var(--display);
+  font-weight:900;
+  text-transform:uppercase;
+  font-size:clamp(16px,2vw,24px);
+  letter-spacing:.06em;
+  color:var(--red);
+  opacity:.13;
+  white-space:nowrap;
+}
+.poster--disec .ticker-diagonal p{color:var(--blue-dark)}
+
+.ticker-band{
+  position:absolute;left:0;z-index:1;width:100%;
+  padding:8px 0;
+  white-space:nowrap;
+  overflow:hidden;
+  font-family:var(--display);
+  font-weight:900;
+  text-transform:uppercase;
+  font-size:clamp(15px,1.7vw,22px);
+  letter-spacing:.08em;
+}
+.ticker-band--tint{top:6%;color:var(--red);background:var(--cream)}
+.ticker-band--solid{top:44%;color:var(--cream);background:var(--red)}
+.ticker-band--dark{top:78%;color:var(--red);background:var(--black-soft)}
+.poster--disec .ticker-band--tint{color:var(--blue);background:var(--cream)}
+.poster--disec .ticker-band--solid{color:var(--cream);background:var(--blue)}
+.poster--disec .ticker-band--dark{color:var(--blue)}
+
+.glimpse-quotes{margin-top:6px}
+.glimpse-quotes p{
+  margin:0 0 22px;
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:clamp(14px,1.25vw,18px);
+  line-height:1.5;
+  color:var(--black)
+}
+
+/* photo stack — vertical column of images, replaces the old
+   3-across bottom row so it reads as a single "media" side */
+.photo-col{background:var(--black)}
+.photo-stack{display:flex;flex-direction:column;height:100%}
+.photo-stack > div{flex:1;overflow:hidden;min-height:0}
+.photo-stack img{filter:grayscale(1) contrast(1.05)}
+
+/* ==========================================================
+   ARCHIVE FOOT
+   ========================================================== */
+
+.archive{background:var(--black);padding:56px 0 74px}
+.archive-inner{width:min(1100px,calc(100% - 34px));margin:auto}
+.archive h2{margin:0 0 18px;color:#fff;font:400 clamp(30px,5vw,64px)/1 var(--pixel)}
+.archive p{max-width:70ch;margin:0 0 18px;color:rgba(241,239,232,.72);font-size:18px;line-height:1.7}
+
+/* ==========================================================
+   RESPONSIVE — rows stack; DOM order already alternates
+   text/image top-to-bottom so nothing needs reordering
+   ========================================================== */
+
+@media(max-width:900px){
+  .zrow{grid-template-columns:1fr!important;min-height:0}
+
+  .hero-title{padding:20px 5% 14px}
+  .hero-title .poster-title{font-size:15vw!important}
+  .hero-photo{height:52vw;min-height:0vw;}
+
+  .duo-photo{height:56vw;clip-path:polygon(0 0,6% 5%,12% 0,18% 6%,24% 0,30% 5%,36% 0,42% 6%,48% 0,54% 5%,60% 0,66% 6%,72% 0,78% 5%,84% 0,90% 6%,96% 0,100% 4%,100% 100%,0 100%)}
+  .info-block{padding:24px 5%}
+  .speaker-photo{width:100%}
+
+  .glimpse-bar{padding:14px 5%}
+  .glimpse-content{padding:20px 5% 4px}
+
+  .ticker-field{height:180px}
+  .ticker-band{font-size:13px}
+
+  .photo-stack{flex-direction:row;height:56vw}
+}

@@ -1,0 +1,313 @@
+@font-face {
+  font-family: "Press";
+  src: url("../fonts/press-start-2p-v16-latin-regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --black: #151515;
+  --panel: #202020;
+  --cream: #f1efe8;
+  --muted: #aaa7a0;
+  --coral: #ff3d5a;
+  --pixel: "Press", "Courier New", monospace;
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --display: "Anton", Impact, sans-serif;
+  --hand: "Gochi Hand", "Comic Sans MS", cursive;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--black); scroll-behavior: smooth; }
+body { margin: 0; overflow-x: hidden; color: var(--cream); background: var(--black); font-family: var(--serif); }
+
+/* ───────── Masthead (unchanged look) ───────── */
+.history-masthead {
+  position: relative; overflow: hidden;
+  padding: clamp(66px, 10vw, 132px) 24px clamp(54px, 8vw, 100px);
+  border-bottom: 1px solid rgba(255, 61, 90, .5);
+  background:
+    linear-gradient(90deg, rgba(255, 61, 90, .12) 1px, transparent 1px),
+    linear-gradient(rgba(255, 61, 90, .12) 1px, transparent 1px),
+    linear-gradient(135deg, #282020, #151515 72%);
+  background-size: 36px 36px, 36px 36px, auto;
+}
+.history-masthead-inner { position: relative; z-index: 1; width: min(1120px, 100%); margin: 0 auto; }
+.history-kicker, .history-index, .section-label, .entry-endmark, .cover-caption, .entry-meta {
+  font-family: var(--pixel); font-size: 8px; line-height: 1.8; letter-spacing: .04em; text-transform: uppercase;
+}
+.history-kicker { margin: 0 0 24px; color: var(--coral); }
+.history-masthead h1 { margin: 0; color: #fff; font: 400 clamp(38px, 9vw, 112px)/.98 var(--display); letter-spacing: -.025em; text-transform: uppercase; }
+.history-masthead h1 span { color: transparent; -webkit-text-stroke: 1px var(--cream); }
+.history-intro { max-width: 47ch; margin: 26px 0 0; color: rgba(241, 239, 232, .76); font-size: clamp(17px, 2.2vw, 22px); font-style: italic; line-height: 1.5; }
+.history-index { display: flex; align-items: center; gap: 14px; margin-top: 34px; color: var(--muted); }
+.history-index i { width: 22px; height: 2px; background: var(--coral); }
+.masthead-mark { position: absolute; right: 4vw; bottom: -14vw; color: rgba(255, 61, 90, .07); font: 900 clamp(260px, 42vw, 620px)/.8 var(--display); pointer-events: none; }
+
+/* ───────── Entry base ─────────
+   Markup: .entry-layout > .entry-head (meta + title) · .entry-art (.entry-cover + .event-gallery) · .entry-copy
+   Each variant places those three blocks with grid-template-areas.
+   Image colour treatment is NEVER set here — only inside a variant, per image role. */
+.history-entry {
+  --paper: #e8e4d9; --ink: #171717; --muted-ink: #5e5b55; --accent: #ff3d5a; --accent-ink: #b0185f;
+  --card: rgba(255, 255, 255, .55); --line: rgba(0, 0, 0, .25);
+  position: relative; overflow: hidden;
+  padding: clamp(40px, 6vw, 84px) 24px;
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image: radial-gradient(rgba(0, 0, 0, .1) .55px, transparent .75px);
+  background-size: 4px 4px;
+}
+.entry-layout { display: grid; gap: clamp(18px, 3vw, 34px); width: min(1000px, 100%); margin: 0 auto; }
+.entry-head { grid-area: head; min-width: 0; }
+.entry-art { grid-area: art; display: contents; }
+.entry-copy { grid-area: copy; width: min(680px, 100%); min-width: 0; margin: 0 auto; }
+
+.entry-cover, .event-thumb { position: relative; margin: 0; overflow: hidden; isolation: isolate; background: #222; }
+.entry-cover img, .event-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.cover-image { position: absolute; inset: 0; }
+.event-gallery { display: grid; gap: 10px; margin: 0; }
+.event-thumb { aspect-ratio: 4 / 3; }
+.cover-caption { position: absolute; z-index: 3; bottom: 12px; left: 12px; color: #fff; text-shadow: 0 1px 6px rgba(0, 0, 0, .7); }
+.cover-placeholder { position: absolute; inset: 0; display: grid; place-items: center; font: 400 clamp(18px, 4vw, 30px)/1.5 var(--pixel); text-align: center; color: rgba(255, 255, 255, .9); }
+.image-unavailable::before { color: rgba(255, 255, 255, .4); font: 8px var(--pixel); content: "IMAGE UNAVAILABLE"; }
+
+.entry-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 11px; margin: 0; color: var(--accent-ink); }
+.entry-meta i { width: 16px; height: 1px; background: currentColor; }
+.entry-head h2 { margin: 14px 0 0; font: 400 clamp(30px, 5vw, 60px)/1 var(--display); text-transform: uppercase; overflow-wrap: anywhere; }
+.entry-description { margin: 0; color: var(--ink); font: italic 600 clamp(17px, 2vw, 22px)/1.5 var(--serif); }
+.award-count { display: inline-flex; align-items: baseline; gap: 8px; margin: 18px 0 0; padding: 8px 10px; background: rgba(0, 0, 0, .07); border-left: 3px solid var(--accent); font-size: 13px; text-transform: uppercase; }
+.award-count b { color: var(--accent-ink); font: 400 22px var(--display); }
+.event-awards { margin-top: 24px; padding-top: 16px; border-top: 4px dashed var(--line); }
+.section-label { display: flex; justify-content: space-between; margin: 0 0 11px; color: var(--accent-ink); }
+.section-label span { color: var(--muted-ink); }
+.award-list { display: grid; gap: 7px; }
+.award-item { display: flex; align-items: center; gap: 11px; padding: 9px 10px; color: var(--ink); background: var(--card); border: 1px solid var(--line); text-decoration: none; }
+.award-item:hover { border-color: var(--accent); }
+.award-mark { color: var(--accent-ink); font-size: 20px; }
+.award-item b, .award-item small { display: block; }
+.award-item b { font-size: 13px; }
+.award-item small { margin-top: 2px; color: var(--muted-ink); font-size: 12px; }
+.entry-endmark { margin-top: 22px; color: var(--muted-ink); text-align: right; }
+.entry-rule { display: none; }
+
+/* ═════════ 1 · OASIS — blue archive poster ═════════
+   The full-width cover is followed by every available gallery image. */
+.history-entry--poster { --paper: #dedad0; --accent: #4a9fe5; --accent-ink: #245c92; }
+.history-entry--pastel-rose { --accent: #e9a8bb; --accent-ink: #754354; }
+.history-entry--pastel-peach { --accent: #efb996; --accent-ink: #805339; }
+.history-entry--pastel-butter { --accent: #e8d58a; --accent-ink: #71602d; }
+.history-entry--pastel-mint { --accent: #9dcbb4; --accent-ink: #426b55; }
+.history-entry--pastel-sage { --accent: #b4c39a; --accent-ink: #52613d; }
+.history-entry--pastel-sky { --accent: #9dc8e2; --accent-ink: #3d627a; }
+.history-entry--pastel-aqua { --accent: #91c9c5; --accent-ink: #3d6865; }
+.history-entry--pastel-lavender { --accent: #b8addc; --accent-ink: #5e527e; }
+.history-entry--pastel-lilac { --accent: #d0abd0; --accent-ink: #755374; }
+.history-entry--pastel-coral { --accent: #eaa69a; --accent-ink: #794b43; }
+.history-entry--bold-pink { --accent: #d81b60; --accent-ink: #971447; }
+.history-entry--bold-orange { --accent: #f26a12; --accent-ink: #a93e00; }
+.history-entry--bold-blue { --accent: #287ec0; --accent-ink: #164c75; }
+.history-entry--poster .entry-layout { width: min(1120px, 100%); grid-template-areas: "head" "cover" "thumbs" "copy"; justify-items: center; }
+.history-entry--poster .event-gallery { grid-area: thumbs; grid-template-columns: repeat(5, minmax(0, 1fr)); width: 100%; gap: 12px; }
+.history-entry--poster .event-thumb { aspect-ratio: 1.15 / 1; border: 3px solid #111; background: #111; }
+.history-entry--poster .cover-image { filter: grayscale(1) brightness(1.12) contrast(1.35); mix-blend-mode: multiply; }
+.history-entry--poster .event-thumb img { filter: grayscale(1) brightness(1.12) contrast(1.35); }
+.history-entry--poster .cover-image,
+.history-entry--poster .event-thumb img { cursor: zoom-in; }
+.image-viewer {
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  padding: 56px 18px 18px;
+  color: #fff;
+  background: rgba(8, 8, 8, .97);
+  border: 0;
+}
+.image-viewer[open] { display: grid; place-items: center; }
+.image-viewer::backdrop { background: rgba(0, 0, 0, .9); }
+.image-viewer img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; }
+.image-viewer-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  padding: 10px 14px;
+  color: #fff;
+  background: #222;
+  border: 1px solid rgba(255, 255, 255, .5);
+  font: 12px var(--pixel);
+  cursor: pointer;
+}
+.image-viewer-close:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.history-entry--poster .entry-head { position: relative; z-index: 0; width: 100%; text-align: center; }
+.history-entry--poster .entry-meta { justify-content: center; color: #222; font: clamp(18px, 2.6vw, 28px)/1 var(--hand); text-transform: none; letter-spacing: 0; transform: rotate(-2deg); }
+.history-entry--poster .entry-meta i { display: none; }
+.history-entry--poster .entry-head h2 { margin-top: 10px; color: var(--accent); font: 400 clamp(64px, 17vw, 200px)/.8 var(--display); letter-spacing: -.04em; }
+.history-entry--poster .entry-cover { grid-area: cover; z-index: 1; width: 100%; aspect-ratio: 4 / 3; background: var(--accent); }
+.history-entry--poster .entry-cover::after { position: absolute; z-index: 1; inset: 0; content: ""; pointer-events: none; background: var(--accent); mix-blend-mode: screen; opacity: .25; }
+
+/* ═════════ 4 · INFERNO — red album collage ═════════
+   LAYOUT : large main photo left, tilted white-border snapshots right, black star burst, title overlapping the bottom
+   OVERLAY: photos stay IN COLOUR (no b/w); only a light red cast so they sit on the red page. */
+.history-entry--collage { --paper: #d92a1f; --ink: #fff5ea; --muted-ink: #ffd9d2; --accent: #fff5ea; --accent-ink: #fff5ea; --card: rgba(0, 0, 0, .28); --line: rgba(255, 245, 234, .4); background-image: radial-gradient(rgba(0, 0, 0, .16) .55px, transparent .75px); }
+.history-entry--collage .entry-layout { grid-template-areas: "art" "head" "copy"; }
+.history-entry--collage .entry-art { display: grid; position: relative; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(10px, 2.5vw, 28px); }
+.history-entry--collage .entry-art::before {
+  position: absolute; z-index: 4; top: -6%; right: -2%; width: clamp(60px, 12vw, 120px); aspect-ratio: 1; content: ""; background: #111; pointer-events: none;
+  clip-path: polygon(100% 50%, 63.9% 55.7%, 85.4% 85.4%, 55.7% 63.9%, 50% 100%, 44.3% 63.9%, 14.6% 85.4%, 36.1% 55.7%, 0 50%, 36.1% 44.3%, 14.6% 14.6%, 44.3% 36.1%, 50% 0, 55.7% 36.1%, 85.4% 14.6%, 63.9% 44.3%);
+}
+.history-entry--collage .entry-cover { aspect-ratio: 4 / 3; box-shadow: 8px 8px 0 rgba(0, 0, 0, .35); }
+.history-entry--collage .entry-cover img { object-fit: contain; }
+.history-entry--collage .event-gallery { grid-template-columns: 1fr 1fr; gap: clamp(10px, 2.5vw, 22px); }
+.history-entry--collage .event-thumb { aspect-ratio: 1.1 / 1; border: 6px solid #fff5ea; border-bottom-width: 16px; background: #fff5ea; box-shadow: 5px 5px 0 rgba(0, 0, 0, .3); }
+.history-entry--collage .event-thumb:nth-child(1) { transform: rotate(-4deg); }
+.history-entry--collage .event-thumb:nth-child(2) { transform: rotate(3deg) translateY(10px); }
+.history-entry--collage .event-thumb:nth-child(3) { transform: rotate(4deg); }
+.history-entry--collage .event-thumb:nth-child(4) { transform: rotate(-3deg) translateY(-8px); }
+.history-entry--collage .entry-cover::after, .history-entry--collage .event-thumb::after { position: absolute; z-index: 1; inset: 0; content: ""; pointer-events: none; background: #ff2a1a; mix-blend-mode: multiply; opacity: .18; }
+.history-entry--collage .cover-caption { padding: 5px 7px; color: #111; background: #fff5ea; text-shadow: none; }
+.history-entry--collage .entry-head { position: relative; z-index: 3; }
+.history-entry--collage .entry-head h2 { margin: 6px 0 0; color: #fff5ea; font: 700 clamp(72px, 18vw, 200px)/.8 var(--serif); letter-spacing: -.05em; text-transform: lowercase; text-shadow: 3px 3px 0 rgba(0, 0, 0, .25); }
+
+/* Gallery keeps the History card treatments while giving every photo room to read. */
+.gallery-page .history-feed { grid-template-columns: minmax(0, 1fr); width: min(1440px, calc(100% - 32px)); }
+.gallery-page .history-entry { padding: clamp(24px, 4vw, 56px); }
+.gallery-page .entry-layout { width: 100%; gap: clamp(16px, 2.5vw, 28px); }
+.gallery-page .history-entry--collage .entry-layout { grid-template-areas: "head" "art" "copy"; }
+.gallery-page .history-entry--collage .entry-art { display: block; }
+.gallery-page .history-entry--collage .event-gallery { grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: clamp(18px, 3vw, 32px); padding: 12px; }
+.gallery-page .history-entry--collage .event-thumb { aspect-ratio: 4 / 3; border: 6px solid #fff5ea; border-bottom-width: 20px; box-shadow: 5px 5px 0 rgba(0, 0, 0, .3); }
+.gallery-page .history-entry--collage .event-thumb:nth-child(4n+1) { transform: rotate(-3deg); }
+.gallery-page .history-entry--collage .event-thumb:nth-child(4n+2) { transform: rotate(2.5deg) translateY(8px); }
+.gallery-page .history-entry--collage .event-thumb:nth-child(4n+3) { transform: rotate(3deg); }
+.gallery-page .history-entry--collage .event-thumb:nth-child(4n) { transform: rotate(-2deg) translateY(-6px); }
+.gallery-page .history-entry--collage .event-thumb::after { opacity: .04; }
+.gallery-page .history-entry--collage .entry-head h2 { font-size: clamp(48px, 8vw, 100px); }
+
+/* BECON uses the same archive art direction, but larger image canvases. */
+.becon-page .history-feed { width: min(1440px, calc(100% - 32px)); }
+.becon-page .history-entry { padding: clamp(24px, 4vw, 64px) clamp(18px, 5vw, 72px); }
+.becon-page .entry-layout { width: 100%; gap: clamp(18px, 3vw, 36px); }
+.becon-page .entry-copy { width: min(980px, 100%); }
+.becon-page .history-entry--collage .entry-art { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); }
+.becon-page .history-entry--collage .entry-cover { aspect-ratio: 4 / 3; }
+.becon-page .history-entry--collage .event-gallery { gap: clamp(12px, 2vw, 24px); }
+.becon-page .history-entry--collage .event-thumb { aspect-ratio: 1.2 / 1; }
+.becon-page .history-entry--poster .lok-sabha-gallery { grid-auto-columns: clamp(300px, 32vw, 460px); }
+.becon-page .history-entry--poster .lok-sabha-gallery {
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(220px, 23vw, 340px);
+  grid-template-columns: none;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  padding: 0 0 12px;
+  scroll-snap-type: x mandatory;
+  scrollbar-color: #171717 rgba(0, 0, 0, .16);
+  scrollbar-width: auto;
+}
+.becon-page .lok-sabha-gallery .event-thumb { scroll-snap-align: start; }
+.becon-page .lok-sabha-gallery:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 4px; }
+
+/* About page keeps the shared archive layout, using a darker palette. */
+.about-page .history-feed { grid-template-columns: minmax(0, 1fr); }
+.about-page .history-entry--poster { --paper: #292c35; --ink: #f1efe8; --muted-ink: #c2c1c4; --card: rgba(255,255,255,.08); --line: rgba(255,255,255,.28); }
+.about-page .history-entry--poster .entry-description { color: var(--ink); }
+.about-page .history-entry--poster .entry-meta { color: #d4deef; }
+.about-page .history-entry--poster .entry-cover { background: #172a48; }
+.about-page .history-entry--collage { --paper: #711a19; --ink: #fff5ea; --muted-ink: #f1c5bd; --card: rgba(0,0,0,.25); --line: rgba(255,245,234,.4); }
+.about-page .history-entry--collage .entry-description { color: var(--ink); }
+.about-page .history-entry--poster .cover-image { filter: grayscale(1) brightness(1.12) contrast(1.2); mix-blend-mode: normal; }
+.about-page .history-entry--poster .entry-cover::after {
+  display: block;
+  background: var(--accent);
+  mix-blend-mode: color;
+  opacity: .85;
+}
+.about-page .history-entry--collage .entry-cover img { filter: grayscale(1) brightness(1.12) contrast(1.2); }
+.about-page .history-entry--collage .entry-cover::after {
+  display: block;
+  background: #ff2a1a;
+  mix-blend-mode: color;
+  opacity: .85;
+}
+.about-page .history-entry .event-thumb img { filter: grayscale(1) brightness(1.08) contrast(1.2); }
+.about-page .history-entry .event-thumb::after { display: none; }
+.about-page .archive { background: #0c0c0e; }
+
+/* ───────── State + responsive ───────── */
+.history-state { width: min(880px, calc(100% - 40px)); margin: 54px auto; padding: 42px 22px; color: var(--cream); background: var(--panel); border: 1px solid rgba(255, 61, 90, .45); font: 400 18px/1.6 var(--serif); text-align: center; }
+.history-state small { display: block; margin-top: 10px; color: var(--muted); font: 14px/1.6 var(--serif); }
+.history-state button { margin-top: 18px; padding: 12px 16px; color: var(--black); background: var(--coral); border: 0; font: 8px var(--pixel); cursor: pointer; }
+
+@media (min-width: 900px) {
+  .gallery-page .history-feed { grid-template-columns: minmax(0, 1fr); }
+  .gallery-page .history-entry--collage .entry-layout { width: 100%; }
+  .gallery-page .history-entry--collage .event-gallery { grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); }
+
+  .history-feed {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 8px;
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+  }
+
+  .history-entry {
+    min-width: 0;
+    padding: clamp(16px, 1.6vw, 22px) clamp(12px, 1.2vw, 18px);
+  }
+
+  .entry-layout { width: 100%; gap: 10px; }
+  .entry-copy { width: 100%; }
+
+  .history-entry--poster .entry-layout { width: 100%; }
+  .history-entry--poster .entry-head h2 { font-size: clamp(48px, 6vw, 82px); }
+  .history-entry--poster .event-gallery { width: 100%; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+  .history-entry--poster .entry-cover { aspect-ratio: 4 / 3; }
+  .history-entry--poster .event-thumb { aspect-ratio: 1.35 / 1; }
+
+  .history-entry--collage .entry-art { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+  .history-entry--collage .entry-cover { aspect-ratio: 4 / 3; }
+  .history-entry--collage .event-gallery { gap: 9px; }
+  .history-entry--collage .event-thumb { border-width: 3px; border-bottom-width: 9px; }
+  .history-entry--collage .entry-head h2 { font-size: clamp(48px, 7vw, 86px); }
+}
+
+@media (min-width: 900px) {
+  .becon-page .history-feed { grid-template-columns: minmax(0, 1fr); }
+  .becon-page .history-entry--poster .entry-head h2 { font-size: clamp(72px, 10vw, 150px); }
+  .becon-page .history-entry--poster .entry-cover { aspect-ratio: 16 / 9; }
+  .becon-page .history-entry--poster .event-gallery { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(10px, 1.5vw, 20px); }
+  .becon-page .history-entry--poster .event-thumb { aspect-ratio: 4 / 3; }
+  .becon-page .history-entry--poster .lok-sabha-gallery { grid-auto-flow: column; grid-auto-columns: clamp(300px, 86vw, 460px); grid-template-columns: none; }
+}
+
+@media (min-width: 900px) {
+  .about-page .history-feed { grid-template-columns: minmax(0, 1fr); }
+  .about-page .history-entry { padding: clamp(32px, 5vw, 72px) clamp(24px, 7vw, 100px); }
+  .about-page .entry-layout { width: min(1180px, 100%); gap: clamp(20px, 3vw, 38px); }
+  .about-page .entry-copy { width: min(1000px, 100%); }
+  .about-page .history-entry--collage .entry-art { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(18px, 3vw, 42px); }
+  .about-page .history-entry--collage .entry-cover { aspect-ratio: 4 / 3; }
+  .about-page .history-entry--collage .event-gallery { gap: clamp(12px, 2vw, 22px); }
+  .about-page .history-entry--collage .event-thumb { aspect-ratio: 1.2 / 1; }
+}
+
+@media (max-width: 640px) {
+  .gallery-page .history-feed { width: calc(100% - 20px); }
+  .gallery-page .history-entry { padding: 24px 14px; }
+  .gallery-page .history-entry--collage .event-gallery { grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); }
+
+  .history-entry { padding: 34px 18px; }
+  .history-entry--collage .entry-art { grid-template-columns: 1fr; }
+  .history-entry--poster .event-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .history-entry--poster .entry-cover { width: 100%; }
+  .history-entry--poster .entry-head h2 { font-size: clamp(56px, 14vw, 100px); }
+  .entry-meta { font-size: 7px; }
+  .becon-page .history-entry { padding: 28px 16px; }
+  .becon-page .history-entry--collage .entry-art { grid-template-columns: 1fr; }
+  .becon-page .history-entry--poster .entry-cover { aspect-ratio: 4 / 3; }
+  .becon-page .history-entry--poster .event-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition-duration: .01ms !important; } }

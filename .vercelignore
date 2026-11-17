@@ -1,0 +1,20 @@
+# Backend (deployed separately on Render)
+/backend
+/server.js
+/prisma.config.ts
+/package.json
+/package-lock.json
+/node_modules
+
+# Secrets
+.env
+.env.*
+
+# Dev tooling and notes
+/scripts
+/docs
+/Makefile
+/gen_page.sh
+/tailwind.config.js
+/README.md
+/1.1.txt

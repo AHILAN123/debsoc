@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DebSoc — Links</title>
+<link rel="stylesheet" href="assets/css/pages/links.css">
+</head>
+<body>
+
+<div class="reel"></div>
+
+<div class="top-layout">
+  <article class="hero-frame">
+    <div class="hero-body">
+      <div class="zine-embed">
+        <iframe allow="autoplay; fullscreen; clipboard-write" scrolling="no"
+          src="https://heyzine.com/flip-book/2e319b8dcc.html"
+          title="Tribunal Zine"></iframe>
+      </div>
+    </div>
+  </article>
+
+  <div class="reel-track" aria-label="DebSoc photo gallery">
+        <div class="reel-frame"><img src="assets/images/events/debsoc-meet-march.webp" alt="DebSoc meeting"></div>
+        
+    <div class="reel-frame"><img src="assets/images/history/2026-4.webp" alt="DISEC event"></div>
+    <div class="reel-frame"><img src="assets/images/history/2018-2.webp" alt="Lok Sabha event"></div>
+    <div class="reel-frame"><img src="assets/images/events/vicharagini.webp" alt="Vicharagini event"></div>
+    <div class="reel-frame"><img src="assets/images/history/2026-3.webp" alt="Becon event"></div>
+    <div class="reel-frame"><img src="assets/images/history/2026-2.webp" alt="DebSoc members"></div>
+    <div class="reel-frame"><img src="assets/images/events/becon/disec-06.webp" alt="DebSoc conference"></div>
+    <div class="reel-frame"><img src="assets/images/events/becon/highlights-04.webp" alt="DebSoc event"></div>
+
+    <div class="reel-frame"><img src="assets/images/history/2020-1.webp" alt="DebSoc event"></div>
+    <div class="reel-frame"><img src="assets/images/history/2025-3.webp" alt="Alcheringa event"></div>
+    <div class="reel-frame"><img src="assets/images/events/amenities.webp" alt="DebSoc event"></div>
+    <div class="reel-frame"><img src="assets/images/events/ash-debsoc.webp" alt="DebSoc event"></div>
+    <div class="reel-frame"><img src="assets/images/events/memorial-debate.webp" alt="Memorial debate"></div>
+    <div class="reel-frame"><img src="assets/images/history/2026-2.webp" alt="DebSoc members"></div>
+    <div class="reel-frame"><img src="assets/images/events/becon/disec-02.webp" alt="DebSoc conference"></div>
+    <div class="reel-frame"><img src="assets/images/events/becon/highlights-02.webp" alt="Becon event"></div>
+    <div class="reel-frame"><img src="assets/images/history/2016-2.webp" alt="DISEC event"></div>
+    <div class="reel-frame"><img src="assets/images/history/2013-1.webp" alt="Lok Sabha event"></div>
+  </div>
+</div>
+
+<main class="stack">
+
+  <a class="frame" href="https://www.instagram.com/debsoc_iiests/" target="_blank" rel="noopener">
+    <h2>Instagram</h2>
+    <span class="arrow">→</span>
+  </a>
+
+  <a class="frame" href="https://www.debsociiests.in/timeline" target="_blank" rel="noopener">
+    <h2>History</h2>
+    <span class="arrow">→</span>
+  </a>
+
+</main>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  const reel = document.querySelector('.reel-track');
+  let isDragging = false;
+  let didDrag = false;
+  let startX = 0, startY = 0;
+  let startScroll = 0;
+  let pressedFrame = null;
+  const DRAG_THRESHOLD = 6;
+
+  function isVertical(){
+    return getComputedStyle(reel).flexDirection === 'column';
+  }
+
+  reel.addEventListener('pointerdown', (event) => {
+    if (event.target.closest('.reel-expand')) { pressedFrame = null; return; }
+    isDragging = true;
+    didDrag = false;
+    pressedFrame = event.target.closest('.reel-frame');
+    startX = event.clientX;
+    startY = event.clientY;
+    startScroll = isVertical() ? reel.scrollTop : reel.scrollLeft;
+    reel.classList.add('is-dragging');
+    reel.setPointerCapture(event.pointerId);
+  });
+  reel.addEventListener('pointermove', (event) => {
+    if (!isDragging) return;
+    const delta = isVertical() ? (event.clientY - startY) : (event.clientX - startX);
+    if (Math.abs(delta) > DRAG_THRESHOLD) didDrag = true;
+    if (isVertical()) reel.scrollTop = startScroll - delta;
+    else reel.scrollLeft = startScroll - delta;
+  });
+  const stopDragging = () => {
+    isDragging = false;
+    reel.classList.remove('is-dragging');
+  };
+  reel.addEventListener('pointerup', stopDragging);
+  reel.addEventListener('pointercancel', stopDragging);
+
+  reel.addEventListener('click', () => {
+    if (didDrag || !pressedFrame) return;
+    pressedFrame.classList.toggle('is-colored');
+  });
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  function openLightbox(src, alt){
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || '';
+    lightbox.classList.add('is-open');
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('is-open');
+    lightboxImg.src = '';
+  }
+
+  reel.querySelectorAll('.reel-frame').forEach((frame) => {
+    const img = frame.querySelector('img');
+    const btn = document.createElement('button');
+    btn.className = 'reel-expand';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Open image');
+    btn.textContent = '⤢';
+    btn.addEventListener('click', (event) => {
+      event.stopPropagation();
+      openLightbox(img.src, img.alt);
+    });
+    frame.appendChild(btn);
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeLightbox();
+  });
+</script>
+<script src="assets/js/footer.js"></script>
+<script src="assets/js/nav.js"></script>
+</body>
+</html>

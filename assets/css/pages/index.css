@@ -1,0 +1,255 @@
+    :root{
+      --black:#151515;
+      --cream:#f1efe8;
+      --blue:#ff3d5a;
+      --blue-deep:#ff3d5a;
+      --slate:#ff3d5a;
+      --serif:"Forward Serif","Iowan Old Style","Baskerville","Times New Roman",serif;
+      --pixel:"Press Start 2P",monospace;
+      --max:1260px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--black)}
+    body{margin:0;background:var(--black);color:var(--cream);font-family:var(--serif);overflow-x:hidden}
+    img{display:block;max-width:100%}
+    a{color:inherit}
+    button{font:inherit}
+    a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+    /* Every .page is a size container, so cqw units scale each layout with the wireframe proportions */
+    .page{width:min(var(--max),calc(100% - 40px));margin:0 auto;container-type:inline-size}
+    .board{position:relative}
+    .board > .band{position:relative;z-index:1}
+    .grain{position:absolute;inset:0;pointer-events:none;opacity:.13;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:screen}
+
+    /* Image slots
+       Normal images scale from their intrinsic dimensions.
+       The parent controls width; the image's own aspect ratio controls height.
+       Film-reel images below are intentionally left on their fixed frame sizing. */
+    .pic{margin:0;overflow:hidden;background:#0e0e0e}
+    .pic img{display:block;width:100%;height:auto;max-width:100%;object-fit:initial;filter: contrast(1.1)}
+
+    .text-link{display:inline-block;margin-top:clamp(18px,1.8cqw,26px);color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(126,168,203,.45);padding-bottom:3px;font-size:16px}
+    .text-link:hover{border-bottom-color:var(--blue)}
+
+    /* ---------- Hero ---------- */
+    .hero{padding:24px 0 0}
+    .hero-grid{display:grid;grid-template-columns:40% 1fr;gap:1.5cqw;align-items:start}
+    .hero-left{margin-top:9cqw;min-width:0}
+    .hero-right{min-width:0}
+
+    .hero-title{font:400 clamp(26px,6.9cqw,96px)/1.3 var(--pixel);text-transform:uppercase;letter-spacing:.01em;color:#fff;margin:0 0 2.9cqw}
+
+    /* left: blue frame holding the portrait image and the tab */
+    .frame{position:relative;border:2px solid #ff3d5a;padding:6.5cqw 0 1.5cqw;margin:0 1.4cqw 0 .6cqw}
+    .frame::before,.frame::after{content:"";position:absolute;left:50%;width:.8cqw;height:.8cqw;min-width:6px;min-height:6px;background:var(--blue-deep);transform:translateX(-50%)}
+    .frame::before{top:-.5cqw}
+    .frame::after{bottom:-.5cqw}
+    .spark{position:absolute;fill:var(--cream);opacity:.9}
+    .spark.s1{left:4.5cqw;top:2.4cqw;width:clamp(12px,2.6cqw,34px)}
+    .spark.s2{left:14cqw;top:1.9cqw;width:clamp(6px,.9cqw,12px)}
+    .spark.s3{left:22.4cqw;top:1.4cqw;width:clamp(10px,1.7cqw,22px)}
+    .pic-a{margin:0 .9cqw 0 -.8cqw}
+
+    .tab{position:relative;margin:2.2cqw .9cqw 0 2.5cqw;padding:clamp(14px,2.6cqw,34px) clamp(12px,2cqw,26px);background:var(--slate);color:#12202e;font-style:italic;font-size:clamp(17px,2.35cqw,30px);line-height:1.2;text-align:center;box-shadow:0 .7cqw 0 rgba(79,123,165,.75)}
+    .tab::before{content:"";position:absolute;inset:-1cqw 2.4cqw 1cqw -.8cqw;border:1px solid rgba(241,239,232,.6);pointer-events:none}
+
+    .pic-b{margin-top:3.3cqw}
+    .hero-caption{margin:.9cqw 0 0;font-size:clamp(15px,1.95cqw,23px);line-height:1.3;font-style:italic}
+
+    /* right: barcode, dither strip, big image, closing bar */
+    .barcode{display:grid;grid-template-columns:195fr 217fr 97fr 67fr;gap:.6cqw;height:3cqw;margin-bottom:3.4cqw}
+    .barcode span{background:var(--blue-deep)}
+    .barcode .bars{background:repeating-linear-gradient(90deg,var(--blue-deep) 0 .28cqw,transparent .28cqw .55cqw,var(--blue-deep) .55cqw .62cqw,transparent .62cqw .95cqw,var(--blue-deep) .95cqw 1.5cqw,transparent 1.5cqw 1.8cqw)}
+    .dither{height:3.4cqw;background:
+      linear-gradient(90deg,#151515 0,rgba(21,21,21,.85) 22%,rgba(21,21,21,0) 62%),
+      conic-gradient(#151515 25%,#efd9c0 0 50%,#151515 0 75%,#efd9c0 0) 0 0/.8cqw .8cqw}
+    .blue-bar{margin-top:.8cqw;height:2.8cqw;background:var(--blue-deep)}
+
+    /* ---------- Tribunal ---------- */
+    .tribunal{padding:clamp(24px,2.4vw,32px) 0 clamp(28px,3vw,44px)}
+    .tribunal-grid{display:grid;grid-template-columns:40% 1fr;gap:1.5cqw;align-items:center}
+    .tribunal-copy{padding-left:1.5cqw}
+    .tribunal-title{font:400 clamp(22px,4.5cqw,60px)/1.4 var(--pixel);margin:0;color:#fff}
+    .tribunal-title span{display:block;padding-left:11cqw}
+    .tribunal-copy p{margin:1.6cqw 0 0;font-size:clamp(16px,2cqw,24px);line-height:1.35;font-style:italic;max-width:44ch}
+
+    /* ---------- Awards + Gallery ---------- */
+    .section{padding:clamp(28px,3.6vw,52px) 0}
+    .showcase{display:grid;grid-template-columns:56% 1fr;gap:5cqw;align-items:center}
+    .showcase-media{min-width:0}
+    .showcase-copy h2{font:italic 400 clamp(32px,3.8cqw,52px)/1.05 var(--serif);margin:0 0 1.3cqw}
+    .showcase-copy p{margin:0;font-size:clamp(17px,1.7cqw,22px);line-height:1.55;font-style:italic;color:rgba(241,239,232,.82);max-width:36ch}
+
+    /* Film reels: three strips, drag to scroll, tap a frame for colour */
+    .reels{display:grid;grid-template-columns:minmax(0,1fr);gap:1.3cqw}
+    .reel{position:relative;background:#000;padding:9px 0}
+    .reel::before,.reel::after{content:"";position:absolute;left:0;right:0;height:6px;background-image:repeating-linear-gradient(to right,var(--cream) 0 5px,transparent 5px 15px);opacity:.92;pointer-events:none}
+    .reel::before{top:1px}
+    .reel::after{bottom:1px}
+    .reel-track{display:flex;gap:3px;overflow-x:auto;padding:7px 0;scrollbar-width:none;cursor:grab;user-select:none;touch-action:pan-y;overscroll-behavior-x:contain}
+    .reel-track::-webkit-scrollbar{display:none}
+    .reel-track.is-dragging{cursor:grabbing}
+    .reel-frame{position:relative;flex:0 0 clamp(120px,16cqw,210px);aspect-ratio:4/3;border-right:1px solid rgba(241,239,232,.9);overflow:hidden;cursor:pointer}
+    .reel-frame img{width:100%;height:100%;object-fit:cover;filter:grayscale(.45) contrast(1.08) brightness(1.01);pointer-events:none;transition:filter .3s ease}
+    .reel-frame.is-colored img{filter:none}
+    .reel-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(126,168,203,.22),transparent 55%);pointer-events:none}
+    .reel-expand{position:absolute;top:4px;right:4px;z-index:2;width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.3);color:var(--cream);font-size:13px;line-height:1;cursor:pointer}
+    .reel-expand:hover{background:#ff3d5a}
+    .reel-frame{
+  flex:0 0 clamp(200px,30cqw,420px);
+}
+
+    .lightbox{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:40px}
+    .lightbox.is-open{display:flex}
+    .lightbox img{max-width:100%;max-height:100%;box-shadow:0 0 0 1px rgba(250,246,238,.16)}
+    .lightbox-close{position:absolute;top:14px;right:20px;color:var(--cream);font-size:32px;line-height:1;cursor:pointer;background:none;border:0;padding:6px 10px}
+
+    /* ---------- Desktop visual rail + text ---------- */
+    .content-rail{
+      display:grid;
+      grid-template-columns:minmax(0,65fr) minmax(0,35fr);
+      gap:clamp(28px,3.2vw,52px);
+      align-items:start;
+      width:min(1500px,calc(100% - 40px));
+      margin:0 auto;
+    }
+
+    .content-rail-main{
+      min-width:0;
+    }
+
+    .content-rail-main .page{
+      width:100%;
+    }
+
+    .text-dump{
+      min-width:0;
+      position:sticky;
+      top:32px;
+      align-self:start;
+      padding:clamp(28px,3vw,48px) 0;
+    }
+
+    .text-dump-inner{
+      border-top:2px solid var(--blue-deep);
+      padding-top:18px;
+    }
+
+    .text-dump-kicker{
+      margin:0 0 22px;
+      color:var(--blue);
+      font:10px/1.5 var(--pixel);
+      letter-spacing:.08em;
+    }
+
+    .text-dump h2{
+      margin:0 0 28px;
+      color:#fff;
+      font:400 clamp(30px,3.8cqw,58px)/1.12 var(--pixel);
+    }
+
+    .text-dump p{
+      margin:0 0 22px;
+      max-width:42ch;
+      color:rgba(241,239,232,.76);
+      font-size:clamp(16px,1.25vw,19px);
+      line-height:1.65;
+    }
+
+    .text-dump p:last-child{
+      margin-bottom:0;
+    }
+
+    /* Below roughly 80% of a typical desktop browser width, stack the
+       text after the complete visual column and immediately before FAQ. */
+    @media (max-width:1280px){
+      .content-rail{
+        display:block;
+        width:min(var(--max),calc(100% - 40px));
+      }
+
+      .text-dump{
+        position:static;
+        padding:18px 0 34px;
+      }
+
+      .text-dump-inner{
+        max-width:none;
+      }
+
+      .text-dump p{
+        max-width:65ch;
+      }
+    }
+
+    /* ---------- FAQ ---------- */
+    .faq-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:5cqw;align-items:start}
+    .faq-title{font:italic 400 clamp(36px,4.4cqw,60px)/1 var(--serif);margin:0}
+    .faq-list{border-top:1px solid rgba(241,239,232,.18)}
+    .faq-item{border-bottom:1px solid rgba(241,239,232,.18)}
+    .faq-btn{width:100%;display:flex;justify-content:space-between;align-items:center;gap:20px;border:0;background:transparent;padding:18px 0;cursor:pointer;text-align:left;color:var(--cream);font-size:clamp(16px,1.4cqw,19px)}
+    .faq-btn span{font:10px var(--pixel);color:var(--blue);flex:none}
+    .faq-body{max-height:0;overflow:hidden;transition:max-height .28s ease,padding .28s ease;line-height:1.65;color:rgba(241,239,232,.72);font-size:15px}
+    .faq-item.open .faq-body{max-height:320px;padding:0 0 18px}
+
+    /* ---------- Footer ---------- */
+    .ref-footer{background:var(--black);border-top:1px solid rgba(255,255,255,.09);padding:64px 0 40px}
+    .footer-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:60px;align-items:start}
+    .footer-brand{display:flex;gap:15px;align-items:center}
+    .footer-brand img{width:54px;height:54px;object-fit:contain}
+    .footer-brand strong{font:22px var(--pixel)}
+    .footer-brand span{display:block;margin-top:8px;color:rgba(241,239,232,.6);font-size:14px}
+    .footer-copy{font-size:15px;line-height:1.7;color:rgba(241,239,232,.62);max-width:520px;margin:22px 0 0}
+    .footer-links{display:grid;grid-template-columns:1fr 1fr;gap:10px 26px}
+    .footer-links h3{grid-column:1 / -1;font:italic 400 18px var(--serif);color:var(--blue);margin:0 0 4px}
+    .footer-links a{text-decoration:none;color:rgba(241,239,232,.72);font-size:15px}
+    .footer-links a:hover{color:#fff}
+
+    @media (max-width:900px){
+      .hero-grid,.tribunal-grid,.showcase,.faq-grid,.footer-grid{grid-template-columns:1fr}
+      .hero-grid{gap:28px}
+      .hero-right{order:-1}
+      .hero-left{margin-top:0}
+      .hero-title{font-size:min(10.6cqw,72px);margin-bottom:20px}
+      .barcode{height:16px;margin-bottom:18px}
+      .dither{height:18px}
+      .blue-bar{height:14px;margin-top:8px}
+      .frame{padding-top:44px}
+      .tribunal-grid{gap:24px}
+      .tribunal-copy{padding-left:0}
+      .tribunal-title span{padding-left:0}
+      .showcase{gap:26px}
+      .faq-grid{gap:26px}
+      .footer-grid{gap:36px}
+    }
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .faq-body,.reel-frame img{transition:none}
+    }
+    /* 1. Gallery: strips span the full column, copy sits underneath */
+#gallery-preview .showcase{
+  grid-template-columns:1fr;
+  gap:28px;
+  align-items:start;
+}
+#gallery-preview .showcase-copy p{max-width:60ch}
+
+/* 2. Start button: smaller */
+.text-dump .cta-buttons .btn-primary{display:inline-block;width:auto}
+.text-dump .cta-buttons .btn-primary img{
+  width:clamp(120px,14vw,190px);
+  height:auto;
+}
+
+/* 3. "To the Batch of 2030" image: fill the full width of the text column */
+.text-dump > .showcase{
+  display:block;          /* was a 56% / 1fr grid, which shrank the image */
+  margin-top:28px;
+}
+.text-dump > .showcase a{display:block}
+.text-dump > .showcase .pic-award,
+.text-dump > .showcase .pic-award img{
+  width:100%;
+  height:auto;
