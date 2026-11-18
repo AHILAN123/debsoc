@@ -2,6 +2,22 @@ const API_BASE = "https://forkdebsoc.onrender.com/api/auth";
 // For Vercel deployment with same-origin API routing:
 // const API_BASE = "/api/auth";
 
+// A leftover login cookie makes the server enforce CSRF, so credentialed auth requests must send a token.
+const authPost = async (url, payload) => {
+  const csrfRes = await fetch("https://forkdebsoc.onrender.com/api/csrf-token", {
+    credentials: "include"
+  });
+  if (!csrfRes.ok) throw new Error("Could not start a secure session. Please try again.");
+  const { csrfToken } = await csrfRes.json();
+
+  return fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
+    credentials: "include",
+    body: JSON.stringify(payload)
+  });
+};
+
 const showAlert = (alertBox, msg, type) => {
   if (!alertBox) return;
   alertBox.innerText = msg;
@@ -241,12 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setButtonText("Verifying OTP...", true);
 
       try {
-        const res = await fetch(`${API_BASE}/verify-otp`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ email: pendingEmail, otp })
-        });
+        const res = await authPost(`${API_BASE}/verify-otp`, { email: pendingEmail, otp });
 
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Verification failed");
@@ -279,15 +290,10 @@ document.addEventListener("DOMContentLoaded", () => {
           password
         };
 
-      const res = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(payload)
-      });
+      const res = await authPost(endpoint, payload);
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Authentication failed.");
+      if (!res.ok) throw new Error(data.error || data.errors?.[0]?.msg || "Authentication failed.");
 
       if (isLoginMode) {
         localStorage.setItem("debsoc_user", JSON.stringify(data.user));
