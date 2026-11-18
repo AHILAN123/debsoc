@@ -24,13 +24,13 @@ body{
 
 .contact-grid{
   display:grid;
-  grid-template-columns:40% 60%;
+  grid-template-columns:minmax(0,2fr) minmax(0,3fr);
   gap:28px;
   align-items:start;
 }
 
 .contact-title-wrap{
-  padding:8vw 6% 0 0;
+  padding:3vw 6% 0 0;
 }
 
 .contact-kicker{
@@ -42,7 +42,7 @@ body{
 
 .contact-title{
   margin:0;
-  font:400 clamp(24px,7vw,48px)/.9 var(--pixel);
+  font:400 clamp(22px,2.4vw,30px)/1.1 var(--pixel);
   color:#fff;
   text-transform:uppercase;
 }
@@ -57,8 +57,8 @@ body{
 .contact-lead{
   max-width:34ch;
   margin:24px 0 0;
-  font-size:clamp(17px,1.7vw,22px);
-  line-height:1.55;
+  font-size:clamp(15px,1.2vw,17px);
+  line-height:1.5;
   font-style:italic;
   color:rgba(241,239,232,.78);
 }
@@ -71,7 +71,7 @@ body{
 }
 
 .contact-map::before{
-  content:"IIEST / SHIBPUR";
+  content:"IIEST Shibpur";
   display:block;
   padding:9px 12px;
   margin-bottom:10px;
@@ -84,7 +84,7 @@ body{
 .contact-map iframe{
   display:block;
   width:100%;
-  height:470px;
+  height:380px;
   border:0;
   filter:grayscale(1) contrast(1.08);
 }
@@ -109,14 +109,8 @@ body{
 
 .contact-section-head h2{
   margin:0;
-  font:400 clamp(30px,4vw,54px)/1 var(--pixel);
+  font:400 clamp(20px,2vw,28px)/1.1 var(--pixel);
   color:#fff;
-}
-
-.contact-section-head span{
-  color:rgba(241,239,232,.48);
-  font:10px var(--pixel);
-  letter-spacing:.08em;
 }
 
 .contact-details{
@@ -146,7 +140,7 @@ body{
 .contact-row a{
   color:var(--cream);
   text-decoration:none;
-  font-size:clamp(18px,1.9vw,25px);
+  font-size:clamp(15px,1.2vw,17px);
   line-height:1.35;
 }
 
@@ -162,14 +156,14 @@ body{
 .contact-note h3{
   margin:0 0 18px;
   color:#fff;
-  font:italic 400 clamp(26px,3vw,38px)/1.1 var(--serif);
+  font:italic 400 clamp(18px,1.8vw,24px)/1.2 var(--serif);
 }
 
 .contact-note p{
   margin:0 0 18px;
   max-width:38ch;
   color:rgba(241,239,232,.68);
-  font-size:17px;
+  font-size:15px;
   line-height:1.7;
 }
 
@@ -190,14 +184,14 @@ body{
 .sponsor-copy h2{
   margin:0 0 12px;
   color:#fff;
-  font:400 clamp(28px,3.6vw,48px)/1 var(--pixel);
+  font:400 clamp(20px,2vw,28px)/1.1 var(--pixel);
 }
 
 .sponsor-copy p{
   margin:0;
   max-width:40ch;
   color:rgba(241,239,232,.64);
-  font-size:16px;
+  font-size:15px;
   line-height:1.65;
 }
 
@@ -214,39 +208,6 @@ body{
   width:min(100%,420px);
   height:auto;
   object-fit:contain;
-}
-
-.contact-footer{
-  border-top:1px solid rgba(241,239,232,.12);
-  padding:38px 0 48px;
-}
-
-.contact-footer-inner{
-  display:flex;
-  align-items:center;
-  gap:18px;
-  flex-wrap:wrap;
-}
-
-.contact-footer img{
-  width:auto;
-  height:48px;
-  object-fit:contain;
-}
-
-.contact-footer p{
-  margin:0;
-  max-width:60ch;
-  color:rgba(241,239,232,.58);
-  font-size:15px;
-  line-height:1.65;
-}
-
-.contact-footer small{
-  flex-basis:100%;
-  color:rgba(241,239,232,.38);
-  font-size:11px;
-  letter-spacing:.04em;
 }
 
 @media(max-width:900px){
@@ -279,7 +240,7 @@ body{
   }
 
   .contact-title{
-    font-size:clamp(38px,14vw,68px);
+    font-size:26px;
   }
 
   .contact-map{

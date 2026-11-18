@@ -1,40 +1,55 @@
 (function () {
   const footerMarkup = `
-    <footer class="retro-footer" aria-label="DebSoc site footer">
-      <div class="retro-footer-inner">
-        <div class="retro-footer-grid">
-          <div class="retro-footer-image-wrap">
-            <img class="retro-footer-image" src="assets/images/site/footer-retro.jpg" alt="Are you debating? DebSoc IIEST Shibpur retro computer graphic">
+    <footer class="df-footer" aria-label="DebSoc site footer">
+      <div class="df-cta">
+        <div class="df-wrap df-cta-inner">
+          <div class="df-cta-line">Come argue with us.</div>
+          <a class="df-cta-link" href="contact.html">Get in touch</a>
+        </div>
+      </div>
+      <div class="df-wrap df-main">
+        <div class="df-brand">
+          <a class="df-home" href="index.html">
+            <img src="assets/images/brand/debsoc-logo.webp" alt="" width="46" height="46" loading="lazy">
+            <span class="df-name">The Debating Society<small>IIEST Shibpur</small></span>
+          </a>
+          <div class="df-blurb">Debate, public speaking and Model United Nations at IIEST Shibpur, and the home of BECON.</div>
+        </div>
+        <div role="navigation" aria-label="Explore">
+          <div class="df-label">Explore</div>
+          <div class="df-links">
+            <a href="about.html">About Us</a>
+            <a href="team.html">Team</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
           </div>
-          <section class="retro-footer-description">
-            <p class="retro-footer-desc">A community dedicated to technical precision and humanistic inquiry. Through debate and formal discourse, we equip scholars to defend ideas with clarity and conviction.</p>
-          </section>
-          <nav aria-label="Footer navigation">
-            <h2 class="retro-footer-title">Quick Links</h2>
-            <ul class="retro-footer-links">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about.html">About Us</a></li>
-              <li><a href="events.html">Events</a></li>
-              <li><a href="becon.html">BECON</a></li>
-              <li><a href="history.html">History</a></li>
-              <li><a href="tribunal.html">Tribunal</a></li>
-              <li><a href="team.html">Team</a></li>
-              <li><a href="register.html">Login</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
-          </nav>
-          <section>
-            <h2 class="retro-footer-title">Connect</h2>
-            <div class="retro-footer-socials">
-              <a class="retro-footer-social" href="https://www.instagram.com/debsoc_iiests" target="_blank" rel="noopener" aria-label="DebSoc on Instagram">IG</a>
-              <a class="retro-footer-social" href="https://www.linkedin.com/company/debsoc-iiest-shibpur/" target="_blank" rel="noopener" aria-label="DebSoc on LinkedIn">in</a>
-            </div>
-          </section>
         </div>
-        <div class="retro-footer-bottom">
-          <span>(c) 2026 The Debating Society of IIEST Shibpur</span>
-          <span class="retro-footer-status">STATUS: ONLINE // DIPLOMACY - DEBATE - DISCOURSE</span>
+        <div role="navigation" aria-label="Events and archive">
+          <div class="df-label">Events</div>
+          <div class="df-links">
+            <a href="events.html">Main Events</a>
+            <a href="becon.html">BECON</a>
+            <a href="history.html">History</a>
+            <a href="tribunal.html">Tribunal</a>
+          </div>
         </div>
+        <div class="df-find">
+          <div class="df-label">Find us</div>
+          <address class="df-address">IIEST Shibpur, Howrah, West Bengal</address>
+          <a class="df-mail" href="mailto:debsoc.iiest@gmail.com">debsoc.iiest@gmail.com</a>
+          <div class="df-socials">
+            <a class="df-social" href="https://www.instagram.com/debsoc_iiests" target="_blank" rel="noopener" aria-label="DebSoc on Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><path d="M17.5 6.5h.01"></path></svg>
+            </a>
+            <a class="df-social" href="https://www.linkedin.com/company/debsoc-iiest-shibpur/" target="_blank" rel="noopener" aria-label="DebSoc on LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10v9M6 5.5v.01M11 19v-9M11 14c0-2.4 1.5-4 3.7-4S19 11.6 19 14v5"></path></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="df-wrap df-bottom">
+        <span>&copy; 2026 The Debating Society of IIEST Shibpur</span>
+        <a class="df-signin" href="register.html">Register or sign in</a>
       </div>
     </footer>`;
 
@@ -43,7 +58,7 @@
       footer.outerHTML = footerMarkup;
     });
 
-    if (!document.querySelector('.retro-footer')) {
+    if (!document.querySelector('.df-footer')) {
       document.body.insertAdjacentHTML('beforeend', footerMarkup);
     }
   }

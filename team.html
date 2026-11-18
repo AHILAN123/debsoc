@@ -139,7 +139,7 @@
       </figure>
     </section>
 
-    <div class="bottom-note">The Debating Society · IIEST Shibpur</div>
+    <div class="bottom-note">The Debating Society of IIEST Shibpur</div>
   </main>
 
 
@@ -238,15 +238,21 @@
 
     const startBelowY = clockBottom + (mobile ? 40 : 54);
     const maxPoolWidth = Math.min(stage.clientWidth - (sidePad * 2), 1200);
-    const poolLeftMargin = (stage.clientWidth - maxPoolWidth) / 2;
 
-    const gridCols = mobile ? 3 : tablet ? 5 : 7;
+    // Use the widest column count that leaves no part-filled row.
+    const remainingItems = items.length - placedCount;
+    const maxGridCols = mobile ? 3 : tablet ? 5 : 7;
+    let gridCols = maxGridCols;
+    for (let cols = maxGridCols; cols >= 2; cols--) {
+      if (remainingItems % cols === 0) { gridCols = cols; break; }
+    }
     const gridGapX = mobile ? 12 : 20;
     const gridGapY = mobile ? 20 : 30;
     const belowTileSize = mobile ? 85 : Math.min(130, (maxPoolWidth - (gridCols - 1) * gridGapX) / gridCols);
 
-    const remainingItems = items.length - placedCount;
     const rowsBelow = Math.ceil(remainingItems / gridCols);
+    const gridWidth = gridCols * belowTileSize + (gridCols - 1) * gridGapX;
+    const poolLeftMargin = (stage.clientWidth - gridWidth) / 2;
 
     for (let i = placedCount; i < items.length; i++) {
       const idx = i - placedCount;

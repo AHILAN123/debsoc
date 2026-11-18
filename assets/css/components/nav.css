@@ -23,9 +23,9 @@
   justify-content: flex-end;
   gap: 10px;
   max-width: 1240px;
-  min-height: 56px;
+  min-height: 46px;
   margin: 0 auto;
-  padding: 8px 24px;
+  padding: 6px 24px;
 }
 .site-nav-links {
   display: flex;
@@ -39,14 +39,14 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 30px;
-  padding: 5px 10px;
+  min-height: 28px;
+  padding: 4px 9px;
   color: rgba(241, 239, 232, 0.86);
   background: transparent;
   border: 1px solid rgba(241, 239, 232, 0.14);
   border-radius: 0;
   font: inherit;
-  font-size: 15px;
+  font-size: 13px;
   line-height: 1.1;
   letter-spacing: .01em;
   white-space: nowrap;
@@ -107,11 +107,11 @@
   visibility: visible;
 }
 .site-nav-dropdown a {
-  padding: 13px 12px;
+  padding: 10px 12px;
   color: var(--nav-cream);
   border-bottom: 1px solid rgba(241, 239, 232, 0.1);
   font-family: var(--nav-font);
-  font-size: 15px;
+  font-size: 13px;
   line-height: 1.1;
   text-decoration: none;
 }
@@ -160,7 +160,7 @@
   color: var(--nav-cream);
   border-left: 2px solid transparent;
   font-family: var(--nav-font);
-  font-size: 17px;
+  font-size: 15px;
   line-height: 1.1;
   text-decoration: none;
 }
@@ -178,7 +178,7 @@
   color: var(--nav-coral);
   border-top: 1px solid rgba(255, 61, 90, 0.28);
   font-family: var(--nav-font);
-  font-size: 13px;
+  font-size: 11px;
   letter-spacing: .08em;
   text-transform: uppercase;
 }
@@ -186,8 +186,16 @@
 .site-nav-mobile-auth { display: grid; gap: 3px; }
 .site-nav-mobile-auth-container { margin-top: 7px; padding-top: 7px; border-top: 1px solid rgba(255, 61, 90, 0.28); }
 .site-nav-mobile .site-nav-link { justify-content: flex-start; border-color: transparent; }
+/* Page themes restyle every button, so keep nav controls matching the links. */
+html body .site-nav :is(.site-nav-link, .site-nav-trigger) {
+  font-family: var(--nav-font) !important;
+  font-size: 13px !important;
+  letter-spacing: .01em !important;
+  text-transform: none !important;
+}
+html body .site-nav .site-nav-mobile .site-nav-link { font-size: 15px !important; }
 @media (max-width: 860px) {
-  .site-nav-inner { min-height: 58px; padding: 9px 18px; }
+  .site-nav-inner { min-height: 50px; padding: 6px 18px; }
   .site-nav-links,
   .site-nav-auth-container { display: none; }
   .site-nav-menu-button { display: block; }

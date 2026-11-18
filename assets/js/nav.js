@@ -175,7 +175,7 @@ const eventLinks = [
                 href="${profileUrl}"
                 class="site-nav-link"
               >
-                @${username} &middot; My Profile
+                My Profile
               </a>
 
               <button
@@ -288,7 +288,7 @@ const eventLinks = [
      */
     document.querySelectorAll('nav').forEach(function (nav) {
 
-      if (!nav.closest('.retro-footer')) {
+      if (!nav.closest('.df-footer')) {
         nav.remove();
       }
 

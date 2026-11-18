@@ -9,15 +9,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Gochi+Hand&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/content.css">
 </head>
-<body>
+<body class="history-page">
   <div class="history-masthead">
     <div class="history-masthead-inner">
-      <p class="history-kicker">DEBSOC / IIEST SHIBPUR / ARCHIVE 001</p>
+      <p class="history-kicker">The DebSoc archive</p>
       <h1>History<br><span>in session.</span></h1>
       <p class="history-intro">A living record of the debates, delegations, people and moments that shaped our society.</p>
-      <div class="history-index"><span>DEBATE</span><i></i><span>DISCUSS</span><i></i><span>REMEMBER</span></div>
     </div>
-    <div class="masthead-mark" aria-hidden="true">D</div>
   </div>
 
   <main id="feed" class="history-feed" aria-live="polite">
@@ -64,11 +62,20 @@
       return `<img class="${className}" src="${escapeHTML(src)}" alt="${escapeHTML(alt)}" role="button" tabindex="0" aria-label="View full-screen: ${escapeHTML(alt)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="${onError}">`;
     };
 
-    const renderImages = (images, title) => images.length
-      ? `<div class="event-gallery" aria-label="More photos from ${escapeHTML(title)}">
-          ${images.map((src, index) => `<figure class="event-thumb">${imageMarkup(src, `${title}, photo ${index + 2}`)}</figure>`).join("")}
-        </div>`
-      : "";
+    // Keep only as many thumbnails as fill complete rows.
+    const fitThumbs = (images) => {
+      const count = images.length;
+      return images.slice(0, count >= 4 ? count - (count % 4) : Math.min(count, 2));
+    };
+
+    const renderImages = (images, title) => {
+      const thumbs = fitThumbs(images);
+      if (!thumbs.length) return "";
+      const sizeClass = thumbs.length === 1 ? " event-gallery--single" : thumbs.length === 2 ? " event-gallery--pair" : "";
+      return `<div class="event-gallery${sizeClass}" aria-label="More photos from ${escapeHTML(title)}">
+          ${thumbs.map((src, index) => `<figure class="event-thumb">${imageMarkup(src, `${title}, photo ${index + 2}`)}</figure>`).join("")}
+        </div>`;
+    };
 
     const renderAwards = (awards) => {
       if (!awards.length) return "";
@@ -98,20 +105,18 @@
       const awards = Array.isArray(event.achievements) ? event.achievements : [];
       const awardCount = Number.isInteger(event.awardCount) ? event.awardCount : awards.length;
       const description = event.description || "";
-      const year = date ? new Date(event.eventDate).getFullYear() : "ARCHIVE";
       const { layout, palette } = getEventStyle(index);
 
       return `
         <article class="history-entry history-entry--${layout}${layout === "poster" ? ` history-entry--${palette}` : ""}">
           <div class="entry-layout">
             <header class="entry-head">
-              <p class="entry-meta"><span>${escapeHTML(date || "Undated")}</span><i></i><span>${escapeHTML(location)}</span></p>
+              <p class="entry-meta">${escapeHTML(`${date || "Undated"}, ${location}`)}</p>
               <h2>${escapeHTML(title)}</h2>
             </header>
             <div class="entry-art">
               <figure class="entry-cover ${cover ? "" : "entry-cover--empty"}">
                 ${cover ? imageMarkup(cover, title, "cover-image") : `<span class="cover-placeholder" aria-hidden="true">DEBSOC<br>ARCHIVE</span>`}
-                <span class="cover-caption">${String(index + 1).padStart(2, "0")} / FIELD NOTES</span>
               </figure>
               ${renderImages(images.slice(1), title)}
             </div>
@@ -119,7 +124,6 @@
               ${description ? `<p class="entry-description">${escapeHTML(description)}</p>` : ""}
               ${awardCount ? `<p class="award-count"><b>${escapeHTML(awardCount)}</b> ${awardCount === 1 ? "award" : "awards"} recorded</p>` : ""}
               ${renderAwards(awards)}
-              <div class="entry-endmark" aria-hidden="true">DS / ${String(year)}</div>
             </div>
           </div>
         </article>`;

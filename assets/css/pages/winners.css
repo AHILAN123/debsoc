@@ -105,14 +105,11 @@ nav {
 }
 
 /* ── PHOTO STRIP ── */
-.photo-strip-wrap { margin: 0 -2rem 3rem; padding: 0 2rem; }
-.photo-strip {
-  display: flex; gap: 1.5rem; overflow-x: auto;
-  padding-bottom: 1.25rem; scrollbar-width: none;
-}
-.photo-strip::-webkit-scrollbar { display: none; }
+.photo-strip-wrap { margin: 0 0 3rem; }
+.photo-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.photo-strip:has(> .photo-slide:nth-child(10)) { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .photo-slide {
-  flex-shrink: 0; width: 340px; height: 240px;
+  aspect-ratio: 4 / 3;
   border: 3px solid var(--text-primary);
   box-shadow: 6px 6px 0 rgba(255,255,255,0.15);
   overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -125,11 +122,6 @@ nav {
 .photo-slide img {
   width: 100%; height: 100%; object-fit: cover; display: block;
 }
-.photo-hint {
-  font-size: 0.78rem; font-weight: 900; text-transform: uppercase;
-  letter-spacing: 0.08em; color: var(--text-muted); margin-top: 0.75rem; text-align: right;
-}
-
 /* ── AWARD TIERS ── */
 .award-tier { margin-bottom: 3rem; }
 .tier-label {
@@ -178,7 +170,7 @@ nav {
   background: var(--card-bg); border: 2px solid var(--text-primary);
   box-shadow: 5px 5px 0 rgba(255,255,255,0.1); padding: 20px 22px; margin-bottom: 10px;
 }
-.mention-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.mention-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 .mention-name {
   font-family: Georgia, 'Times New Roman', Times, serif; font-size: 0.95rem; color: var(--text-primary);
   padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px;
@@ -210,8 +202,8 @@ nav {
 @media (max-width: 768px) {
   .footer-grid { grid-template-columns: 1fr; gap: 36px; }
   .committee-section { padding: 0 1.25rem 4rem; }
-  .photo-strip-wrap { margin: 0 -1.25rem 2.5rem; padding: 0 1.25rem; }
-  .photo-slide { width: 270px; height: 190px; }
+  .photo-strip-wrap { margin: 0 0 2.5rem; }
+  .photo-strip, .photo-strip:has(> .photo-slide:nth-child(10)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .committee-header { padding: 2rem 0 1.5rem; }
   .committee-name { font-size: 2.8rem; }
   .tab-bar { overflow-x: auto; scrollbar-width: none; }
