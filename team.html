@@ -13,6 +13,12 @@
 <div class="team-page">
   <main class="team-stage" aria-label="DebSoc Team">
     <div class="stage-grain" aria-hidden="true"></div>
+    <header class="team-head">
+      <img class="team-logo" src="assets/images/brand/debsoc-logo-pixel.png" alt="DebSoc crest" width="320" height="320">
+      <div>
+        <h1 class="team-title">The Team</h1>
+      </div>
+    </header>
     <!-- Central Clock Tower Landmark -->
     <figure class="central-print" id="centralPrint" aria-label="IIEST Shibpur clock tower" data-title="IIEST Shibpur Clock Tower" data-subtitle="Historic Campus Landmark">
       <img id="clockImage" src="assets/images/site/clock-tower.png" alt="IIEST Shibpur clock tower" onerror="this.onerror=null; this.src='https://placehold.co/600x800/111/eee?text=IIEST+Clock+Tower';">
@@ -138,8 +144,6 @@
         <figcaption class="pool-label">Utkarsh Mishra</figcaption>
       </figure>
     </section>
-
-    <div class="bottom-note">The Debating Society of IIEST Shibpur</div>
   </main>
 
 
@@ -159,121 +163,30 @@
 
 <script>
   function arrangeTeamPool() {
-    const stage = document.querySelector('.team-stage');
-    const clock = document.getElementById('centralPrint');
     const pool = document.getElementById('portraitPool');
-    if (!stage || !clock || !pool) return;
-
+    if (!pool || pool.dataset.built) return;
+    pool.dataset.built = '1';
     const items = Array.from(pool.querySelectorAll('.pool-item'));
-
-    const rank = {2027: 0, 2028: 1, 2029: 2};
-    items.sort((a, b) =>
-      (rank[a.dataset.batch] - rank[b.dataset.batch]) ||
-      (Number(a.dataset.order) - Number(b.dataset.order))
-    );
-
-    items.forEach(item => pool.appendChild(item));
-
-    const stageRect = stage.getBoundingClientRect();
-    const clockRect = clock.getBoundingClientRect();
-
-    const clockLeft = clockRect.left - stageRect.left;
-    const clockRight = clockLeft + clockRect.width;
-    const clockTop = clockRect.top - stageRect.top;
-    const clockBottom = clockTop + clockRect.height;
-
-    const winWidth = window.innerWidth;
-    const mobile = winWidth <= 650;
-    const tablet = winWidth <= 980;
-
-    const tileSize = mobile ? 85 : tablet ? 110 : Math.min(130, winWidth * 0.085);
-    const sideGapX = mobile ? 10 : 16;
-    const sideGapY = mobile ? 20 : 28;
-    const sidePad = mobile ? 10 : 24;
-    const cardExtraHeight = 45;
-
-    items.forEach(item => {
-      item.style.width = tileSize + 'px';
+    const batches = ['2027', '2028', '2029'];
+    batches.forEach(batch => {
+      const mine = items
+        .filter(item => item.dataset.batch === batch)
+        .sort((a, b) => Number(a.dataset.order) - Number(b.dataset.order));
+      if (!mine.length) return;
+      const section = document.createElement('section');
+      section.className = 'batch';
+      const title = document.createElement('h2');
+      title.className = 'batch-title';
+      title.textContent = batch === '2029' ? 'Batch of 2029/30' : 'Batch of ' + batch;
+      const grid = document.createElement('div');
+      grid.className = 'batch-grid';
+      mine.forEach(item => grid.appendChild(item));
+      let cols = Math.min(mine.length, 7);
+      while (cols > 1 && mine.length % cols !== 0) cols--;
+      grid.style.setProperty('--cols', cols);
+      section.append(title, grid);
+      pool.appendChild(section);
     });
-
-    const leftAvailableWidth = clockLeft - sidePad;
-    const rightAvailableWidth = stage.clientWidth - clockRight - sidePad;
-
-    const leftCols = Math.max(0, Math.floor((leftAvailableWidth + sideGapX) / (tileSize + sideGapX)));
-    const rightCols = Math.max(0, Math.floor((rightAvailableWidth + sideGapX) / (tileSize + sideGapX)));
-    const sideRows = Math.max(1, Math.floor((clockRect.height + sideGapY) / (tileSize + cardExtraHeight + sideGapY)));
-
-    const slots = [];
-
-    for (let r = 0; r < sideRows; r++) {
-      const y = clockTop + r * (tileSize + cardExtraHeight + sideGapY);
-      if (y + tileSize + cardExtraHeight > clockBottom + 20) break;
-
-      for (let c = 0; c < Math.max(leftCols, rightCols); c++) {
-        if (c < leftCols) {
-          const xLeft = sidePad + c * (tileSize + sideGapX);
-          if (xLeft + tileSize <= clockLeft - 8) {
-            slots.push({ x: xLeft, y, size: tileSize });
-          }
-        }
-        if (c < rightCols) {
-          const xRight = clockRight + sidePad + c * (tileSize + sideGapX);
-          if (xRight + tileSize <= stage.clientWidth - sidePad) {
-            slots.push({ x: xRight, y, size: tileSize });
-          }
-        }
-      }
-    }
-
-    let placedCount = 0;
-
-    for (const slot of slots) {
-      if (placedCount >= items.length) break;
-      const item = items[placedCount];
-      item.style.width = slot.size + 'px';
-      item.style.left = slot.x + 'px';
-      item.style.top = slot.y + 'px';
-      placedCount++;
-    }
-
-    const startBelowY = clockBottom + (mobile ? 40 : 54);
-    const maxPoolWidth = Math.min(stage.clientWidth - (sidePad * 2), 1200);
-
-    // Use the widest column count that leaves no part-filled row.
-    const remainingItems = items.length - placedCount;
-    const maxGridCols = mobile ? 3 : tablet ? 5 : 7;
-    let gridCols = maxGridCols;
-    for (let cols = maxGridCols; cols >= 2; cols--) {
-      if (remainingItems % cols === 0) { gridCols = cols; break; }
-    }
-    const gridGapX = mobile ? 12 : 20;
-    const gridGapY = mobile ? 20 : 30;
-    const belowTileSize = mobile ? 85 : Math.min(130, (maxPoolWidth - (gridCols - 1) * gridGapX) / gridCols);
-
-    const rowsBelow = Math.ceil(remainingItems / gridCols);
-    const gridWidth = gridCols * belowTileSize + (gridCols - 1) * gridGapX;
-    const poolLeftMargin = (stage.clientWidth - gridWidth) / 2;
-
-    for (let i = placedCount; i < items.length; i++) {
-      const idx = i - placedCount;
-      const col = idx % gridCols;
-      const row = Math.floor(idx / gridCols);
-
-      const x = poolLeftMargin + col * (belowTileSize + gridGapX);
-      const y = startBelowY + row * (belowTileSize + cardExtraHeight + gridGapY);
-      const item = items[i];
-
-      item.style.width = belowTileSize + 'px';
-      item.style.left = x + 'px';
-      item.style.top = y + 'px';
-    }
-
-    const totalHeightRequired = remainingItems > 0
-      ? startBelowY + rowsBelow * (belowTileSize + cardExtraHeight + gridGapY) + 60
-      : clockBottom + 80;
-
-    stage.style.minHeight = Math.max(totalHeightRequired, 700) + 'px';
-    pool.style.height = stage.offsetHeight + 'px';
   }
 
   function initLightboxModal() {

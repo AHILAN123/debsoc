@@ -255,3 +255,73 @@
 .text-dump > .showcase .pic-award img{
   width:100%;
   height:auto;
+}
+
+/* ---------- High-contrast retro look (matches the footer) ---------- */
+:root{--red:#c4231a;--yellow:#ffdf5e}
+html,body{background:#000 radial-gradient(rgba(196,35,26,.45) 1px,transparent 1px) 0 0/10px 10px}
+.grain{display:none}
+.tribunal,.hero{background:transparent}
+
+/* window frames on every picture */
+.pic{position:relative;background:#000;border:2px solid var(--cream);box-shadow:6px 6px 0 var(--red);padding-top:22px}
+.pic::before{content:"";position:absolute;top:0;left:0;right:0;height:22px;border-bottom:2px solid var(--cream);background:
+  linear-gradient(var(--cream),var(--cream)) right 6px top 6px/9px 9px no-repeat,
+  linear-gradient(var(--cream),var(--cream)) right 20px top 6px/9px 9px no-repeat,
+  linear-gradient(var(--cream),var(--cream)) right 34px top 6px/9px 9px no-repeat,var(--red)}
+.pic-a{padding-top:0;border:0;box-shadow:none}.pic-a::before{display:none}
+.pic img{filter:grayscale(1) contrast(1.2)}
+.pic:hover img{filter:none;transition:filter .3s}
+.frame{border-color:var(--cream);box-shadow:6px 6px 0 var(--red)}
+.frame::before,.frame::after{background:var(--yellow)}
+.tab{background:var(--yellow);color:#000;box-shadow:5px 5px 0 var(--red)}
+.tab::before{border-color:#000}
+.barcode span,.barcode .bars,.blue-bar{background-color:var(--red)}
+.barcode .bars{background:repeating-linear-gradient(90deg,var(--yellow) 0 .28cqw,transparent .28cqw .55cqw,var(--yellow) .55cqw .62cqw,transparent .62cqw .95cqw,var(--yellow) .95cqw 1.5cqw,transparent 1.5cqw 1.8cqw)}
+
+/* headings: pixel face, yellow accent, red drop shadow */
+.hero-title,.tribunal-title,.text-dump h2,.showcase-copy h2,.faq-title{font-family:var(--pixel);font-style:normal;color:#fff;text-shadow:3px 3px 0 var(--red)}
+.hero-title,.tribunal-title span{color:var(--yellow)}
+.showcase-copy h2{font-size:clamp(18px,2.2cqw,28px);line-height:1.4}
+.faq-title{font-size:clamp(20px,2.6cqw,32px)}
+.text-dump-kicker,.cta-eyebrow{color:var(--yellow)}
+.text-dump-inner{border-top:3px solid var(--red)}
+
+/* links become buttons */
+.text-link{padding:9px 12px;color:#000;background:var(--yellow);border:2px solid var(--cream);box-shadow:4px 4px 0 var(--red);font:10px/1.2 var(--pixel);transition:transform .12s,box-shadow .12s}
+.text-link:hover{color:#000;transform:translate(2px,2px);box-shadow:2px 2px 0 var(--red);border-bottom-color:var(--cream)}
+
+/* film reels */
+.reel{background:#000;border:2px solid var(--cream);box-shadow:6px 6px 0 var(--red)}
+.reel::before,.reel::after{background-image:repeating-linear-gradient(to right,var(--yellow) 0 5px,transparent 5px 15px)}
+.reel-expand:hover{background:var(--red)}
+
+/* FAQ as windows */
+.faq-list{border-top:0;display:grid;gap:12px}
+.faq-item{border:2px solid var(--cream);background:#000;box-shadow:4px 4px 0 var(--red)}
+.faq-btn{padding:12px 14px;font-weight:700}
+.faq-btn span{color:var(--yellow);font-size:12px}
+.faq-body{padding-left:14px;padding-right:14px}
+.faq-item.open .faq-body{padding:0 14px 14px}
+.faq-item.open .faq-btn{background:var(--red)}
+
+.cta-art-link{display:block}
+.text-dump .cta-buttons .btn-primary img{filter:none}
+
+.hero-heading{display:flex;align-items:center;gap:clamp(12px,2cqw,24px);margin:0 0 2.9cqw}
+.hero-heading .hero-title{margin:0}
+.hero-logo{flex:none;width:clamp(56px,8cqw,104px);height:auto;image-rendering:pixelated;border:2px solid var(--cream);box-shadow:4px 4px 0 var(--red)}
+
+/* hero note: red box with yellow shadow (this one only) */
+.tab{background:var(--red);color:#fff;box-shadow:5px 5px 0 var(--yellow)}
+.tab::before{border-color:var(--yellow)}
+
+.text-dump p.intro-invite{margin-top:4px;color:var(--yellow);font:11px/1.6 var(--pixel)}
+
+/* awards: where we have won, and BECON */
+.win-chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;max-width:44ch}
+.win-chips span{padding:7px 9px;color:var(--cream);background:#000;border:2px solid var(--cream);box-shadow:3px 3px 0 var(--red);font:8px/1.3 var(--pixel)}
+.becon-badge{display:flex;align-items:center;gap:12px;margin-top:18px;max-width:44ch;padding:10px 12px;color:var(--cream);background:#000;border:2px solid var(--cream);box-shadow:5px 5px 0 var(--red);text-decoration:none;transition:transform .12s,box-shadow .12s}
+.becon-badge:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--red)}
+.becon-badge b{flex:none;padding:8px 10px;color:#000;background:var(--yellow);font:11px/1 var(--pixel)}
+.becon-badge span{font-size:15px;line-height:1.35;font-style:italic}

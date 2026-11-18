@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="h-full">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="assets/css/pages/events.css">
   <link rel="stylesheet" href="assets/css/editorial.css">
 </head>
-<body class="editorial-page h-full overflow-auto bg-[#0B0C10] font-sans-body text-[#FAF7F2] flex flex-col justify-between selection:bg-[#DAA520] selection:text-[#800020]">
+<body class="editorial-page min-h-screen bg-[#0B0C10] font-sans-body text-[#FAF7F2] flex flex-col justify-between selection:bg-[#DAA520] selection:text-[#800020]">
 
   <div id="toast" class="fixed bottom-6 right-6 z-50 hidden px-5 py-3 rounded-lg text-xs font-mono-code shadow-2xl border transition-all duration-300 transform"></div>
 
@@ -18,17 +18,10 @@
     
     <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-neutral-800 gap-4">
       <div>
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#DAA520]/30 bg-[#DAA520]/10 text-[#DAA520] text-xs font-mono-code mb-3">
-          <span class="w-2 h-2 rounded-full bg-[#DAA520] animate-pulse"></span>
-          OFFICIAL PARLIAMENTARY CIRCUIT
-        </div>
         <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wide text-white font-serif-title">
           Tournaments & Sessions
         </h1>
       </div>
-      <p class="text-xs md:text-sm text-neutral-400 max-w-md font-light leading-relaxed">
-        Live debate registrations, Asian Parliamentary fixtures, and Model United Nations conclaves hosted by DebSoc IIEST Shibpur.
-      </p>
     </div>
 
     <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
