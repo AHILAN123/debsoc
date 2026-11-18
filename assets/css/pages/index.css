@@ -325,3 +325,8 @@ html,body{background:#000 radial-gradient(rgba(196,35,26,.45) 1px,transparent 1p
 .becon-badge:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--red)}
 .becon-badge b{flex:none;padding:8px 10px;color:#000;background:var(--yellow);font:11px/1 var(--pixel)}
 .becon-badge span{font-size:15px;line-height:1.35;font-style:italic}
+
+/* BECON logo, cropped to the artwork (the source file has wide white margins) */
+.becon-mark{--s:72px;position:relative;flex:none;display:block;width:var(--s);height:var(--s);overflow:hidden;background:#fff;border:2px solid #f1efe8;box-shadow:4px 4px 0 #c4231a}
+.becon-mark img{display:block;max-width:none;width:calc(var(--s) * 1.15);height:calc(var(--s) * 1.4375);margin:calc(var(--s) * -0.256) 0 0 calc(var(--s) * -0.048)}
+.becon-badge .becon-mark{--s:64px;box-shadow:none}

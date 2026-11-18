@@ -317,3 +317,9 @@ body.gallery-page { background: #d92a1f; }
   .becon-page .history-entry--poster .event-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+/* BECON logo, cropped to the artwork (the source file has wide white margins) */
+.becon-mark{--s:72px;position:relative;flex:none;display:block;width:var(--s);height:var(--s);overflow:hidden;background:#fff;border:2px solid #f1efe8;box-shadow:4px 4px 0 #c4231a}
+.becon-mark img{display:block;max-width:none;width:calc(var(--s) * 1.15);height:calc(var(--s) * 1.4375);margin:calc(var(--s) * -0.256) 0 0 calc(var(--s) * -0.048)}
+.mast-title{display:flex;align-items:center;gap:clamp(12px,2vw,20px)}
+.mast-title .becon-mark{--s:clamp(64px,7vw,88px)}
+.mast-title h1{margin:0}
