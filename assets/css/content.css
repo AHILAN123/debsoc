@@ -147,9 +147,9 @@ body { margin: 0; overflow-x: hidden; color: var(--cream); background: var(--bla
    OVERLAY: photos stay IN COLOUR (no b/w); only a light red cast so they sit on the red page. */
 .history-entry--collage { --paper: #d92a1f; --ink: #fff5ea; --muted-ink: #ffd9d2; --accent: #fff5ea; --accent-ink: #fff5ea; --card: rgba(0, 0, 0, .28); --line: rgba(255, 245, 234, .4); background-image: radial-gradient(rgba(0, 0, 0, .16) .55px, transparent .75px); }
 .history-entry--collage .entry-layout { grid-template-areas: "art" "head" "copy"; }
-.history-entry--collage .entry-art { display: grid; position: relative; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(10px, 2.5vw, 28px); }
+.history-entry--collage .entry-art { display: grid; position: relative; isolation: isolate; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(10px, 2.5vw, 28px); }
 .history-entry--collage .entry-art::before {
-  position: absolute; z-index: 4; top: -6%; right: -2%; width: clamp(60px, 12vw, 120px); aspect-ratio: 1; content: ""; background: #111; pointer-events: none;
+  position: absolute; z-index: -1; top: -6%; right: -2%; width: clamp(60px, 12vw, 120px); aspect-ratio: 1; content: ""; background: #111; pointer-events: none;
   clip-path: polygon(100% 50%, 63.9% 55.7%, 85.4% 85.4%, 55.7% 63.9%, 50% 100%, 44.3% 63.9%, 14.6% 85.4%, 36.1% 55.7%, 0 50%, 36.1% 44.3%, 14.6% 14.6%, 44.3% 36.1%, 50% 0, 55.7% 36.1%, 85.4% 14.6%, 63.9% 44.3%);
 }
 .history-entry--collage .entry-cover { aspect-ratio: 4 / 3; box-shadow: 8px 8px 0 rgba(0, 0, 0, .35); }
@@ -323,3 +323,43 @@ body.gallery-page { background: #d92a1f; }
 .mast-title{display:flex;align-items:center;gap:clamp(12px,2vw,20px)}
 .mast-title .becon-mark{--s:clamp(64px,7vw,88px)}
 .mast-title h1{margin:0}
+
+.becon-page .history-entry--collage .entry-cover img { object-fit: cover; }
+
+.becon-page .history-masthead .history-intro{max-width:92ch}
+
+/* BECON wrap poster, beside the closing text */
+.becon-page .history-masthead-inner { display: grid; grid-template-columns: minmax(0, 1fr) clamp(160px, 17vw, 230px); grid-template-areas: "text poster"; column-gap: clamp(20px, 4vw, 56px); align-items: center; }
+.becon-page .history-masthead-inner > *:not(.wrap-poster) { grid-column: 1; }
+.wrap-poster { grid-column: 2; grid-row: 1 / span 4; margin: 0; background: #000; border: 2px solid var(--cream); box-shadow: 6px 6px 0 var(--coral); }
+.wrap-poster img { display: block; width: 100%; height: auto; }
+@media (max-width: 760px) {
+  .becon-page .history-masthead-inner { display: block; }
+  .wrap-poster { width: min(60%, 240px); margin: 18px 0 0; }
+}
+
+/* the star always sits behind the pictures */
+.history-entry--collage .entry-cover, .history-entry--collage .event-gallery { position: relative; z-index: 1; }
+
+/* Gallery: every photo the same small size, four per row */
+.gallery-page .history-entry--collage .event-gallery,
+.gallery-page .history-entry--collage .event-gallery.event-gallery--single { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 20px); padding: 8px; }
+.gallery-page .history-entry--collage .event-thumb,
+.gallery-page .history-entry--collage .event-gallery--single .event-thumb { aspect-ratio: 4 / 3; border-width: 5px; border-bottom-width: 14px; }
+@media (max-width: 640px) {
+  .gallery-page .history-entry--collage .event-gallery,
+  .gallery-page .history-entry--collage .event-gallery.event-gallery--single { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* on short rows the star would float away from the photos, so only show it on full rows */
+.gallery-page .history-entry--collage .entry-art:not(:has(.event-thumb:nth-child(4)))::before { display: none; }
+
+/* Gallery: dotted red background, photos in straight, even lines */
+html:has(.gallery-page), body.gallery-page { background: #d92a1f radial-gradient(rgba(0, 0, 0, .3) 1.5px, transparent 1.8px) 0 0 / 16px 16px; }
+.gallery-page .history-masthead { background: transparent; }
+.gallery-page .history-entry--collage .event-thumb:nth-child(n) { transform: none; }
+.gallery-page .history-entry--collage .event-gallery { align-items: start; }
+
+/* Gallery page: black background with red dots */
+html:has(.gallery-page), body.gallery-page { background: #000 radial-gradient(rgba(196, 35, 26, .75) 1.5px, transparent 1.8px) 0 0 / 16px 16px; }
+.gallery-page .history-entry { border-bottom-color: rgba(196, 35, 26, .6); }

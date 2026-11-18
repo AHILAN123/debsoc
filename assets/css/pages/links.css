@@ -42,3 +42,15 @@ body{background:#000 radial-gradient(rgba(196,35,26,.45) 1px,transparent 1px) 0 
   .stack{grid-template-columns:minmax(0,1fr)}
   .zine-embed{min-height:440px;height:72vh}
 }
+
+/* Red snapshot gallery (replaces the film strip); the star sits behind the pictures */
+.gal-red{order:1;position:relative;isolation:isolate;padding:clamp(18px,3vw,36px);background:#d92a1f radial-gradient(rgba(0,0,0,.16) .55px,transparent .75px) 0 0/4px 4px;border:2px solid var(--cream);box-shadow:7px 7px 0 #000}
+.gal-red::before{content:"";position:absolute;z-index:-1;top:-24px;right:-18px;width:clamp(56px,6vw,88px);aspect-ratio:1;background:#111;pointer-events:none;clip-path:polygon(100% 50%,63.9% 55.7%,85.4% 85.4%,55.7% 63.9%,50% 100%,44.3% 63.9%,14.6% 85.4%,36.1% 55.7%,0 50%,36.1% 44.3%,14.6% 14.6%,44.3% 36.1%,50% 0,55.7% 36.1%,85.4% 14.6%,63.9% 44.3%)}
+.gal-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2.4vw,28px)}
+.gal-thumb{margin:0;aspect-ratio:1 / 1.05;overflow:hidden;background:#fff5ea;border:6px solid #fff5ea;border-bottom-width:18px;box-shadow:5px 5px 0 rgba(0,0,0,.3);cursor:zoom-in}
+.gal-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.gal-thumb:nth-child(4n+1){transform:rotate(-2.5deg)}
+.gal-thumb:nth-child(4n+2){transform:rotate(2deg) translateY(6px)}
+.gal-thumb:nth-child(4n+3){transform:rotate(2.5deg)}
+.gal-thumb:nth-child(4n){transform:rotate(-2deg) translateY(-4px)}
+@media (max-width:760px){.gal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}

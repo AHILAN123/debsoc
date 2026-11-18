@@ -330,3 +330,34 @@ html,body{background:#000 radial-gradient(rgba(196,35,26,.45) 1px,transparent 1p
 .becon-mark{--s:72px;position:relative;flex:none;display:block;width:var(--s);height:var(--s);overflow:hidden;background:#fff;border:2px solid #f1efe8;box-shadow:4px 4px 0 #c4231a}
 .becon-mark img{display:block;max-width:none;width:calc(var(--s) * 1.15);height:calc(var(--s) * 1.4375);margin:calc(var(--s) * -0.256) 0 0 calc(var(--s) * -0.048)}
 .becon-badge .becon-mark{--s:64px;box-shadow:none}
+
+/* iPod: much smaller */
+.text-dump .cta-art-link{display:block;width:clamp(150px,15vw,220px);margin:6px auto 14px}
+.text-dump .cta-art{display:block;width:100%;height:auto}
+
+/* Gallery block: red page with tilted snapshots, star behind the pictures */
+.gal-red{position:relative;isolation:isolate;padding:clamp(18px,3cqw,34px);background:#d92a1f radial-gradient(rgba(0,0,0,.16) .55px,transparent .75px) 0 0/4px 4px;border:2px solid var(--cream);box-shadow:7px 7px 0 #000}
+.gal-red::before{content:"";position:absolute;z-index:-1;top:-22px;right:-18px;width:clamp(56px,7cqw,84px);aspect-ratio:1;background:#111;pointer-events:none;clip-path:polygon(100% 50%,63.9% 55.7%,85.4% 85.4%,55.7% 63.9%,50% 100%,44.3% 63.9%,14.6% 85.4%,36.1% 55.7%,0 50%,36.1% 44.3%,14.6% 14.6%,44.3% 36.1%,50% 0,55.7% 36.1%,85.4% 14.6%,63.9% 44.3%)}
+.gal-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,2cqw,20px)}
+.gal-thumb{margin:0;aspect-ratio:1 / 1.05;overflow:hidden;background:#fff5ea;border:5px solid #fff5ea;border-bottom-width:16px;box-shadow:4px 4px 0 rgba(0,0,0,.3);cursor:zoom-in}
+.gal-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.gal-thumb:nth-child(4n+1){transform:rotate(-2.5deg)}
+.gal-thumb:nth-child(4n+2){transform:rotate(2deg) translateY(6px)}
+.gal-thumb:nth-child(4n+3){transform:rotate(2.5deg)}
+.gal-thumb:nth-child(4n){transform:rotate(-2deg) translateY(-4px)}
+@media (max-width:900px){.gal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Gallery spans the full bottom, five photos per row */
+#gallery-preview .page{width:min(1500px,calc(100% - 40px))}
+.gal-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media (max-width:900px){.gal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* typewriter: far smaller, centred */
+.text-dump > .showcase{display:block;margin-top:20px}
+.text-dump > .showcase a{display:block;width:clamp(130px,12vw,180px);margin:0 auto}
+.text-dump > .showcase .pic-award{width:100%}
+
+/* lightbox: above the sticky nav, photo kept well inside the screen */
+.lightbox{z-index:5000;padding:64px 24px 24px}
+.lightbox img{max-width:min(100%,1100px);max-height:100%;object-fit:contain}
+.lightbox-close{z-index:1;top:12px;right:16px;color:#fff}

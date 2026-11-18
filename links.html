@@ -20,28 +20,7 @@
     </div>
   </article>
 
-  <div class="reel-track" aria-label="DebSoc photo gallery">
-        <div class="reel-frame"><img src="assets/images/events/debsoc-meet-march.webp" alt="DebSoc meeting"></div>
-        
-    <div class="reel-frame"><img src="assets/images/history/2026-4.webp" alt="DISEC event"></div>
-    <div class="reel-frame"><img src="assets/images/history/2018-2.webp" alt="Lok Sabha event"></div>
-    <div class="reel-frame"><img src="assets/images/events/vicharagini.webp" alt="Vicharagini event"></div>
-    <div class="reel-frame"><img src="assets/images/history/2026-3.webp" alt="Becon event"></div>
-    <div class="reel-frame"><img src="assets/images/history/2026-2.webp" alt="DebSoc members"></div>
-    <div class="reel-frame"><img src="assets/images/events/becon/disec-06.webp" alt="DebSoc conference"></div>
-    <div class="reel-frame"><img src="assets/images/events/becon/highlights-04.webp" alt="DebSoc event"></div>
-
-    <div class="reel-frame"><img src="assets/images/history/2020-1.webp" alt="DebSoc event"></div>
-    <div class="reel-frame"><img src="assets/images/history/2025-3.webp" alt="Alcheringa event"></div>
-    <div class="reel-frame"><img src="assets/images/events/amenities.webp" alt="DebSoc event"></div>
-    <div class="reel-frame"><img src="assets/images/events/ash-debsoc.webp" alt="DebSoc event"></div>
-    <div class="reel-frame"><img src="assets/images/events/memorial-debate.webp" alt="Memorial debate"></div>
-    <div class="reel-frame"><img src="assets/images/history/2026-2.webp" alt="DebSoc members"></div>
-    <div class="reel-frame"><img src="assets/images/events/becon/disec-02.webp" alt="DebSoc conference"></div>
-    <div class="reel-frame"><img src="assets/images/events/becon/highlights-02.webp" alt="Becon event"></div>
-    <div class="reel-frame"><img src="assets/images/history/2016-2.webp" alt="DISEC event"></div>
-    <div class="reel-frame"><img src="assets/images/history/2013-1.webp" alt="Lok Sabha event"></div>
-  </div>
+  <div class="gal-red" aria-label="DebSoc photo gallery"><div class="gal-grid"><figure class="gal-thumb"><img src="assets/images/events/debsoc-meet-march.webp" alt="DebSoc meeting" loading="lazy"></figure><figure class="gal-thumb"><img src="assets/images/history/2026-4.webp" alt="DISEC event" loading="lazy"></figure><figure class="gal-thumb"><img src="assets/images/history/2018-2.webp" alt="Lok Sabha event" loading="lazy"></figure><figure class="gal-thumb"><img src="assets/images/events/vicharagini.webp" alt="Vicharagini event" loading="lazy"></figure><figure class="gal-thumb"><img src="assets/images/history/2026-3.webp" alt="BECON event" loading="lazy"></figure><figure class="gal-thumb"><img src="assets/images/history/2026-2.webp" alt="DebSoc members" loading="lazy"></figure><figure class="gal-thumb"><img src="assets/images/events/becon/highlights-04.webp" alt="BECON committee" loading="lazy"></figure><figure class="gal-thumb"><img src="assets/images/events/memorial-debate.webp" alt="Memorial debate" loading="lazy"></figure></div></div>
 </div>
 
 <main class="stack">
@@ -65,48 +44,6 @@
 </div>
 
 <script>
-  const reel = document.querySelector('.reel-track');
-  let isDragging = false;
-  let didDrag = false;
-  let startX = 0, startY = 0;
-  let startScroll = 0;
-  let pressedFrame = null;
-  const DRAG_THRESHOLD = 6;
-
-  function isVertical(){
-    return getComputedStyle(reel).flexDirection === 'column';
-  }
-
-  reel.addEventListener('pointerdown', (event) => {
-    if (event.target.closest('.reel-expand')) { pressedFrame = null; return; }
-    isDragging = true;
-    didDrag = false;
-    pressedFrame = event.target.closest('.reel-frame');
-    startX = event.clientX;
-    startY = event.clientY;
-    startScroll = isVertical() ? reel.scrollTop : reel.scrollLeft;
-    reel.classList.add('is-dragging');
-    reel.setPointerCapture(event.pointerId);
-  });
-  reel.addEventListener('pointermove', (event) => {
-    if (!isDragging) return;
-    const delta = isVertical() ? (event.clientY - startY) : (event.clientX - startX);
-    if (Math.abs(delta) > DRAG_THRESHOLD) didDrag = true;
-    if (isVertical()) reel.scrollTop = startScroll - delta;
-    else reel.scrollLeft = startScroll - delta;
-  });
-  const stopDragging = () => {
-    isDragging = false;
-    reel.classList.remove('is-dragging');
-  };
-  reel.addEventListener('pointerup', stopDragging);
-  reel.addEventListener('pointercancel', stopDragging);
-
-  reel.addEventListener('click', () => {
-    if (didDrag || !pressedFrame) return;
-    pressedFrame.classList.toggle('is-colored');
-  });
-
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
   const lightboxClose = document.getElementById('lightbox-close');
@@ -121,18 +58,14 @@
     lightboxImg.src = '';
   }
 
-  reel.querySelectorAll('.reel-frame').forEach((frame) => {
-    const img = frame.querySelector('img');
-    const btn = document.createElement('button');
-    btn.className = 'reel-expand';
-    btn.type = 'button';
-    btn.setAttribute('aria-label', 'Open image');
-    btn.textContent = '⤢';
-    btn.addEventListener('click', (event) => {
-      event.stopPropagation();
-      openLightbox(img.src, img.alt);
+  document.querySelectorAll('.gal-thumb').forEach((fig) => {
+    const img = fig.querySelector('img');
+    fig.tabIndex = 0;
+    fig.setAttribute('role', 'button');
+    fig.addEventListener('click', () => openLightbox(img.src, img.alt));
+    fig.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(img.src, img.alt); }
     });
-    frame.appendChild(btn);
   });
 
   lightboxClose.addEventListener('click', closeLightbox);
