@@ -14,14 +14,18 @@
   <link rel="stylesheet" href="assets/css/pages/profile.css">
   <style>
     .m-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 3px; background: var(--gd); }
-    .m-card { display: flex; align-items: center; gap: 10px; padding: 10px; color: var(--ink); text-decoration: none; background: var(--g); box-shadow: inset 1px 1px 0 #ececec; min-width: 0; }
-    .m-card:hover, .m-card:focus-visible { background: #dcdcf2; outline: 1px dotted #000; outline-offset: -4px; }
+    .m-card { display: flex; flex-direction: column; gap: 8px; padding: 10px; background: var(--g); box-shadow: inset 1px 1px 0 #ececec; min-width: 0; }
+    .m-head { display: flex; align-items: center; gap: 10px; min-width: 0; color: var(--ink); text-decoration: none; }
+    .m-head:hover .m-name, .m-head:focus-visible .m-name { text-decoration: underline; }
+    .m-links { display: flex; flex-wrap: wrap; gap: 4px 10px; font: 12px var(--sans); }
+    .m-links a { color: var(--blue); }
+    .m-nolinks { font: 12px var(--sans); color: #666; }
     .m-avatar { flex: none; width: 44px; height: 44px; display: grid; place-items: center; overflow: hidden; border: 2px inset #fff; background: #fff; font: 700 14px var(--mono); color: var(--blue); }
     .m-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .m-name { display: block; font: 700 14px var(--sans); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .m-user { display: block; font: 12px var(--mono); color: #444; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .m-empty { padding: 14px; }
-    [data-theme="dark"] .m-card:hover, [data-theme="dark"] .m-card:focus-visible { background: rgba(255, 61, 90, .16); }
+    [data-theme="dark"] .m-nolinks { color: #aaa; }
     [data-theme="dark"] .m-user { color: #bbb; }
   </style>
 </head>
@@ -88,9 +92,15 @@
         grid.classList.remove("hidden");
         grid.innerHTML = users.map(function (u) {
           var img = safeImg(u.profileImage);
-          return '<a class="m-card" href="profile.html?u=' + encodeURIComponent(u.username) + '">' +
+          var links = (Array.isArray(u.socialLinks) ? u.socialLinks : []).filter(function (l) { return l && safeImg(l.url); }).slice(0, 4);
+          var linkHtml = links.length
+            ? links.map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener noreferrer">' + esc(l.label || "Link") + '</a>'; }).join("")
+            : '<span class="m-nolinks">no links yet</span>';
+          return '<div class="m-card">' +
+            '<a class="m-head" href="profile.html?u=' + encodeURIComponent(u.username) + '">' +
             '<span class="m-avatar">' + (img ? '<img src="' + esc(img) + '" alt="" loading="lazy">' : esc(initials(u.displayName))) + '</span>' +
-            '<span style="min-width:0"><span class="m-name">' + esc(u.displayName) + '</span><span class="m-user">@' + esc(u.username) + '</span></span></a>';
+            '<span style="min-width:0"><span class="m-name">' + esc(u.displayName) + '</span><span class="m-user">@' + esc(u.username) + '</span></span></a>' +
+            '<div class="m-links">' + linkHtml + '</div></div>';
         }).join("");
       }
 
@@ -100,7 +110,16 @@
         grid.classList.add("hidden");
         status.textContent = "Loading members...";
         fetch(API + "/users?limit=100" + (q ? "&q=" + encodeURIComponent(q) : ""))
-          .then(function (r) { if (!r.ok) throw new Error("Could not load members."); return r.json(); })
+          .then(function (r) {
+            if (!r.ok) {
+              return r.text().then(function (t) {
+                var msg = ""; try { msg = JSON.parse(t).error || ""; } catch (e) { /* not JSON */ }
+                throw new Error("Could not load members (HTTP " + r.status + (msg ? ": " + msg : "") + "). " +
+                  (r.status === 404 ? "The backend is probably running old code without /api/users, so redeploy or restart it." : ""));
+              });
+            }
+            return r.json();
+          })
           .then(function (d) { if (mine === seq) render(d.users || [], q); })
           .catch(function (e) { if (mine === seq) { status.classList.remove("hidden"); grid.classList.add("hidden"); status.textContent = e.message; } });
       }

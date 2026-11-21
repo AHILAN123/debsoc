@@ -194,7 +194,7 @@ router.get("/", async (req, res) => {
 			where,
 			orderBy: { displayName: "asc" },
 			take: limit,
-			select: { username: true, displayName: true, profileImage: true, role: true }
+			select: { username: true, displayName: true, profileImage: true, role: true, socialLinks: true }
 		});
 		res.json({ users });
 	} catch (error) {
