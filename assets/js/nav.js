@@ -2,7 +2,7 @@
 const links = [
   { label: 'Home', href: 'index.html' },
   { label: 'About Us', href: 'about.html' },
-  { label: 'Tribunal', href: 'links.html' },
+  { label: 'Tribunal', href: 'tribunal.html' },
   { label: 'Team', href: 'team.html' },
   { label: 'Contact', href: 'contact.html' }
 ];
@@ -18,7 +18,7 @@ const eventLinks = [
 
   localStorage.removeItem("debsoc_token");
 
-  const API_BASE = "https://forkdebsoc.onrender.com/api";
+  const API_BASE = "/api";
 
   let csrfToken;
 
@@ -26,8 +26,7 @@ const eventLinks = [
   function linkMarkup(link, mobile) {
 
     const current =
-      link.href === currentPage ||
-      (link.href === 'links.html' && currentPage === 'tribunal.html')
+      link.href === currentPage
         ? ' aria-current="page"'
         : '';
 
@@ -391,9 +390,8 @@ const eventLinks = [
 
             <a
               class="site-nav-link"
-              href="links.html"
-              ${currentPage === 'links.html' ||
-                currentPage === 'tribunal.html'
+              href="tribunal.html"
+              ${currentPage === 'tribunal.html'
                 ? 'aria-current="page"'
                 : ''}
             >

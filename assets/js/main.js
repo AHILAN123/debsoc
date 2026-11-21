@@ -5,7 +5,7 @@
 // ----- Mobile Menu -----
 const menu = document.getElementById("mobile-menu");
 const button = document.getElementById("hamburger-btn");
-const API_BASE = "https://forkdebsoc.onrender.com/api";
+const API_BASE = "/api";
 // For Vercel deployment with same-origin API routing:
 // const API_BASE = "/api";
 // --- Session Helpers ---

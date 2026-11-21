@@ -54,3 +54,12 @@ body{background:#000 radial-gradient(rgba(196,35,26,.45) 1px,transparent 1px) 0 
 .gal-thumb:nth-child(4n+3){transform:rotate(2.5deg)}
 .gal-thumb:nth-child(4n){transform:rotate(-2deg) translateY(-4px)}
 @media (max-width:760px){.gal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Published Tribunal issues (below the gallery) */
+.tr-issues{width:min(1240px,calc(100% - 40px));margin:44px auto 0}
+.tr-issues-title{margin:0 0 24px;font:400 clamp(14px,2vw,22px)/1.4 var(--pixel);color:var(--yellow);text-shadow:3px 3px 0 var(--red);text-transform:uppercase}
+.tr-issue-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.tr-issue{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.tr-issue img{display:block;width:100%;height:300px;object-fit:cover;border:2px solid var(--cream);box-shadow:6px 6px 0 var(--red)}
+.tr-issue .arrow{text-decoration:none}
+@media (max-width:760px){.tr-issue-grid{grid-template-columns:minmax(0,1fr)}}

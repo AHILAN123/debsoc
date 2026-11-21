@@ -1,5 +1,8 @@
 {
   "cleanUrls": true,
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://forkdebsoc.onrender.com/api/:path*" }
+  ],
   "redirects": [
     { "source": "/aboutus", "destination": "/about", "permanent": true },
     { "source": "/aboutus.html", "destination": "/about", "permanent": true },
@@ -11,8 +14,10 @@
     { "source": "/debsoc_iiest_timeline_with_photos.html", "destination": "/timeline", "permanent": true },
     { "source": "/viewcommittee", "destination": "/committees", "permanent": true },
     { "source": "/viewcommittee.html", "destination": "/committees", "permanent": true },
-    { "source": "/new", "destination": "/links", "permanent": true },
-    { "source": "/new.html", "destination": "/links", "permanent": true },
+    { "source": "/new", "destination": "/tribunal", "permanent": true },
+    { "source": "/new.html", "destination": "/tribunal", "permanent": true },
+    { "source": "/links", "destination": "/tribunal", "permanent": true },
+    { "source": "/links.html", "destination": "/tribunal", "permanent": true },
     { "source": "/tribunal2", "destination": "/tribunal-edition", "permanent": true },
     { "source": "/tribunal2.html", "destination": "/tribunal-edition", "permanent": true }
   ]

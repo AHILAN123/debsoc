@@ -1,10 +1,10 @@
-const API_BASE = "https://forkdebsoc.onrender.com/api/auth";
+const API_BASE = "/api/auth";
 // For Vercel deployment with same-origin API routing:
 // const API_BASE = "/api/auth";
 
 // A leftover login cookie makes the server enforce CSRF, so credentialed auth requests must send a token.
 const authPost = async (url, payload) => {
-  const csrfRes = await fetch("https://forkdebsoc.onrender.com/api/csrf-token", {
+  const csrfRes = await fetch("/api/csrf-token", {
     credentials: "include"
   });
   if (!csrfRes.ok) throw new Error("Could not start a secure session. Please try again.");

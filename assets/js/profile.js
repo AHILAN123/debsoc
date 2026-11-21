@@ -1,4 +1,4 @@
-const API_BASE = "https://forkdebsoc.onrender.com/api";
+const API_BASE = "/api";
 // For Vercel deployment with same-origin API routing:
 // const API_BASE = "/api";
 localStorage.removeItem("debsoc_token");
