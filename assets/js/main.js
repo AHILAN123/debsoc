@@ -23,20 +23,7 @@ const logoutUser = async () => {
   window.location.reload();
 };
 
-let csrfToken;
-const apiFetch = async (url, options = {}) => {
-  const method = (options.method || "GET").toUpperCase();
-  const headers = new Headers(options.headers || {});
-  if (method !== "GET" && method !== "HEAD" && method !== "OPTIONS") {
-    if (!csrfToken) {
-      const csrfResponse = await fetch(`${API_BASE}/csrf-token`, { credentials: "include" });
-      const csrfData = await csrfResponse.json();
-      csrfToken = csrfData.csrfToken;
-    }
-    headers.set("X-CSRF-Token", csrfToken);
-  }
-  return fetch(url, { ...options, credentials: "include", headers });
-};
+const apiFetch = (url, options = {}) => window.DebSoc.apiFetch(url, options);
 
 // --- Auth API Calls ---
 const loginUser = async (email, password) => {

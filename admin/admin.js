@@ -6,21 +6,7 @@ const API_BASE = "/api";
 // For Vercel deployment with same-origin API routing:
 // const API_BASE = "/api";
 localStorage.removeItem("debsoc_token");
-let csrfToken;
-
-const apiFetch = async (url, options = {}) => {
-  const method = (options.method || "GET").toUpperCase();
-  const headers = new Headers(options.headers || {});
-  if (method !== "GET" && method !== "HEAD" && method !== "OPTIONS") {
-    if (!csrfToken) {
-      const csrfResponse = await fetch(`${API_BASE}/csrf-token`, { credentials: "include" });
-      const csrfData = await csrfResponse.json();
-      csrfToken = csrfData.csrfToken;
-    }
-    headers.set("X-CSRF-Token", csrfToken);
-  }
-  return fetch(url, { ...options, credentials: "include", headers });
-};
+const apiFetch = (url, options = {}) => window.DebSoc.apiFetch(url, options);
 
 /* ---------- Small helpers ---------- */
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -1110,5 +1096,14 @@ function initDashboard() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  if (verifyAdminAccess()) initDashboard();
+  if (!verifyAdminAccess()) return;
+  initDashboard();
+  // Confirm the cookie is still valid and still belongs to an admin (localStorage can be stale).
+  window.DebSoc.getSession().then((user) => {
+    if (!user) redirectToLogin("Session expired, log in again.");
+    else if (user.role !== "ADMIN") {
+      alert("Access Denied: Administrator clearance required.");
+      window.location.href = "../events.html";
+    }
+  });
 });

@@ -176,6 +176,33 @@ router.post(
   }
 );
 
+// Member directory / search. Only public profile fields are returned.
+router.get("/", async (req, res) => {
+	try {
+		const q = String(req.query.q || "").trim().slice(0, 50);
+		const limit = Math.min(Math.max(parseInt(req.query.limit, 10) || 60, 1), 100);
+		const where = {
+			isVerified: true,
+			...(q ? {
+				OR: [
+					{ username: { contains: q, mode: "insensitive" } },
+					{ displayName: { contains: q, mode: "insensitive" } }
+				]
+			} : {})
+		};
+		const users = await prisma.user.findMany({
+			where,
+			orderBy: { displayName: "asc" },
+			take: limit,
+			select: { username: true, displayName: true, profileImage: true, role: true }
+		});
+		res.json({ users });
+	} catch (error) {
+		console.error("Member list error:", error);
+		res.status(500).json({ error: "Failed to load members." });
+	}
+});
+
 router.get("/:username", async (req, res) => {
 	try {
 		const username = String(req.params.username || "").trim();

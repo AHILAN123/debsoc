@@ -363,3 +363,15 @@ html:has(.gallery-page), body.gallery-page { background: #d92a1f radial-gradient
 /* Gallery page: black background with red dots */
 html:has(.gallery-page), body.gallery-page { background: #000 radial-gradient(rgba(196, 35, 26, .75) 1.5px, transparent 1.8px) 0 0 / 16px 16px; }
 .gallery-page .history-entry { border-bottom-color: rgba(196, 35, 26, .6); }
+
+/* Gallery: year chips + lightbox navigation */
+.gallery-chips { flex-wrap: wrap; gap: 8px; position: sticky; top: 46px; z-index: 20; padding: 10px 0; background: #d92a1f; }
+.gallery-chip { padding: 8px 12px; color: #fff5ea; background: #111; border: 1px solid #fff5ea; font: 9px/1.2 var(--pixel); letter-spacing: .04em; text-transform: uppercase; cursor: pointer; }
+.gallery-chip[aria-pressed="true"] { color: #111; background: #ffdf5e; }
+.gallery-chip:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.image-viewer-nav { position: absolute; top: 50%; z-index: 2; width: 48px; height: 64px; margin-top: -32px; padding: 0; color: #fff; background: rgba(0, 0, 0, .55); border: 1px solid rgba(255, 255, 255, .5); font: 34px/1 var(--serif); cursor: pointer; }
+.image-viewer-nav[hidden] { display: none; }
+.image-viewer-prev { left: 10px; }
+.image-viewer-next { right: 10px; }
+.image-viewer-count { position: absolute; left: 16px; top: 18px; margin: 0; font: 11px var(--pixel); color: #fff; }
+@media (max-width: 640px) { .image-viewer-nav { width: 40px; height: 52px; margin-top: -26px; } }

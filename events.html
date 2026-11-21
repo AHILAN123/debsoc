@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="assets/js/session.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Events & Tournaments — Debating Society IIEST Shibpur</title>
@@ -58,20 +59,9 @@
     // For Vercel deployment with same-origin API routing:
     // const API_BASE = "/api";
     localStorage.removeItem("debsoc_token");
-    let csrfToken;
 
-    async function apiFetch(url, options = {}) {
-      const method = (options.method || "GET").toUpperCase();
-      const headers = new Headers(options.headers || {});
-      if (method !== "GET" && method !== "HEAD" && method !== "OPTIONS") {
-        if (!csrfToken) {
-          const csrfResponse = await fetch(`${API_BASE}/csrf-token`, { credentials: "include" });
-          const csrfData = await csrfResponse.json();
-          csrfToken = csrfData.csrfToken;
-        }
-        headers.set("X-CSRF-Token", csrfToken);
-      }
-      return fetch(url, { ...options, credentials: "include", headers });
+    function apiFetch(url, options = {}) {
+      return window.DebSoc.apiFetch(url, options);
     }
 
     function toggleMobileMenu() {
@@ -242,6 +232,14 @@
             });
 
             const data = await res.json();
+            if (res.status === 401 || (res.status === 403 && /expired/i.test(data.error || ""))) {
+              localStorage.removeItem("debsoc_user");
+              triggerToast("Session expired, log in again.", "error");
+              button.disabled = false;
+              button.innerText = "Register";
+              setTimeout(() => { window.location.href = "register.html"; }, 1500);
+              return;
+            }
             if (!res.ok) throw new Error(data.error || "Registration failed.");
 
             triggerToast("Registration confirmed! Check your participant record.", "success");

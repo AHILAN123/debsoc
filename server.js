@@ -79,6 +79,13 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "X-CSRF-Token"]
 }));
+// Lightweight wake-up / uptime endpoint. Registered before the rate limiter so
+// monitors and the site's page-load ping never eat into the request budget.
+app.get("/api/health", (req, res) => {
+  res.set("Cache-Control", "no-store");
+  res.json({ status: "ok" });
+});
+
 app.use(compression());
 app.use(hpp());
 app.use(cookieParser());

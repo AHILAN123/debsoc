@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="assets/js/session.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Tribunal — Debating Society IIEST Shibpur</title>
@@ -8,11 +9,19 @@
 </head>
 <body>
 
+<header class="tr-head">
+  <p class="tr-kicker">Debating Society, IIEST Shibpur</p>
+  <h1 class="tr-title">The Tribunal</h1>
+  <p class="tr-sub">The signature fortnightly magazine of DebSoc. A bridge between the campus and global discourse. Flip through the latest issue below, then browse every published edition.</p>
+</header>
+
 <div class="top-layout">
   <article class="hero-frame">
     <div class="tr-bar"><span>Tribunal</span><i></i></div>
     <div class="hero-body">
-      <div class="zine-embed">
+      <div class="zine-embed" id="zine-embed">
+        <button class="zine-gate" id="zine-gate" type="button">Tap to read the zine</button>
+        <button class="zine-exit" id="zine-exit" type="button">Done reading, scroll page</button>
         <iframe allow="autoplay; fullscreen; clipboard-write" scrolling="no"
           src="https://heyzine.com/flip-book/2e319b8dcc.html"
           title="Tribunal Zine"></iframe>
@@ -50,8 +59,13 @@
     <span class="arrow">Open</span>
   </a>
 
-  <a class="frame" href="https://www.debsociiests.in/timeline" target="_blank" rel="noopener">
+  <a class="frame" href="history.html">
     <h2>History</h2>
+    <span class="arrow">Open</span>
+  </a>
+
+  <a class="frame" href="gallery.html">
+    <h2>Full gallery</h2>
     <span class="arrow">Open</span>
   </a>
 
@@ -86,6 +100,11 @@
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(img.src, img.alt); }
     });
   });
+
+  // Touch devices: the flip-book iframe swallows scrolling, so it only wakes up after a tap.
+  const zine = document.getElementById('zine-embed');
+  document.getElementById('zine-gate').addEventListener('click', () => zine.classList.add('is-active'));
+  document.getElementById('zine-exit').addEventListener('click', () => zine.classList.remove('is-active'));
 
   lightboxClose.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', (event) => {

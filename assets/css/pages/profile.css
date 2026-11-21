@@ -342,3 +342,13 @@ html[data-theme="dark"], html[data-theme="dark"] body { background: #000; }
 [data-theme="dark"] #achievement-list article p:last-child { color: var(--blue) !important; }
 [data-theme="dark"] #achievement-list > p { color: #a8a8a8 !important; background: #0b0b0b !important; }
 [data-theme="dark"] #styled-card { background: var(--g); }
+
+/* ---------- inline field errors + session notice ---------- */
+.ferr { display: block; margin-top: 3px; font: 700 12px/1.35 var(--sans); text-transform: none; letter-spacing: 0; color: var(--red); }
+.in[aria-invalid="true"] { outline: 2px solid var(--red); outline-offset: -2px; }
+#profile-edit-status.err, #redeem-status.err { color: var(--red); }
+#profile-edit-status.ok, #redeem-status.ok { color: #0a6b2b; }
+#profile-edit-status:not(.hidden) { padding: 5px 8px; border: 2px solid currentColor; background: #fff; font-size: 13px; }
+#session-notice:not(.hidden) { color: var(--red); font-weight: 700; }
+[data-theme="dark"] .ferr, [data-theme="dark"] #session-notice:not(.hidden) { color: #ff8a98; }
+[data-theme="dark"] #profile-edit-status:not(.hidden) { background: #1a1a1a; }

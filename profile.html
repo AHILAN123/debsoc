@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="assets/js/session.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile | DebSoc IIEST Shibpur</title>
@@ -31,8 +32,8 @@
 
       <div class="stack">
 
-        <!-- menu -->
-        <nav class="row menu" aria-label="Profile navigation">
+        <!-- menu (plain div: the shared site nav above replaces any <nav> on the page) -->
+        <div class="row menu" role="group" aria-label="Profile links">
           <div class="cell">
             <a href="index.html">Home</a>
             <a id="my-profile-link" class="hidden" href="#">My Profile</a>
@@ -42,10 +43,9 @@
             <a href="history.html">archive</a>
           </div>
           <div class="cell">
-            <a href="javascript:history.back()">&lsaquo; back</a> |
-            <a href="javascript:history.forward()">next &rsaquo;</a>
+            <a href="members.html">members</a>
           </div>
-        </nav>
+        </div>
 
         <!-- search = url bar -->
         <form id="profile-search-form" class="url">
@@ -56,10 +56,13 @@
           <div class="cell">
             <label class="field">
               <span>debsoc://</span>
-              <input id="profile-search-input" placeholder="username" aria-label="Find a profile" autocomplete="off">
+              <input id="profile-search-input" placeholder="username or name" aria-label="Find a profile" autocomplete="off" list="member-suggest">
+              <datalist id="member-suggest"></datalist>
             </label>
           </div>
         </form>
+
+        <div id="session-notice" class="cell hidden" role="alert">Session expired, log in again. <a href="register.html">Log in</a></div>
 
         <div id="profile-status" class="cell">Loading profile...</div>
 
@@ -184,6 +187,8 @@
   </div>
 
   <script src="assets/js/profile.js"></script>
+  <script src="assets/js/footer.js"></script>
+  <script src="assets/js/nav.js"></script>
   <script>
     /* Spotify enhancement: watches #spotify-link (set by assets/js/profile.js), then pulls
        title + cover from Spotify's public oEmbed endpoint and offers an inline player.

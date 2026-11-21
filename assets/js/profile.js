@@ -2,21 +2,8 @@ const API_BASE = "/api";
 // For Vercel deployment with same-origin API routing:
 // const API_BASE = "/api";
 localStorage.removeItem("debsoc_token");
-let csrfToken;
 
-const apiFetch = async (url, options = {}) => {
-  const method = (options.method || "GET").toUpperCase();
-  const headers = new Headers(options.headers || {});
-  if (!["GET", "HEAD", "OPTIONS"].includes(method)) {
-    if (!csrfToken) {
-      const csrfResponse = await fetch(`${API_BASE}/csrf-token`, { credentials: "include" });
-      const csrfData = await csrfResponse.json();
-      csrfToken = csrfData.csrfToken;
-    }
-    headers.set("X-CSRF-Token", csrfToken);
-  }
-  return fetch(url, { ...options, credentials: "include", headers });
-};
+const apiFetch = (url, options = {}) => window.DebSoc.apiFetch(url, options);
 
 const escapeHTML = (value) => String(value ?? "")
   .replaceAll("&", "&amp;")
@@ -45,22 +32,56 @@ const setStatus = (message) => {
 };
 
 const setupProfileNavigation = () => {
-  let viewer = null;
-  try {
-    viewer = JSON.parse(localStorage.getItem("debsoc_user") || "null");
-  } catch {
-    localStorage.removeItem("debsoc_user");
-  }
   const myProfileLink = document.getElementById("my-profile-link");
-  if (viewer?.username) {
-    myProfileLink.href = `profile.html?u=${encodeURIComponent(viewer.username)}`;
-    myProfileLink.classList.remove("hidden");
-  }
+  const showMine = (viewer) => {
+    if (viewer?.username) {
+      myProfileLink.href = `profile.html?u=${encodeURIComponent(viewer.username)}`;
+      myProfileLink.classList.remove("hidden");
+    } else {
+      myProfileLink.classList.add("hidden");
+    }
+  };
+  // Stored user paints first; the server-verified session then confirms or removes it.
+  showMine(window.DebSoc.getStoredUser());
+  window.DebSoc.getSession().then((viewer) => {
+    showMine(viewer);
+    if (!viewer && window.DebSoc.sessionExpired()) {
+      const notice = document.getElementById("session-notice");
+      if (notice) notice.classList.remove("hidden");
+    }
+  });
 
-  document.getElementById("profile-search-form").addEventListener("submit", (event) => {
+  const searchInput = document.getElementById("profile-search-input");
+  const suggestions = document.getElementById("member-suggest");
+  let suggestTimer = null;
+  searchInput.addEventListener("input", () => {
+    clearTimeout(suggestTimer);
+    const q = searchInput.value.trim();
+    if (q.length < 2) return;
+    suggestTimer = setTimeout(async () => {
+      try {
+        const response = await fetch(`${API_BASE}/users?q=${encodeURIComponent(q)}&limit=8`);
+        if (!response.ok) return;
+        const { users } = await response.json();
+        suggestions.innerHTML = (users || [])
+          .map((user) => `<option value="${escapeHTML(user.username)}">${escapeHTML(user.displayName)}</option>`)
+          .join("");
+      } catch { /* suggestions are optional */ }
+    }, 250);
+  });
+
+  document.getElementById("profile-search-form").addEventListener("submit", async (event) => {
     event.preventDefault();
-    const username = document.getElementById("profile-search-input").value.trim();
-    if (username) window.location.href = `profile.html?u=${encodeURIComponent(username)}`;
+    const username = searchInput.value.trim();
+    if (!username) return;
+    try {
+      const response = await fetch(`${API_BASE}/users/${encodeURIComponent(username)}`);
+      if (response.ok) {
+        window.location.href = `profile.html?u=${encodeURIComponent(username)}`;
+        return;
+      }
+    } catch { /* fall through to the directory search */ }
+    window.location.href = `members.html?q=${encodeURIComponent(username)}`;
   });
 };
 
@@ -83,13 +104,105 @@ const setupThemeToggle = () => {
 const setEditStatus = (message, isError = false) => {
   const status = document.getElementById("profile-edit-status");
   status.textContent = message;
-  status.className = `mt-3 text-xs ${isError ? "text-red-700" : "text-emerald-700"}`;
+  status.className = isError ? "err" : "ok";
+};
+
+const FIELD_IDS = {
+  displayName: "edit-display-name",
+  spotifyLink: "edit-spotify-link",
+  bio: "edit-bio",
+  socialLinks: "edit-social-links",
+  profileImage: "edit-profile-image-file",
+  bannerImage: "edit-banner-image-file"
+};
+
+const SERVER_FIELD_MESSAGES = {
+  displayName: "Display name must be 2 to 100 characters.",
+  spotifyLink: "Enter a full Spotify link starting with https://",
+  bio: "Biography is too long (2000 characters max).",
+  socialLinks: "Each social link needs a name and a full https:// link (20 max)."
+};
+
+const clearFieldErrors = () => {
+  document.querySelectorAll("#profile-edit-form .ferr").forEach((el) => el.remove());
+  document.querySelectorAll("#profile-edit-form [aria-invalid]").forEach((el) => el.removeAttribute("aria-invalid"));
+};
+
+const setFieldError = (key, message) => {
+  const input = document.getElementById(FIELD_IDS[key]);
+  if (!input) return false;
+  input.setAttribute("aria-invalid", "true");
+  const error = document.createElement("span");
+  error.className = "ferr";
+  error.setAttribute("role", "alert");
+  error.textContent = message;
+  input.insertAdjacentElement("afterend", error);
+  return true;
+};
+
+const isHttpUrl = (value) => {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+};
+
+const parseSocialLines = (text) => text
+  .split("\n").map((line) => line.trim()).filter(Boolean).map((line) => {
+    const separator = line.indexOf("|");
+    return separator < 0
+      ? { label: "Link", url: line }
+      : { label: line.slice(0, separator).trim(), url: line.slice(separator + 1).trim() };
+  });
+
+// Returns { fieldKey: message } for everything wrong, so every problem shows next to its own field.
+const validateEditForm = (socialLinks) => {
+  const errors = {};
+  const name = document.getElementById("edit-display-name").value.trim();
+  if (name.length < 2 || name.length > 100) errors.displayName = SERVER_FIELD_MESSAGES.displayName;
+
+  const spotify = document.getElementById("edit-spotify-link").value.trim();
+  if (spotify && !isHttpUrl(spotify)) errors.spotifyLink = SERVER_FIELD_MESSAGES.spotifyLink;
+
+  if (document.getElementById("edit-bio").value.trim().length > 2000) errors.bio = SERVER_FIELD_MESSAGES.bio;
+
+  if (socialLinks.length > 20) {
+    errors.socialLinks = "You can add at most 20 links.";
+  } else {
+    const bad = socialLinks.findIndex(({ label, url }) =>
+      !label || label.length > 40 || !isHttpUrl(url));
+    if (bad >= 0) {
+      errors.socialLinks = `Line ${bad + 1}: use "Name | https://link" (name up to 40 characters, link must start with http:// or https://).`;
+    }
+  }
+
+  [["profileImage", "Profile image"], ["bannerImage", "Banner image"]].forEach(([key, label]) => {
+    const file = document.getElementById(FIELD_IDS[key])?.files?.[0];
+    if (!file) return;
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) errors[key] = `${label} must be JPEG, PNG or WebP.`;
+    else if (file.size > 5 * 1024 * 1024) errors[key] = `${label} must be 5MB or smaller.`;
+  });
+  return errors;
+};
+
+const isSessionError = (response, data) =>
+  response.status === 401 || (response.status === 403 && /expired/i.test(data?.error || ""));
+
+const handleSessionExpired = () => {
+  window.DebSoc.clearSession();
+  const notice = document.getElementById("session-notice");
+  if (notice) notice.classList.remove("hidden");
+  const error = new Error("Session expired, log in again.");
+  error.sessionExpired = true;
+  return error;
 };
 
 const setRedeemStatus = (message, isError = false) => {
   const status = document.getElementById("redeem-status");
   status.textContent = message;
-  status.className = `mt-3 text-xs ${isError ? "text-red-700" : "text-emerald-700"}`;
+  status.className = isError ? "err" : "ok";
 };
 
 const fillEditForm = (profile) => {
@@ -100,15 +213,9 @@ const fillEditForm = (profile) => {
     .map(({ label, url }) => `${label || "Link"} | ${url || ""}`).join("\n");
 };
 
-const setupSelfEditing = (profile) => {
-  let viewer = null;
-  try {
-    viewer = JSON.parse(localStorage.getItem("debsoc_user") || "null");
-  } catch {
-    viewer = null;
-  }
-
-  if (!viewer || viewer.username !== profile.username) return;
+const setupSelfEditing = (profile, viewer) => {
+  // viewer comes from the server-verified session (/api/auth/me), not raw localStorage.
+  if (!viewer || String(viewer.username).toLowerCase() !== String(profile.username).toLowerCase()) return;
 
   const editButton = document.getElementById("edit-profile-btn");
   const editForm = document.getElementById("profile-edit-form");
@@ -228,14 +335,23 @@ const setupSelfEditing = (profile) => {
   });
   editForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const socialLinks = document.getElementById("edit-social-links").value
-      .split("\n").map(line => line.trim()).filter(Boolean).map(line => {
-        const separator = line.indexOf("|");
-        return separator < 0
-          ? { label: "Link", url: line }
-          : { label: line.slice(0, separator).trim(), url: line.slice(separator + 1).trim() };
-      });
+    clearFieldErrors();
+    const statusEl = document.getElementById("profile-edit-status");
+    statusEl.textContent = "";
+    statusEl.classList.add("hidden");
 
+    const socialLinks = parseSocialLines(document.getElementById("edit-social-links").value);
+    const problems = validateEditForm(socialLinks);
+    const problemKeys = Object.keys(problems);
+    if (problemKeys.length) {
+      problemKeys.forEach((key) => setFieldError(key, problems[key]));
+      setEditStatus("Fix the highlighted fields and save again.", true);
+      document.getElementById(FIELD_IDS[problemKeys[0]])?.focus();
+      return;
+    }
+
+    const saveButton = editForm.querySelector('button[type="submit"]');
+    saveButton.disabled = true;
     try {
       const response = await apiFetch(`${API_BASE}/users/me/profile`, {
         method: "PATCH",
@@ -247,97 +363,73 @@ const setupSelfEditing = (profile) => {
           socialLinks
         })
       });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Profile update failed.");
+      const data = await response.json().catch(() => ({}));
+      if (isSessionError(response, data)) throw handleSessionExpired();
+      if (!response.ok) {
+        if (Array.isArray(data.errors) && data.errors.length) {
+          const error = new Error("Fix the highlighted fields and save again.");
+          error.fieldErrors = {};
+          data.errors.forEach((item) => {
+            const key = String(item.path || item.param || "").split(/[.\[]/)[0];
+            if (FIELD_IDS[key]) error.fieldErrors[key] = SERVER_FIELD_MESSAGES[key] || item.msg || "Invalid value.";
+          });
+          throw error;
+        }
+        throw new Error(data.error || "Profile update failed.");
+      }
+      localStorage.setItem("debsoc_user", JSON.stringify(data.user));
+
       const profileImageInput = document.getElementById("edit-profile-image-file");
       const profileImageFile = profileImageInput?.files?.[0];
-
       if (profileImageFile) {
-        if (profileImageFile.size > 5 * 1024 * 1024) {
-          throw new Error("Profile image must be 5MB or smaller.");
-        }
-
         const formData = new FormData();
         formData.append("profileImage", profileImageFile);
-
-        const uploadResponse = await apiFetch(
-          `${API_BASE}/users/me/profile-image`,
-          {
-            method: "POST",
-            body: formData
-          }
-        );
-
-        const uploadData = await uploadResponse.json();
-
+        const uploadResponse = await apiFetch(`${API_BASE}/users/me/profile-image`, { method: "POST", body: formData });
+        const uploadData = await uploadResponse.json().catch(() => ({}));
+        if (isSessionError(uploadResponse, uploadData)) throw handleSessionExpired();
         if (!uploadResponse.ok) {
-          throw new Error(
-            uploadData.error || "Profile image upload failed."
-          );
+          const error = new Error(uploadData.error || "Profile image upload failed.");
+          error.fieldErrors = { profileImage: error.message };
+          throw error;
         }
-
-        localStorage.setItem(
-          "debsoc_user",
-          JSON.stringify(uploadData.user)
-        );
-      } else {
-        localStorage.setItem(
-          "debsoc_user",
-          JSON.stringify(data.user)
-        );
+        localStorage.setItem("debsoc_user", JSON.stringify(uploadData.user));
+        profileImageInput.value = "";
       }
+
       const bannerImageInput = document.getElementById("edit-banner-image-file");
-const bannerImageFile = bannerImageInput?.files?.[0];
-
-if (bannerImageFile) {
-  if (bannerImageFile.size > 5 * 1024 * 1024) {
-    throw new Error("Banner image must be 5MB or smaller.");
-  }
-
-  if (!croppedBannerBlob) {
-    throw new Error("Please apply the banner crop before saving.");
-  }
-
-  const formData = new FormData();
-
-  formData.append(
-    "bannerImage",
-    croppedBannerBlob,
-    "banner.webp"
-  );
-
-  const uploadResponse = await apiFetch(
-    `${API_BASE}/users/me/banner-image`,
-    {
-      method: "POST",
-      body: formData
-    }
-  );
-
-  const uploadData = await uploadResponse.json();
-
-  if (!uploadResponse.ok) {
-    throw new Error(
-      uploadData.error || "Banner image upload failed."
-    );
-  }
-
-  localStorage.setItem(
-    "debsoc_user",
-    JSON.stringify(uploadData.user)
-  );
-
-  bannerImageInput.value = "";
-  croppedBannerBlob = null;
-}
-
-
+      if (bannerImageInput?.files?.[0]) {
+        if (!croppedBannerBlob) {
+          const error = new Error("Apply the banner crop before saving.");
+          error.fieldErrors = { bannerImage: "Choose the banner again and press Apply in the crop window." };
+          throw error;
+        }
+        const formData = new FormData();
+        formData.append("bannerImage", croppedBannerBlob, "banner.webp");
+        const uploadResponse = await apiFetch(`${API_BASE}/users/me/banner-image`, { method: "POST", body: formData });
+        const uploadData = await uploadResponse.json().catch(() => ({}));
+        if (isSessionError(uploadResponse, uploadData)) throw handleSessionExpired();
+        if (!uploadResponse.ok) {
+          const error = new Error(uploadData.error || "Banner image upload failed.");
+          error.fieldErrors = { bannerImage: error.message };
+          throw error;
+        }
+        localStorage.setItem("debsoc_user", JSON.stringify(uploadData.user));
+        bannerImageInput.value = "";
+        croppedBannerBlob = null;
+      }
 
       setEditStatus("Profile updated.");
       editForm.classList.add("hidden");
       await loadProfile();
     } catch (error) {
+      if (error.fieldErrors) {
+        Object.entries(error.fieldErrors).forEach(([key, message]) => setFieldError(key, message));
+        const first = Object.keys(error.fieldErrors)[0];
+        document.getElementById(FIELD_IDS[first])?.focus();
+      }
       setEditStatus(error.message, true);
+    } finally {
+      saveButton.disabled = false;
     }
   });
 };
@@ -390,7 +482,7 @@ const loadProfile = async () => {
       const safeLabel = escapeHTML(label || "Link");
       return `<a class="rounded border border-[#e8b84b]/60 px-3 py-2 text-xs text-[#e8b84b] hover:bg-white/10" href="${escapeHTML(safeUrl)}" target="_blank" rel="noopener noreferrer">${safeLabel}</a>`;
     }).join("");
-    setupSelfEditing(profile);
+    window.DebSoc.getSession().then((viewer) => setupSelfEditing(profile, viewer));
 
     const list = document.getElementById("achievement-list");
     list.innerHTML = profile.achievements.length

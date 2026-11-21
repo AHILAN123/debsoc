@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="assets/js/session.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gallery — Debating Society IIEST Shibpur</title>
@@ -21,24 +22,15 @@
   </div>
 </header>
 
-<label class="gallery-filter" for="gallery-filter">Browse by year
-  <select id="gallery-filter" aria-label="Filter gallery by year">
-    <option value="all">All photos</option>
-    <option value="becon">BECON</option>
-    <option value="2026">2026</option>
-    <option value="2025">2025</option>
-    <option value="2024">2024</option>
-    <option value="2023">2023</option>
-    <option value="2020">2020</option>
-    <option value="2019">2019</option>
-    <option value="2018">2018</option>
-    <option value="2017">2017</option>
-    <option value="2016">2016</option>
-    <option value="2015">2015</option>
-    <option value="2014">2014</option>
-    <option value="2013">2013</option>
-  </select>
-</label>
+<div class="gallery-filter gallery-chips" id="gallery-filter" role="group" aria-label="Filter gallery by year">
+  <button type="button" class="gallery-chip" data-filter="all" aria-pressed="true">All photos</button>
+  <button type="button" class="gallery-chip" data-filter="becon" aria-pressed="false">BECON</button>
+  <button type="button" class="gallery-chip" data-filter="2026" aria-pressed="false">2026</button>
+  <button type="button" class="gallery-chip" data-filter="2025" aria-pressed="false">2025</button>
+  <button type="button" class="gallery-chip" data-filter="2024" aria-pressed="false">2024</button>
+  <button type="button" class="gallery-chip" data-filter="2023" aria-pressed="false">2023</button>
+  <button type="button" class="gallery-chip" data-filter="earlier" aria-pressed="false">2013 &ndash; 2020</button>
+</div>
 
 <main id="gallery-feed" class="history-feed">
 
@@ -161,14 +153,37 @@
 
 <dialog id="image-viewer" class="image-viewer" aria-label="Gallery image viewer">
   <button class="image-viewer-close" id="image-viewer-close" type="button" autofocus>Close</button>
+  <button class="image-viewer-nav image-viewer-prev" id="image-viewer-prev" type="button" aria-label="Previous photo">&lsaquo;</button>
+  <button class="image-viewer-nav image-viewer-next" id="image-viewer-next" type="button" aria-label="Next photo">&rsaquo;</button>
+  <p class="image-viewer-count" id="image-viewer-count" aria-live="polite"></p>
   <img id="image-viewer-image" src="" alt="">
 </dialog>
 
 <script>
+  // Fold the sparse early years (2013-2020, one or two photos each) into a single section.
+  (function mergeEarlyYears() {
+    const early = Array.from(document.querySelectorAll('.year-group')).filter(g => {
+      const year = Number(g.dataset.group);
+      return Number.isFinite(year) && year <= 2020;
+    });
+    if (early.length < 2) return;
+    const target = early[0];
+    const targetGrid = target.querySelector('.photo-grid');
+    early.slice(1).forEach(group => {
+      group.querySelectorAll('.photo-item').forEach(item => targetGrid.appendChild(item));
+      group.remove();
+    });
+    const total = targetGrid.querySelectorAll('.photo-item').length;
+    target.dataset.group = 'earlier';
+    target.querySelector('.year-label-text').textContent = '2013 – 2020';
+    target.querySelector('.year-label-count').textContent = total + ' photos';
+  })();
+
   const yearGroups = Array.from(document.querySelectorAll('.year-group'));
-  const galleryFilter = document.getElementById('gallery-filter');
+  const chips = Array.from(document.querySelectorAll('.gallery-chip'));
   const imageViewer = document.getElementById('image-viewer');
   const viewerImage = document.getElementById('image-viewer-image');
+  const viewerCount = document.getElementById('image-viewer-count');
   let allItems = [];
   let currentIndex = 0;
 
@@ -210,6 +225,10 @@
     const image = allItems[currentIndex].querySelector('img');
     viewerImage.src = image.currentSrc || image.src;
     viewerImage.alt = image.alt;
+    viewerCount.textContent = (currentIndex + 1) + ' / ' + allItems.length;
+    const single = allItems.length < 2;
+    document.getElementById('image-viewer-prev').hidden = single;
+    document.getElementById('image-viewer-next').hidden = single;
   }
 
   function openLightbox(item) {
@@ -235,13 +254,29 @@
     });
   });
 
-  galleryFilter.addEventListener('change', () => {
-    yearGroups.forEach(group => {
-      group.hidden = galleryFilter.value !== 'all' && group.dataset.group !== galleryFilter.value;
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const value = chip.dataset.filter;
+      chips.forEach(c => c.setAttribute('aria-pressed', String(c === chip)));
+      yearGroups.forEach(group => {
+        group.hidden = value !== 'all' && group.dataset.group !== value;
+      });
     });
   });
 
   document.getElementById('image-viewer-close').addEventListener('click', () => imageViewer.close());
+  document.getElementById('image-viewer-prev').addEventListener('click', () => shiftLightbox(-1));
+  document.getElementById('image-viewer-next').addEventListener('click', () => shiftLightbox(1));
+
+  // Swipe left/right on touch screens
+  let touchStartX = null;
+  imageViewer.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+  imageViewer.addEventListener('touchend', e => {
+    if (touchStartX === null || allItems.length < 2) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    touchStartX = null;
+    if (Math.abs(dx) > 50) shiftLightbox(dx < 0 ? 1 : -1);
+  }, { passive: true });
 
   document.addEventListener('keydown', e => {
     if (!imageViewer.open) return;

@@ -6,6 +6,7 @@ import { Resend } from 'resend';
 import prisma from '../config/db.js';
 import { createToken } from '../utils/token.js';
 import { validate } from '../middlewares/validate.middleware.js';
+import { verifyToken } from '../middlewares/auth.middleware.js';
 import { generateOtp, hashOtp, verifyOtpHash } from '../utils/otp.js';
 import { crossSiteCookieOptions } from '../config/cookie-options.js';
 
@@ -181,6 +182,25 @@ router.post('/login', [
   } catch (error) {
     console.error('Login error:', error);
     return res.status(500).json({ error: 'Login failed.' });
+  }
+});
+
+// Session check: the front end calls this to confirm the cookie is still valid
+// (localStorage alone can outlive the 7-day cookie).
+router.get('/me', verifyToken, async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      select: { id: true, username: true, displayName: true, email: true, role: true }
+    });
+    if (!user) {
+      return res.status(401).json({ error: 'Account no longer exists.' });
+    }
+    res.set('Cache-Control', 'no-store');
+    return res.json({ user });
+  } catch (error) {
+    console.error('Session check error:', error);
+    return res.status(500).json({ error: 'Could not verify session.' });
   }
 });
 

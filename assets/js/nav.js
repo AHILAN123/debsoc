@@ -20,9 +20,6 @@ const eventLinks = [
 
   const API_BASE = "/api";
 
-  let csrfToken;
-
-
   function linkMarkup(link, mobile) {
 
     const current =
@@ -40,44 +37,8 @@ const eventLinks = [
    * - Sends the HttpOnly session cookie
    * - Fetches CSRF token for POST/PATCH/DELETE requests
    */
-  async function apiFetch(url, options = {}) {
-
-    const method = (options.method || "GET").toUpperCase();
-    const headers = new Headers(options.headers || {});
-
-    if (
-      method !== "GET" &&
-      method !== "HEAD" &&
-      method !== "OPTIONS"
-    ) {
-
-      if (!csrfToken) {
-
-        const csrfResponse = await fetch(
-          `${API_BASE}/csrf-token`,
-          {
-            credentials: "include"
-          }
-        );
-
-        if (csrfResponse.ok) {
-
-          const csrfData = await csrfResponse.json();
-
-          csrfToken = csrfData.csrfToken;
-        }
-      }
-
-      if (csrfToken) {
-        headers.set("X-CSRF-Token", csrfToken);
-      }
-    }
-
-    return fetch(url, {
-      ...options,
-      credentials: "include",
-      headers
-    });
+  function apiFetch(url, options) {
+    return window.DebSoc.apiFetch(url, options);
   }
 
 
@@ -629,6 +590,16 @@ const eventLinks = [
      * after the navbar has been inserted.
      */
     syncNavAuth();
+
+    /*
+     * localStorage only seeds the first paint; confirm the cookie is still
+     * valid and re-render (this logs the navbar out if the session expired).
+     */
+    if (window.DebSoc) {
+      window.DebSoc.getSession().then(function () {
+        syncNavAuth();
+      });
+    }
   }
 
 
