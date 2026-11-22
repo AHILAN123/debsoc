@@ -1,5 +1,5 @@
 /* ============================================================
-   THE PLACARD — assets/css/placard.css
+   THE PLACARD, assets/css/placard.css
    Search-focused Q&A and guide content, styled like a MUN country
    placard: off-white tent card, two-band flag stripe, condensed caps
    label, handwritten signatures.
@@ -42,7 +42,7 @@
 .pl-guide *, .pl-guide *::before, .pl-guide *::after { box-sizing: border-box; }
 
 /* Pages that already load Anton / Cormorant Garamond / Gochi Hand
-   (about, becon, gallery, history, resources — all use content.css). */
+   (about, becon, gallery, history, resources, all use content.css). */
 .pl-f-content {
   --pl-display: var(--display, "Anton"), Impact, "Arial Narrow", sans-serif;
   --pl-serif: var(--serif, "Cormorant Garamond"), Georgia, serif;
