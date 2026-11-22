@@ -29,38 +29,60 @@
         "@type":"EducationalOrganization",
         "@id":"https://debsociiests.in/#aboutus",
         "name":"The Debating Society of IIEST Shibpur",
-        "alternateName":["DebSoc IIEST","DebSoc IIEST Shibpur","IIEST Shibpur Debate Society"],
+        "alternateName":["DebSoc","DebSoc IIEST","DebSoc IIEST Shibpur","IIEST Shibpur Debate Society","IIEST Debating Society","The Debating Society, IIEST Shibpur"],
+        "foundingDate":"2009",
+        "email":"debsoc.iiest@gmail.com",
         "url":"https://debsociiests.in",
         "logo":"https://debsociiests.in/assets/images/brand/debsoc-logo.webp",
         "description":"Model United Nations (MUN) and Debate society of IIEST Shibpur, competitive debating, public speaking, and international relations studies within the Kolkata MUN circuit, West Bengal.",
         "keywords":"Debate IIEST, IIEST Debate Society, Kolkata MUN, Kolkata Debate Circuit, BECON MUN, REBECA Debate, Parliamentary Debate Kolkata",
         "parentOrganization":{"@type":"EducationalOrganization","name":"Indian Institute of Engineering Science and Technology, Shibpur","url":"https://www.iiests.ac.in"},
         "address":{"@type":"PostalAddress","streetAddress":"Student's Amenity Centre, IIEST Shibpur Campus","addressLocality":"Howrah","addressRegion":"Kolkata, West Bengal","postalCode":"711103","addressCountry":"IN"},
-        "sameAs":["https://www.instagram.com/debsoc.iiest","https://www.linkedin.com/company/debsoc-iiest-shibpur"]
+        "sameAs":["https://www.instagram.com/debsoc_iiests/","https://www.linkedin.com/company/debsoc-iiest-shibpur"]
       },
       {
         "@type":"Event",
         "@id":"https://debsociiests.in/#becon",
-        "name":"BECON (Bengal Engineering Conclave of Nations)",
-        "alternateName":["BECON MUN","IIEST BECON","KOLKATA MUN","Low Cost MUN Kolkata"],
-        "description":"Model United Nations conference hosted annually in Kolkata by the Debating Society of IIEST Shibpur.",
+        "name":"BECON MUN 2026 — Bengal Engineering Conclave of Nations",
+        "alternateName":["BECON MUN","BECON IIEST","Bengal Engineering Conclave of Nations"],
+        "description":"The inaugural edition of BECON, the Model United Nations conference of the Debating Society of IIEST Shibpur, held 28–29 March 2026 with 122 delegates from 34 institutes.",
         "startDate":"2026-03-28T09:00:00+05:30",
         "endDate":"2026-03-29T18:00:00+05:30",
         "eventStatus":"https://schema.org/EventScheduled",
         "eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
         "organizer":{"@id":"https://debsociiests.in/#aboutus"},
         "image":"https://debsociiests.in/assets/images/events/becon/highlights-02.webp",
-        "offers":{"@type":"Offer","price":"500","priceCurrency":"INR","availability":"https://schema.org/InStock","url":"https://debsociiests.in/becon.html"},
         "location":{"@type":"Place","name":"IIEST Shibpur Campus","address":{"@type":"PostalAddress","streetAddress":"Shibpur","addressLocality":"Howrah","addressRegion":"Kolkata, West Bengal","postalCode":"711103","addressCountry":"IN"}}
       }
     ]
   }
   </script>
+  <!--
+  BECON MUN 2027 Event template. Do NOT publish until real data exists (no placeholders in live JSON-LD).
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Event",
+    "@id":"https://debsociiests.in/#becon-2027",
+    "name":"BECON MUN 2027 — Bengal Engineering Conclave of Nations",
+    "alternateName":["BECON MUN","BECON IIEST"],
+    "description":"{{BECON_2027_DESCRIPTION}}",
+    "startDate":"{{BECON_2027_START_ISO}}",
+    "endDate":"{{BECON_2027_END_ISO}}",
+    "eventStatus":"https://schema.org/EventScheduled",
+    "eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
+    "organizer":{"@id":"https://debsociiests.in/#aboutus"},
+    "location":{"@type":"Place","name":"IIEST Shibpur Campus","address":{"@type":"PostalAddress","streetAddress":"Shibpur","addressLocality":"Howrah","postalCode":"711103","addressCountry":"IN"}},
+    "offers":{"@type":"Offer","price":"{{BECON_2027_FEE}}","priceCurrency":"INR","availability":"https://schema.org/InStock","url":"{{BECON_2027_REG_LINK}}"}
+  }
+  </script>
+  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/css/pages/index.css">
+  <link rel="stylesheet" href="assets/css/placard.css">
 </head>
 <body>
   <!-- Shared nav is injected by assets/js/nav.js -->
@@ -216,6 +238,7 @@
       <!-- FAQ -->
       <section class="section" id="faq">
         <div class="page">
+          <p class="pl-def"><strong>What is DebSoc?</strong> DebSoc is short for Debating Society. It is Club at IIEST and DebSoc IIEST is the debating and Model United Nations club of IIEST Shibpur in Howrah, West Bengal. The university is 10 minute distance from Kolkata, and many colleges from Kolkata attend our BECON MUN.</p>
           <div class="faq-grid">
             <h2 class="faq-title">FAQ</h2>
             <div class="faq-list">
@@ -240,7 +263,7 @@
           </div>
           <div class="footer-links">
             <h3>Pages</h3>
-            <a href="index.html">Home</a><a href="events.html">Events</a><a href="tribunal.html">Tribunal</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a><a href="becon.html">BECON</a>
+            <a href="index.html">Home</a><a href="events.html">Events</a><a href="tribunal.html">Tribunal</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a><a href="becon.html">BECON</a><a href="resources.html">Resources</a>
           </div>
         </div>
       </div>

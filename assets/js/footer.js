@@ -26,6 +26,7 @@
               <a href="team.html">Team</a>
               <a href="gallery.html">Gallery</a>
               <a href="contact.html">Contact</a>
+              <a href="resources.html">Resources</a>
             </div>
           </div>
           <div class="df-window" role="navigation" aria-label="Events">

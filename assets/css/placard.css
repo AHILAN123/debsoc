@@ -1,0 +1,425 @@
+/* ============================================================
+   THE PLACARD — assets/css/placard.css
+   Search-focused Q&A and guide content, styled like a MUN country
+   placard: off-white tent card, two-band flag stripe, condensed caps
+   label, handwritten signatures.
+
+   Rules for this file:
+   - Every class is prefixed `pl-`.
+   - No font is loaded here. Each page may only use families it
+     already loads; the modifier classes below pick the right stack.
+   - Colours are the site's existing values (cream #f1efe8, red
+     #c4231a, yellow #ffdf5e, blue-ink #164c75), set as tokens here
+     because several pages re-use --cream for a dark colour.
+   ============================================================ */
+
+.pl-notes,
+.pl-guide {
+  --pl-paper: #1c1c1c; /* dark card */
+  --pl-ink: #ffdf5e; /* body text on the card: the site yellow */
+  --pl-muted: #e6cd62;
+  --pl-red: #c4231a;
+  --pl-red-ink: #ffdf5e; /* questions, numbers, links: the site yellow */
+  --pl-yellow: #ffdf5e;
+  --pl-pen: #ffdf5e;
+  --pl-band: #ffdf5e;
+  --pl-pink: #ff3d5a; /* the site's coral */
+
+  /* default stacks: system faces only (pages that load no suitable font) */
+  --pl-display: Impact, "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --pl-serif: Georgia, "Times New Roman", serif;
+  --pl-hand: Georgia, "Times New Roman", serif;
+
+  box-sizing: border-box;
+  position: relative;
+  clear: both;
+  width: 100%;
+  padding: 56px 20px 64px;
+  font-family: var(--pl-serif);
+  text-align: left;
+}
+.pl-notes *, .pl-notes *::before, .pl-notes *::after,
+.pl-guide *, .pl-guide *::before, .pl-guide *::after { box-sizing: border-box; }
+
+/* Pages that already load Anton / Cormorant Garamond / Gochi Hand
+   (about, becon, gallery, history, resources — all use content.css). */
+.pl-f-content {
+  --pl-display: var(--display, "Anton"), Impact, "Arial Narrow", sans-serif;
+  --pl-serif: var(--serif, "Cormorant Garamond"), Georgia, serif;
+  --pl-hand: var(--hand, "Gochi Hand"), "Comic Sans MS", cursive;
+}
+
+/* Text colour for the section header, set per host page background. */
+.pl-tone-dark  { color: #f1efe8; }
+.pl-tone-light { color: #171717; }
+.pl-tone-auto  { color: inherit; }
+
+.pl-wrap { width: min(920px, 100%); margin: 0 auto; }
+.pl-wrap::before {
+  content: "";
+  display: block;
+  height: 2px;
+  margin-bottom: 28px;
+  background: currentColor;
+  opacity: .35;
+}
+
+/* ---------- Section header ---------- */
+.pl-head { margin: 0 0 28px; }
+.pl-kicker {
+  margin: 0 0 8px;
+  font: 400 14px/1.2 var(--pl-display);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.pl-title {
+  margin: 0;
+  font-family: var(--pl-serif);
+  font-weight: 700;
+  font-size: clamp(30px, 4.6vw, 48px);
+  line-height: 1.05;
+  letter-spacing: -.01em;
+  text-transform: none;
+  color: inherit;
+}
+.pl-sub { margin: 12px 0 0; max-width: 62ch; font: 500 clamp(17px, 1.5vw, 19px)/1.5 var(--pl-serif); }
+
+/* ---------- The placard ---------- */
+.pl-stack { display: grid; gap: 18px; counter-reset: pl-n; }
+
+.pl-card {
+  --pl-tilt: 0deg;
+  counter-increment: pl-n;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--pl-ink);
+  background-color: var(--pl-paper);
+  border: 1px solid rgba(241, 239, 232, .4);
+  /* two-band flag stripe on the left edge */
+  box-shadow: inset 7px 0 0 var(--pl-red), inset 14px 0 0 var(--pl-band);
+  transform: rotate(var(--pl-tilt));
+}
+/* emblem: DebSoc logo, top-right corner, low opacity */
+.pl-card::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  z-index: -1;
+  background: url("../images/brand/debsoc-logo.webp") center / contain no-repeat;
+  opacity: .35;
+}
+/* faint scribble: loose pen strokes, ~7% */
+.pl-card::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(260px, 70%);
+  height: 170px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .07;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 170'%3E%3Cg fill='none' stroke='%23f1efe8' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M8 132c28-46 44 8 70-30s38-52 62-16 30 40 58-6'/%3E%3Cpath d='M20 60c22-30 40-8 54-34M120 150c30-26 52-4 84-34'/%3E%3Cpath d='M150 40c18 22 36-18 56 6s22 14 44-12'/%3E%3Cpath d='M30 110c12-6 20 10 34 2'/%3E%3C/g%3E%3C/svg%3E") right bottom / contain no-repeat;
+}
+
+.pl-card > summary {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: 0 14px;
+  padding: 18px 56px 18px 34px;
+  cursor: pointer;
+  list-style: none;
+  color: #fff;
+  text-shadow: 0 2px 0 var(--pl-pink);
+  font: 400 clamp(19px, 2.3vw, 25px)/1.15 var(--pl-display);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.pl-card > summary::-webkit-details-marker { display: none; }
+.pl-card > summary::marker { content: ""; }
+.pl-card > summary::before {
+  content: counter(pl-n, decimal-leading-zero);
+  text-shadow: none;
+  color: var(--pl-red-ink);
+  font-size: .72em;
+  letter-spacing: .1em;
+}
+.pl-card > summary::after {
+  content: "+";
+  text-shadow: none;
+  grid-column: 3;
+  color: var(--pl-red-ink);
+  font-size: 1.1em;
+  line-height: 1;
+}
+.pl-card[open] > summary::after { content: "\2013"; }
+.pl-card > summary:hover { background: rgba(255, 255, 255, .06); }
+.pl-card > summary:focus-visible {
+  outline: 3px solid var(--pl-ink);
+  outline-offset: -6px;
+  background: rgba(255, 255, 255, .06);
+}
+
+.pl-a { padding: 0 24px 22px 34px; max-width: 70ch; }
+.pl-a p {
+  margin: 0 0 .7em;
+  color: var(--pl-ink);
+  font: 500 clamp(17px, 1.5vw, 19px)/1.55 var(--pl-serif);
+  text-transform: none;
+  letter-spacing: 0;
+}
+.pl-a p:last-child { margin-bottom: 0; }
+.pl-a a, .pl-art-body a, .pl-lede a {
+  color: var(--pl-pink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.pl-a a:hover, .pl-art-body a:hover { color: #fff; }
+.pl-a a:focus-visible, .pl-art-body a:focus-visible, .pl-handbook a:focus-visible, .pl-mini:focus-visible {
+  outline: 3px solid var(--pl-ink);
+  outline-offset: 2px;
+}
+.pl-ph { background: var(--pl-yellow); color: #171717; padding: 0 .25em; font-weight: 700; }
+
+/* ---------- Signatures ---------- */
+.pl-sign {
+  margin: 12px 0 0 !important;
+  color: var(--pl-pen) !important;
+  font: 400 22px/1.1 var(--pl-hand) !important;
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+.pl-pen {
+  display: block;
+  width: 84px;
+  height: 22px;
+  margin-top: 12px;
+  fill: none;
+  stroke: var(--pl-pen);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* ---------- Handbook line (end of each section) ---------- */
+.pl-handbook {
+  margin: 26px 0 0;
+  font: 400 clamp(15px, 1.7vw, 18px)/1.3 var(--pl-display);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.pl-handbook a {
+  display: inline-block;
+  padding: 6px 0 4px;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 4px double var(--pl-red);
+}
+.pl-handbook a:hover { border-bottom-style: solid; }
+.pl-tone-dark .pl-handbook a:focus-visible,
+.pl-guide .pl-handbook a:focus-visible { outline-color: #f1efe8; }
+
+/* ---------- Home page definition (index) ---------- */
+.pl-def {
+  max-width: 100%;
+  margin: 0 0 28px;
+  padding: 14px 18px 14px 28px;
+  color: #ffdf5e;
+  background-color: #1c1c1c;
+  border: 1px solid rgba(241, 239, 232, .4);
+  box-shadow: inset 6px 0 0 #c4231a, inset 12px 0 0 #f1efe8;
+  font: 500 17px/1.55 Georgia, "Times New Roman", serif;
+}
+.pl-def strong { font-weight: 700; }
+
+/* ============================================================
+   RESOURCES PAGE (the handbook)
+   ============================================================ */
+.pl-guide { padding-top: 40px; color: #f1efe8; }
+.pl-guide .pl-wrap::before { display: none; }
+.pl-h1 {
+  margin: 0 0 14px;
+  font: 400 clamp(36px, 7vw, 76px)/.98 var(--pl-display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+.pl-lede { max-width: 66ch; margin: 0 0 14px; font: 500 clamp(18px, 1.7vw, 21px)/1.55 var(--pl-serif); }
+.pl-lede a { color: #ffdf5e; }
+.pl-lede a:hover { color: #f1efe8; }
+
+.pl-index {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+  margin: 28px 0 44px;
+  padding: 0;
+  list-style: none;
+  counter-reset: pl-i;
+}
+.pl-index li { counter-increment: pl-i; }
+.pl-mini {
+  position: relative;
+  display: block;
+  height: 100%;
+  padding: 12px 12px 12px 26px;
+  color: #fff;
+  text-shadow: 0 2px 0 var(--pl-pink);
+  background: var(--pl-paper);
+  border: 1px solid rgba(241, 239, 232, .4);
+  box-shadow: inset 5px 0 0 var(--pl-red), inset 10px 0 0 var(--pl-band);
+  text-decoration: none;
+  font: 400 15px/1.2 var(--pl-display);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.pl-mini::before {
+  content: counter(pl-i, decimal-leading-zero);
+  display: block;
+  margin-bottom: 4px;
+  color: var(--pl-red-ink);
+  font-size: 12px;
+  letter-spacing: .12em;
+}
+.pl-mini:hover { background: #2a2a2a; }
+
+.pl-articles { display: grid; gap: 28px; }
+.pl-article {
+  --pl-tilt: 0deg;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 26px 26px 26px 38px;
+  color: var(--pl-ink);
+  background-color: var(--pl-paper);
+  border: 1px solid rgba(241, 239, 232, .4);
+  box-shadow: inset 8px 0 0 var(--pl-red), inset 16px 0 0 var(--pl-band);
+  transform: rotate(var(--pl-tilt));
+  scroll-margin-top: 24px;
+}
+.pl-article::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  z-index: -1;
+  background: url("../images/brand/debsoc-logo.webp") center / contain no-repeat;
+  opacity: .2;
+}
+.pl-article::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(300px, 70%);
+  height: 200px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .07;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 170'%3E%3Cg fill='none' stroke='%23f1efe8' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M8 132c28-46 44 8 70-30s38-52 62-16 30 40 58-6'/%3E%3Cpath d='M20 60c22-30 40-8 54-34M120 150c30-26 52-4 84-34'/%3E%3Cpath d='M150 40c18 22 36-18 56 6s22 14 44-12'/%3E%3Cpath d='M30 110c12-6 20 10 34 2'/%3E%3C/g%3E%3C/svg%3E") right bottom / contain no-repeat;
+}
+.pl-art-no {
+  margin: 0 0 4px;
+  color: var(--pl-red-ink);
+  font: 400 13px/1 var(--pl-display);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.pl-art-title {
+  margin: 0 0 14px;
+  padding-right: 48px;
+  color: #fff;
+  text-shadow: 0 2px 0 var(--pl-pink);
+  font: 400 clamp(25px, 3.6vw, 38px)/1.08 var(--pl-display);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.pl-art-body { max-width: 68ch; }
+.pl-art-body p, .pl-art-body li, .pl-art-body dd {
+  color: var(--pl-ink);
+  font: 500 clamp(17px, 1.45vw, 19px)/1.6 var(--pl-serif);
+}
+.pl-art-body p { margin: 0 0 .85em; }
+.pl-art-body ul, .pl-art-body ol { margin: 0 0 1em; padding-left: 1.3em; }
+.pl-art-body li { margin-bottom: .35em; }
+.pl-art-body h3 {
+  margin: 1.2em 0 .4em;
+  color: var(--pl-ink);
+  font: 400 19px/1.2 var(--pl-display);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.pl-art-body strong { font-weight: 700; }
+.pl-note-line {
+  margin-top: 1.1em !important;
+  padding-top: .7em;
+  border-top: 1px dashed var(--pl-muted);
+  color: var(--pl-muted) !important;
+}
+.pl-sample {
+  margin: 1em 0;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, .06);
+  border-left: 3px solid var(--pl-ink);
+}
+.pl-sample p { margin: 0 0 .6em; font-style: italic; }
+.pl-sample p:last-child { margin-bottom: 0; }
+.pl-gloss { margin: 0; display: grid; gap: 10px 22px; grid-template-columns: 1fr; }
+.pl-gloss dt { margin: 0; font: 400 17px/1.2 var(--pl-display); letter-spacing: .05em; text-transform: uppercase; color: var(--pl-red-ink); }
+.pl-gloss dd { margin: 2px 0 0; }
+.pl-motions h3 { margin-top: 1.4em; }
+
+/* ---------- Wide screens: slight tilt, no motion-sensitive users ---------- */
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .pl-stack .pl-card:nth-child(odd)  { --pl-tilt: -.5deg; }
+  .pl-stack .pl-card:nth-child(even) { --pl-tilt: .5deg; }
+  .pl-articles .pl-article:nth-child(odd)  { --pl-tilt: -.3deg; }
+  .pl-articles .pl-article:nth-child(even) { --pl-tilt: .3deg; }
+  .pl-gloss { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 560px) {
+  .pl-notes, .pl-guide { padding-left: 16px; padding-right: 16px; }
+  .pl-card > summary { padding: 14px 46px 14px 24px; gap: 0 10px; }
+  .pl-a { padding: 0 16px 18px 24px; }
+  .pl-article { padding: 20px 16px 22px 28px; }
+  .pl-card::before { width: 24px; height: 24px; top: 8px; right: 8px; }
+}
+
+@media print {
+  .pl-card, .pl-article { transform: none; box-shadow: none; }
+}
+
+/* ============================================================
+   Pages whose stylesheet (editorial.css) forces pixel headings and
+   translucent cream paragraphs with !important (events, committees,
+   timeline, winners). Re-assert the placard type and ink colours.
+   ============================================================ */
+body.editorial-page .pl-notes .pl-title {
+  color: inherit !important;
+  font-family: var(--pl-serif) !important;
+  font-weight: 700 !important;
+  font-size: clamp(30px, 4.6vw, 48px) !important;
+  line-height: 1.05 !important;
+  letter-spacing: -.01em !important;
+  text-transform: none;
+  text-shadow: none;
+}
+body.editorial-page .pl-notes .pl-a p {
+  color: var(--pl-ink) !important;
+  font-size: clamp(17px, 1.5vw, 19px);
+  line-height: 1.55;
+}
+body.editorial-page .pl-notes .pl-sign { color: var(--pl-pen) !important; }
+body.editorial-page .pl-notes .pl-a a {
+  color: var(--pl-pink) !important;
+  text-decoration: underline;
+}
+body.editorial-page .pl-notes .pl-a a:hover { color: #fff !important; }
+body.editorial-page .pl-notes .pl-handbook a:hover { color: inherit !important; }
