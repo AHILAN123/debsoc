@@ -31,6 +31,7 @@ const thumb = (url, w = 320, h = 240) =>
 
 let toastTimer;
 function toast(msg, type = "ok") {
+  if (!msg) return; // silent (e.g. editor cancelled)
   const el = $("#toast");
   el.textContent = msg;
   el.className = type === "error" ? "err" : "ok";
@@ -200,6 +201,15 @@ async function uploadFiles(files) {
   if (bad) throw new Error(`${bad.name}: only JPEG, PNG, and WebP images are allowed.`);
   const big = files.find((f) => f.size > 5 * 1024 * 1024);
   if (big) throw new Error(`${big.name} is larger than 5MB.`);
+
+  // Client-side photo editor (crop, rotate, filters) before the upload. Cancel aborts silently.
+  if (window.DebSocEditor) {
+    const edited = await window.DebSocEditor.edit(files);
+    if (edited === null) throw new Error("");
+    files = edited;
+    const tooBig = files.find((f) => f.size > 5 * 1024 * 1024);
+    if (tooBig) throw new Error(`${tooBig.name} is larger than 5MB.`);
+  }
 
   const form = new FormData();
   files.forEach((f) => form.append("images", f));
