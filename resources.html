@@ -20,7 +20,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Gochi+Hand&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/content.css">
-  <link rel="stylesheet" href="assets/css/placard.css">
+  <link rel="stylesheet" href="assets/css/placard.css?v=pics2">
+  <style>.pl-pics{display:none}</style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -494,10 +495,16 @@
        The static images in the markup stay as a fallback if the API is unreachable. */
     (async () => {
       try {
-        const res = await fetch("/api/history");
-        if (!res.ok) return;
-        const events = await res.json();
-        if (!Array.isArray(events)) return;
+        let events;
+        for (const base of ["/api", "https://forkdebsoc.onrender.com/api"]) {
+          try {
+            const res = await fetch(base + "/history");
+            if (!res.ok) continue;
+            const data = await res.json();
+            if (Array.isArray(data)) { events = data; break; }
+          } catch (e) { /* try next base */ }
+        }
+        if (!events) return;
         const urls = [...new Set(events.flatMap((e) => [e.coverImage, ...(Array.isArray(e.images) ? e.images : [])])
           .filter((u) => typeof u === "string" && u.trim()))];
         if (!urls.length) return;
