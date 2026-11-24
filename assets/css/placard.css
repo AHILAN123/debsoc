@@ -423,3 +423,41 @@ body.editorial-page .pl-notes .pl-a a {
 }
 body.editorial-page .pl-notes .pl-a a:hover { color: #fff !important; }
 body.editorial-page .pl-notes .pl-handbook a:hover { color: inherit !important; }
+
+/* ---------- Handbook sections: photo column on the right (image + white border only) ---------- */
+.pl-pics { display: none; }
+@media (min-width: 900px) {
+  .pl-guide .pl-article {
+    display: grid;
+    grid-template-columns: minmax(0, 68ch) minmax(0, 1fr);
+    column-gap: 28px;
+    align-items: start;
+  }
+  .pl-guide .pl-article > :not(.pl-art-body):not(.pl-pics) { grid-column: 1 / -1; }
+  .pl-guide .pl-article > .pl-art-body { grid-column: 1; }
+  .pl-guide .pl-article > .pl-pics {
+    grid-column: 2;
+    grid-row: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    align-items: flex-end;
+    padding: 6px 14px 0 0;
+    align-self: start;
+    position: sticky;
+    top: 24px;
+  }
+  .pl-pics img {
+    display: block;
+    width: min(100%, 150px);
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    box-sizing: border-box;
+    padding: 8px 8px 30px;
+    background: #f6f1e4;
+    border: 0;
+    box-shadow: 3px 4px 0 rgba(0, 0, 0, .55);
+  }
+  .pl-pics img:nth-child(odd)  { transform: rotate(-3deg); }
+  .pl-pics img:nth-child(even) { transform: rotate(2.5deg); }
+}
