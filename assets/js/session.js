@@ -72,8 +72,17 @@
     }
   }
 
+  // GitHub Pages is static, so there is no /api proxy there (Vercel proxies it via vercel.json).
+  // On *.github.io, site-relative /api calls go straight to the Render backend; its CORS
+  // list already allows this origin, and credentials must be sent explicitly cross-origin.
+  var REMOTE_API = /\.github\.io$/i.test(window.location.hostname) ? "https://forkdebsoc.onrender.com" : "";
+
   window.fetch = function (input, init) {
     var url = typeof input === "string" ? input : (input && input.url) || "";
+    if (REMOTE_API && typeof input === "string" && (input === API || input.indexOf(API + "/") === 0 || input.indexOf(API + "?") === 0)) {
+      input = url = REMOTE_API + input;
+      init = Object.assign({}, init, { credentials: "include" });
+    }
     var promise = nativeFetch(input, init);
     if (!isApiUrl(url)) return promise;
 
