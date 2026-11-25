@@ -213,6 +213,46 @@ const fillEditForm = (profile) => {
     .map(({ label, url }) => `${label || "Link"} | ${url || ""}`).join("\n");
 };
 
+// Share card: owner only. Everything on the card comes from the profile API response;
+// the card is drawn in the browser (assets/js/share-card.js) and nothing is sent back.
+let shareProfile = null;
+const enableShareButtons = (profile) => {
+  shareProfile = profile;
+  if (!window.DebSocShareCard) return;
+  const list = document.getElementById("achievement-list");
+  list.querySelectorAll(".award-row[data-index]").forEach((row) => {
+    if (row.querySelector(".share-btn")) return;
+    const achievement = profile.achievements[Number(row.dataset.index)];
+    if (!achievement) return;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "btn share-btn";
+    button.dataset.shareIndex = row.dataset.index;
+    button.textContent = "Share";
+    button.setAttribute("aria-label", `Share ${achievement.position || "achievement"}`);
+    row.appendChild(button);
+  });
+  if (list.dataset.shareBound === "true") return;
+  list.dataset.shareBound = "true";
+  list.addEventListener("click", (event) => {
+    const button = event.target.closest(".share-btn");
+    if (!button || !shareProfile) return;
+    const achievement = shareProfile.achievements[Number(button.dataset.shareIndex)];
+    if (!achievement) return;
+    const source = achievement.event || achievement.history || {};
+    window.DebSocShareCard.open({
+      award: achievement.position || "Recognition",
+      eventTitle: source.title || "DebSoc event",
+      eventDate: source.eventDate || achievement.awardedAt,
+      location: source.location || "IIEST Shibpur",
+      coverImage: source.coverImage || "",
+      displayName: shareProfile.displayName,
+      username: shareProfile.username,
+      profileImage: shareProfile.profileImage || ""
+    }, button);
+  });
+};
+
 const setupSelfEditing = (profile, viewer) => {
   // viewer comes from the server-verified session (/api/auth/me), not raw localStorage.
   if (!viewer || String(viewer.username).toLowerCase() !== String(profile.username).toLowerCase()) return;
@@ -226,6 +266,7 @@ const setupSelfEditing = (profile, viewer) => {
   // Visibility only; the admin API still enforces the role server-side.
   if (viewer.role === "ADMIN") document.getElementById("admin-dashboard-link").classList.remove("hidden");
   fillEditForm(profile);
+  enableShareButtons(profile);
   if (editButton.dataset.bound === "true") return;
   editButton.dataset.bound = "true";
   editButton.addEventListener("click", () => editForm.classList.toggle("hidden"));
@@ -486,9 +527,9 @@ const loadProfile = async () => {
 
     const list = document.getElementById("achievement-list");
     list.innerHTML = profile.achievements.length
-      ? profile.achievements.map(achievement => {
+      ? profile.achievements.map((achievement, index) => {
         const source = achievement.event || achievement.history;
-        return `<article class="award-row rounded-r-lg bg-white p-4 shadow-sm">
+        return `<article class="award-row rounded-r-lg bg-white p-4 shadow-sm" data-index="${index}">
             <p class="font-serif-title text-lg text-[#6b0f1a]">${escapeHTML(achievement.position)}</p>
             <p class="mt-1 text-sm text-[#5c3a30]">${escapeHTML(source?.title || "DebSoc achievement")}</p>
             <p class="mt-2 font-mono text-[11px] uppercase tracking-wider text-[#9a6f22]">Awarded ${formatDate(achievement.awardedAt)}</p>

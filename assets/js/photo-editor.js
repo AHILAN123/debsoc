@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DebSoc admin: client-side photo editor (Instagram-style)
+   DebSoc: client-side photo editor (Instagram-style)
    Purely client side. Exposes window.DebSocEditor.edit(files) -> Promise<File[]|null>
    - resolves with the edited (or skipped, original) files in order
    - resolves null when the user cancels

@@ -12,9 +12,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Gochi+Hand&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css">
   <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js"></script>
   <link rel="stylesheet" href="assets/css/pages/profile.css">
+  <link rel="stylesheet" href="assets/css/components/photo-editor.css">
 </head>
 <body>
   <div class="profile-shell">
@@ -186,6 +188,63 @@
     </div>
   </div>
 
+  <!-- share achievement (owner only; rendered entirely in the browser by assets/js/share-card.js) -->
+  <div id="share-modal" class="share-modal hidden" role="dialog" aria-modal="true" aria-labelledby="share-title">
+    <div class="modal-win share-win">
+      <div class="tb">
+        <span id="share-title">Share achievement</span>
+        <button type="button" data-share-close>Close</button>
+      </div>
+      <div class="share-body">
+        <div class="share-preview">
+          <canvas id="share-canvas" width="1080" height="1350" role="img" aria-label="Preview of your achievement card"></canvas>
+          <p id="share-busy" class="share-busy hidden">Loading photos&hellip;</p>
+        </div>
+        <div class="share-controls">
+          <fieldset>
+            <legend class="h">Colour</legend>
+            <div class="share-swatches">
+              <label class="sw"><input type="radio" name="share-theme" value="mustard" checked><span class="sw-chip sw-mustard" aria-hidden="true"></span>Mustard</label>
+              <label class="sw"><input type="radio" name="share-theme" value="black"><span class="sw-chip sw-black" aria-hidden="true"></span>Black</label>
+              <label class="sw"><input type="radio" name="share-theme" value="white"><span class="sw-chip sw-white" aria-hidden="true"></span>White</label>
+            </div>
+            <div id="share-dots" class="share-sub hidden" role="group" aria-label="Dot colour">
+              <span>Dots:</span>
+              <label><input type="radio" name="share-dot" value="yellow" checked> Yellow</label>
+              <label><input type="radio" name="share-dot" value="red"> Red</label>
+              <label><input type="radio" name="share-dot" value="pink"> Hot pink</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend class="h">Photos</legend>
+            <label id="share-pfp-row" class="chk hidden"><input type="checkbox" id="share-use-pfp" checked> Use my profile picture</label>
+            <p id="share-no-pfp" class="note hidden">No profile picture on your account. Add a photo from the event to put one on the card.</p>
+            <div class="share-upload">
+              <button id="share-photo-add" type="button" class="btn">Add my event photo</button>
+              <button id="share-photo-edit" type="button" class="btn hidden">Edit</button>
+              <button id="share-photo-remove" type="button" class="btn hidden">Remove</button>
+              <input id="share-photo-input" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+            </div>
+            <small class="note">Your photo stays on this device. Nothing is uploaded.</small>
+            <label id="share-cover-row" class="chk hidden"><input type="checkbox" id="share-use-cover" checked> Show event cover</label>
+          </fieldset>
+          <fieldset id="share-layout-row" class="hidden">
+            <legend class="h">Arrange photos</legend>
+            <label class="chk"><input type="radio" name="share-arrange" value="side" checked> Side by side</label>
+            <label class="chk"><input type="radio" name="share-arrange" value="stacked"> Stacked</label>
+          </fieldset>
+          <p id="share-status" class="note" role="status" aria-live="polite"></p>
+          <div class="acts">
+            <button id="share-download" type="button" class="btn share-go">Download PNG</button>
+            <button id="share-native" type="button" class="btn hidden">Share&hellip;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/photo-editor.js"></script>
+  <script src="assets/js/share-card.js"></script>
   <script src="assets/js/profile.js"></script>
   <script src="assets/js/footer.js"></script>
   <script src="assets/js/nav.js"></script>

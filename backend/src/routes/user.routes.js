@@ -227,8 +227,8 @@ router.get("/:username", async (req, res) => {
 						id: true,
 						position: true,
 						awardedAt: true,
-						event: { select: { title: true, eventDate: true } },
-						history: { select: { title: true, eventDate: true } }
+						event: { select: { title: true, eventDate: true, location: true, coverImage: true } },
+						history: { select: { title: true, eventDate: true, location: true, coverImage: true } }
 					}
 				},
 				_count: { select: { registrations: true, comments: true } }
