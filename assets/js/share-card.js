@@ -21,9 +21,10 @@
     story: { h: 1920, top: 250, bottom: 250, k: 1.06 }
   };
   let H = 1350, TOP = 72, BOTTOM = 56, K = 1;      // set per render from the chosen format
-  const SIGNER = { name: "Karan", lines: ["Karan, GS", "DebSoc"], image: "assets/images/karan_sign.png" };
+  const SIGNER = { name: "Karan", lines: ["Karan,", "Secretary, DebSoc"], image: "assets/images/karan_sign.png" };
   const FRAME = "#fff5ea";
   const LOGO_SRC = "assets/images/brand/debsoc-logo.webp";
+  const IIEST_SRC = "assets/images/IIESTLOGO.webp";
 
   const FONTS = {
     pixel: '"Press", "Courier New", monospace',
@@ -394,14 +395,21 @@
     rows.forEach((r) => { r.draw(y); y += r.h + r.gap; });
   }
 
+  const TOPBAR_SEAL = 74;
   function drawTopBar(ctx, theme) {
+    const sy = TOP - 8, cy = sy + TOPBAR_SEAL / 2;
+    const sealed = drawSeal(ctx, iiestLogo, PAD + 2, sy, TOPBAR_SEAL, { rot: 3, pad: 0.09 });
+    ctx.textBaseline = "alphabetic";
+    ctx.textAlign = "left";
+    ctx.font = `24px ${FONTS.pixel}`;
+    setSpacing(ctx, 2);
+    ctx.fillStyle = theme.ink;
+    ctx.fillText("DEBSOC", PAD + (sealed ? TOPBAR_SEAL + 28 : 0), cy + 9);
     ctx.font = `14px ${FONTS.pixel}`;
     setSpacing(ctx, 1);
     ctx.fillStyle = theme.soft;
-    ctx.textAlign = "left";
-    ctx.fillText("DEBSOC IIEST SHIBPUR", PAD, TOP + 14);
     ctx.textAlign = "right";
-    ctx.fillText("VERIFIED ACHIEVEMENT", W - PAD, TOP + 14);
+    ctx.fillText("VERIFIED ACHIEVEMENT", W - PAD, cy + 7);
     ctx.textAlign = "left";
     setSpacing(ctx, 0);
   }
@@ -554,6 +562,12 @@
     return logoLoad;
   }
 
+  let iiestLogo = null, iiestLoad = null;
+  function loadIiest() {
+    if (!iiestLoad) iiestLoad = loadImage(IIEST_SRC).then((img) => { iiestLogo = img; return img; });
+    return iiestLoad;
+  }
+
   function roundRect(ctx, x, y, w, h, r) {
     ctx.beginPath();
     ctx.moveTo(x + r, y);
@@ -564,26 +578,26 @@
     ctx.closePath();
   }
 
-  // The logo is a maroon crest on a white square, so it sits on a cream seal (like the polaroids);
-  // "multiply" turns its white into the seal's cream and leaves the crest untouched.
-  function drawSeal(ctx, x, y, size) {
-    if (!logo) return false;
-    const iw = logo.naturalWidth, ih = logo.naturalHeight;
+  // A logo on a cream, slightly tilted seal (like the polaroid frames). With o.multiply the logo's
+  // white background becomes the seal's cream; o.crop trims that much off every edge first.
+  function drawSeal(ctx, img, x, y, size, o) {
+    if (!img) return false;
+    const iw = img.naturalWidth, ih = img.naturalHeight, c = o.crop || 0;
     ctx.save();
     ctx.translate(x + size / 2, y + size / 2);
-    ctx.rotate((-3 * Math.PI) / 180);
+    ctx.rotate(((o.rot || 0) * Math.PI) / 180);
     const r = size * 0.16, half = size / 2;
     ctx.fillStyle = "rgba(0,0,0,.3)";
-    roundRect(ctx, -half + 7, -half + 7, size, size, r);
+    roundRect(ctx, -half + 6, -half + 6, size, size, r);
     ctx.fill();
     ctx.fillStyle = FRAME;
     roundRect(ctx, -half, -half, size, size, r);
     ctx.fill();
     roundRect(ctx, -half, -half, size, size, r);
     ctx.clip();
-    ctx.globalCompositeOperation = "multiply";
-    const pad = size * 0.06;
-    ctx.drawImage(logo, iw * 0.0625, ih * 0.0625, iw * 0.875, ih * 0.875, -half + pad, -half + pad, size - pad * 2, size - pad * 2);
+    if (o.multiply) ctx.globalCompositeOperation = "multiply";
+    const pad = size * (o.pad || 0.06);
+    ctx.drawImage(img, iw * c, ih * c, iw * (1 - 2 * c), ih * (1 - 2 * c), -half + pad, -half + pad, size - pad * 2, size - pad * 2);
     ctx.restore();
     return true;
   }
@@ -605,7 +619,7 @@
     const l1 = top + FOOTER_H - 26, l2 = top + FOOTER_H;
 
     // bottom left: the DebSoc seal, then the handle and site
-    const sealed = drawSeal(ctx, PAD + 4, l2 - SEAL + 2, SEAL);
+    const sealed = drawSeal(ctx, logo, PAD + 4, l2 - SEAL + 2, SEAL, { crop: 0.0625, multiply: true, rot: -3 });
     const lx = PAD + (sealed ? SEAL + 34 : 0);
 
     // a tiny pixel sticker sits on the baseline in the middle
@@ -686,7 +700,7 @@
 
     const footerTop = H - BOTTOM - FOOTER_H;
     const text = buildText(ctx, d, theme, !hasArt, st);
-    const artTop = TOP + 50;
+    const artTop = TOP + 84;
 
     if (hasArt) {
       const textTop = footerTop - 34 - text.height;
@@ -945,7 +959,7 @@
 
     const [pfp, cover] = await Promise.all([
       loadRemote(data.profileImage), loadRemote(data.coverImage),
-      loadFonts(), loadSignature(), loadSprites(), loadLogo()
+      loadFonts(), loadSignature(), loadSprites(), loadLogo(), loadIiest()
     ]);
     if (token !== state.token) return;          // closed or reopened meanwhile
     state.pfp = pfp;
