@@ -23,8 +23,8 @@
   let H = 1350, TOP = 72, BOTTOM = 56, K = 1;      // set per render from the chosen format
   const SIGNER = { name: "Karan", lines: ["Karan,", "Secretary, DebSoc"], image: "assets/images/karan_sign.png" };
   const FRAME = "#fff5ea";
-  const LOGO_SRC = "assets/images/brand/debsoc-logo.webp";
-  const IIEST_SRC = "assets/images/IIESTLOGO.webp";
+  const LOGO_SRC = "assets/images/share/debsoc-logo.jpg";
+  const IIEST_SRC = "assets/images/share/iiest-logo.png";
 
   const FONTS = {
     pixel: '"Press", "Courier New", monospace',
@@ -122,10 +122,22 @@
       const img = new Image();
       img.crossOrigin = "anonymous";
       img.referrerPolicy = "no-referrer";
-      img.onload = () => resolve(img.naturalWidth ? img : null);
+      img.onload = () => {
+        if (!img.naturalWidth) return resolve(null);
+        // make sure it is fully decoded before the first draw (some phones draw a blank otherwise)
+        (img.decode ? img.decode().catch(() => {}) : Promise.resolve()).then(() => resolve(img));
+      };
       img.onerror = () => resolve(null);
       img.src = src;
     });
+  }
+
+  // DebSoc's own files: a second try after a short wait (mobile data drops requests now and then)
+  async function loadAsset(src) {
+    const first = await loadImage(src);
+    if (first) return first;
+    await new Promise((r) => setTimeout(r, 700));
+    return loadImage(`${src}${src.includes("?") ? "&" : "?"}r=1`);
   }
 
   // A copy cached earlier without CORS headers can fail the anonymous load, so retry once uncached.
@@ -420,8 +432,8 @@
   const tintCache = new Map();
   function loadSignature() {
     if (!signatureLoad) {
-      signatureLoad = loadImage(SIGNER.image).then((img) => {
-        if (!img) return null;
+      signatureLoad = loadAsset(SIGNER.image).then((img) => {
+        if (!img) { signatureLoad = null; return null; }
         const c = document.createElement("canvas");
         c.width = img.naturalWidth;
         c.height = img.naturalHeight;
@@ -449,7 +461,7 @@
         out.getContext("2d").drawImage(c, minX - m, minY - m, w, h, 0, 0, w, h);
         signature = out;
         return out;
-      }).catch(() => null);
+      }).catch(() => { signatureLoad = null; return null; });
     }
     return signatureLoad;
   }
@@ -506,8 +518,11 @@
   function loadSprites() {
     if (!spritesLoad) {
       spritesLoad = Promise.all(Object.entries(SPRITES).map(async ([name, def]) => {
-        spriteImgs[name] = def.art ? pixelCanvas(PIXEL_ART[def.art]) : await loadImage(def.src);
-      })).then(() => null);
+        spriteImgs[name] = def.art ? pixelCanvas(PIXEL_ART[def.art]) : await loadAsset(def.src);
+      })).then(() => {
+        if (Object.keys(SPRITES).some((n) => !spriteImgs[n])) spritesLoad = null;   // retry next time
+        return null;
+      });
     }
     return spritesLoad;
   }
@@ -557,14 +572,43 @@
   }
 
   let logo = null, logoLoad = null;
+  // The crest is on a white square. Multiply its pixels by the seal's cream here, once, so the
+  // seal needs no canvas blend mode (those behave differently from phone to phone).
+  function bakeCream(img) {
+    const c = document.createElement("canvas");
+    c.width = img.naturalWidth;
+    c.height = img.naturalHeight;
+    const x = c.getContext("2d", { willReadFrequently: true });
+    x.drawImage(img, 0, 0);
+    try {
+      const id = x.getImageData(0, 0, c.width, c.height), d = id.data;
+      for (let i = 0; i < d.length; i += 4) {
+        d[i + 1] = Math.round((d[i + 1] * 245) / 255);
+        d[i + 2] = Math.round((d[i + 2] * 234) / 255);
+      }
+      x.putImageData(id, 0, 0);
+      return c;
+    } catch { return img; }
+  }
+
   function loadLogo() {
-    if (!logoLoad) logoLoad = loadImage(LOGO_SRC).then((img) => { logo = img; return img; });
+    if (logo) return Promise.resolve(logo);
+    if (!logoLoad) {
+      logoLoad = loadAsset(LOGO_SRC).then((img) => {
+        logoLoad = null;
+        if (img) logo = bakeCream(img);
+        return logo;
+      });
+    }
     return logoLoad;
   }
 
   let iiestLogo = null, iiestLoad = null;
   function loadIiest() {
-    if (!iiestLoad) iiestLoad = loadImage(IIEST_SRC).then((img) => { iiestLogo = img; return img; });
+    if (iiestLogo) return Promise.resolve(iiestLogo);
+    if (!iiestLoad) {
+      iiestLoad = loadAsset(IIEST_SRC).then((img) => { iiestLoad = null; iiestLogo = img; return img; });
+    }
     return iiestLoad;
   }
 
@@ -582,7 +626,7 @@
   // white background becomes the seal's cream; o.crop trims that much off every edge first.
   function drawSeal(ctx, img, x, y, size, o) {
     if (!img) return false;
-    const iw = img.naturalWidth, ih = img.naturalHeight, c = o.crop || 0;
+    const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height, c = o.crop || 0;
     ctx.save();
     ctx.translate(x + size / 2, y + size / 2);
     ctx.rotate(((o.rot || 0) * Math.PI) / 180);
@@ -619,7 +663,7 @@
     const l1 = top + FOOTER_H - 26, l2 = top + FOOTER_H;
 
     // bottom left: the DebSoc seal, then the handle and site
-    const sealed = drawSeal(ctx, logo, PAD + 4, l2 - SEAL + 2, SEAL, { crop: 0.0625, multiply: true, rot: -3 });
+    const sealed = drawSeal(ctx, logo, PAD + 4, l2 - SEAL + 2, SEAL, { rot: -3 });
     const lx = PAD + (sealed ? SEAL + 34 : 0);
 
     // a tiny pixel sticker sits on the baseline in the middle
@@ -969,9 +1013,14 @@
     const missing = [];
     if (data.profileImage && !pfp) missing.push("your profile picture");
     if (data.coverImage && safeSrc(data.coverImage) && !cover) missing.push("the event cover");
-    setStatus(missing.length ? `Could not load ${missing.join(" or ")}; the card works without it.` : "");
+    if (!logo) missing.push("the DebSoc logo");
+    if (!iiestLogo) missing.push("the IIEST logo");
+    setStatus(missing.length ? `Could not load ${missing.join(", ")}. Check your connection, then close and reopen this to try again.` : "");
     scheduleRender();
   }
 
-  window.DebSocShareCard = { open, close };
+  window.DebSocShareCard = {
+    open, close,
+    preload: () => Promise.all([loadFonts(), loadSignature(), loadSprites(), loadLogo(), loadIiest()]).then(() => null)
+  };
 })();

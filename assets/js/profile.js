@@ -232,6 +232,11 @@ const enableShareButtons = (profile) => {
     button.setAttribute("aria-label", `Share ${achievement.position || "achievement"}`);
     row.appendChild(button);
   });
+  // Fetch the card's logos, stickers and fonts in the background now, so the dialog opens
+  // instantly and a flaky connection does not catch it mid-download.
+  if (profile.achievements.length && window.DebSocShareCard.preload) {
+    (window.requestIdleCallback || ((fn) => setTimeout(fn, 1200)))(() => window.DebSocShareCard.preload().catch(() => {}));
+  }
   if (list.dataset.shareBound === "true") return;
   list.dataset.shareBound = "true";
   list.addEventListener("click", (event) => {
