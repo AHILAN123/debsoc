@@ -377,31 +377,35 @@ html.share-open { overflow: hidden; }
 .share-controls fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
 .share-controls legend.h { display: block; width: 100%; }
 .share-controls fieldset.hidden, .share-controls .hidden { display: none; }
-.share-swatches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.share-swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
 .sw { display: flex; flex-direction: column; align-items: center; gap: 4px; font: 700 11px var(--sans); cursor: pointer; }
 .sw input { position: absolute; opacity: 0; pointer-events: none; }
-.sw-chip { width: 100%; aspect-ratio: 4 / 5; border: 2px solid #555; background-size: 8px 8px; }
+.sw-chip { display: grid; place-items: center; width: 100%; aspect-ratio: 1; border: 2px solid #555; background-size: 8px 8px; font: 700 16px/1 "Cormorant Garamond", Georgia, serif; }
+.sw { text-align: center; }
 .sw input:checked + .sw-chip { outline: 3px solid var(--blue); outline-offset: 2px; }
 .sw input:focus-visible + .sw-chip { outline: 3px dotted var(--blue); outline-offset: 2px; }
-.sw-mustard { background-color: #e1ad01; background-image: radial-gradient(rgba(45,45,45,.45) 1.2px, transparent 1.4px); }
-.sw-black { background-color: #0e0e0e; background-image: radial-gradient(#ffd60a 1.2px, transparent 1.4px), radial-gradient(#ff2e93 1.2px, transparent 1.4px); background-position: 0 0, 4px 4px; }
-.sw-white { background-color: #fbfbf7; background-image: radial-gradient(rgba(16,163,186,.75) 1.2px, transparent 1.4px); }
+.share-pick { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px 10px; margin-top: 8px; }
+.share-pick label { display: flex; flex-direction: column; gap: 2px; font: 700 11px var(--sans); }
+.share-pick input[type="color"] { width: 74px; height: 30px; padding: 0; border: 2px inset #fff; background: #fff; cursor: pointer; }
 .share-sub { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 7px; font-size: 12px; }
 .share-sub span { font-weight: 700; }
 .chk { display: flex; align-items: center; gap: 6px; margin: 4px 0; font-size: 12.5px; cursor: pointer; }
-.share-upload { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 4px; }
 .share-controls .note { margin: 2px 0; }
 #share-status:empty { display: none; }
 #share-status.err { color: var(--red); font-weight: 700; }
-.share-controls .acts { margin-top: auto; flex-wrap: wrap; }
+.share-actions { position: sticky; bottom: 0; margin-top: auto; padding: 8px 0 2px; background: var(--g); }
+.share-actions .acts { flex-wrap: wrap; margin-top: 4px; }
+.share-actions .btn { min-height: 32px; }
 .share-go { color: #fff; background: var(--bar); }
 [data-theme="dark"] .share-go { color: #0b0b0b; background: var(--blue); }
 [data-theme="dark"] .sw-chip { border-color: #333; }
 
 @media (max-width: 760px) {
+  .share-actions .share-go { flex: 1; min-height: 44px; font-size: 14px; }
   .share-modal { padding: 0; align-items: stretch; }
   .share-win { max-width: none; max-height: none; height: 100dvh; border: 0; box-shadow: none; }
-  .share-body { grid-template-columns: minmax(0, 1fr); }
+  .share-body { display: flex; flex-direction: column; }
+  .share-preview, .share-controls { flex: none; }
   .share-preview canvas { max-height: 50dvh; }
-  .sw-chip { aspect-ratio: auto; height: 44px; }
+  .sw-chip { aspect-ratio: auto; height: 40px; }
 }

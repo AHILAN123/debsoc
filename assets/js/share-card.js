@@ -3,9 +3,9 @@
    Purely client side. The card is drawn on a <canvas> in the browser:
    - event, award and date come from the public profile API response (not from
      any input the person can type into), so nothing on the card is free text
-   - the optional event photo stays on the device (FileReader -> canvas) and is
-     never uploaded; it goes through the shared photo editor (filters, crop)
-   Exposes window.DebSocShareCard.open(data, returnFocusEl).
+   - only images DebSoc already controls go on the card: the person's profile picture
+     and the event cover. There is no way to add an arbitrary photo, by design.
+   Exposes window.DebSocShareCard.open(data, returnFocusEl) and .close().
    Visual language: the red "collage" entries of becon.html / history.html
    (dot grid paper, black starburst, cream polaroids with a thick bottom lip,
    hard drop shadows, lowercase serif titles, pixel-font meta, Gochi Hand).
@@ -13,11 +13,17 @@
 (function () {
   "use strict";
 
-  const W = 1080, H = 1350, PAD = 72, INNER = W - PAD * 2;
-  const SIGNER = { name: "Karan", role: "Karan, GS, DebSoc IIEST Shibpur", image: "assets/images/karan_sign.png" };
+  const W = 1080, PAD = 72, INNER = W - PAD * 2;
+  // Post = Instagram feed (4:5). Story = Instagram / WhatsApp story (9:16); the top and bottom
+  // ~250px are kept clear of anything important because the apps draw their own bars there.
+  const FORMATS = {
+    post: { h: 1350, top: 72, bottom: 56, k: 1 },
+    story: { h: 1920, top: 250, bottom: 250, k: 1.06 }
+  };
+  let H = 1350, TOP = 72, BOTTOM = 56, K = 1;      // set per render from the chosen format
+  const SIGNER = { name: "Karan", lines: ["Karan, GS", "DebSoc"], image: "assets/images/karan_sign.png" };
   const FRAME = "#fff5ea";
-  const MAX_UPLOAD = 15 * 1024 * 1024;
-  const OK_TYPES = ["image/jpeg", "image/png", "image/webp"];
+  const LOGO_SRC = "assets/images/brand/debsoc-logo.webp";
 
   const FONTS = {
     pixel: '"Press", "Courier New", monospace',
@@ -33,26 +39,48 @@
     return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
   };
 
-  const THEMES = {
-    mustard: () => ({
-      bg: "#e1ad01", dot: "rgba(45,45,45,.34)", ink: "#111", soft: "rgba(17,17,17,.74)",
-      title: "#111", meta: "#111", awardBg: "#111", awardInk: "#e1ad01", star: "#111",
-      tint: "#a06c00", sign: "#111"
-    }),
-    black: (dot) => {
-      const c = DOT_COLORS[dot] || DOT_COLORS.yellow;
-      return {
-        bg: "#0e0e0e", dot: rgba(c, 0.55), ink: "#fff", soft: "rgba(255,255,255,.78)",
-        title: "#ffd60a", meta: "#ffd60a", awardBg: "#ffd60a", awardInk: "#111", star: c,
-        tint: c, sign: "#ffd60a"
-      };
-    },
-    white: () => ({
-      bg: "#fbfbf7", dot: "rgba(16,163,186,.55)", ink: "#111", soft: "rgba(17,17,17,.74)",
-      title: "#111", meta: "#0b6f8a", awardBg: "#111", awardInk: "#5fe1ea", star: "#1479c9",
-      tint: "#1479c9", sign: "#111"
-    })
+  // bg / ink (body) / title / meta / chip (award badge) / chipInk / star / dot (+alpha) / tint (photos) / sign
+  const PRESETS = {
+    mustard: { label: "Mustard", bg: "#e1ad01", ink: "#111111", title: "#111111", meta: "#111111", chip: "#111111", chipInk: "#e1ad01", star: "#111111", dot: "#2d2d2d", dotA: 0.34, tint: "#a06c00", sign: "#111111" },
+    black: { label: "Black", bg: "#0e0e0e", ink: "#ffffff", title: "#ffd60a", meta: "#ffd60a", chip: "#ffd60a", chipInk: "#111111", sign: "#ffd60a", dotA: 0.55, dots: DOT_COLORS },
+    white: { label: "White", bg: "#fbfbf7", ink: "#111111", title: "#111111", meta: "#0b6f8a", chip: "#111111", chipInk: "#5fe1ea", star: "#1479c9", dot: "#10a3ba", dotA: 0.55, tint: "#1479c9", sign: "#111111" },
+    red: { label: "Collage red", bg: "#d92a1f", ink: "#fff5ea", title: "#fff5ea", meta: "#ffd9d2", chip: "#111111", chipInk: "#fff5ea", star: "#111111", dot: "#000000", dotA: 0.2, tint: "#ff2a1a", sign: "#fff5ea" },
+    pink: { label: "Hot pink", bg: "#ff2e93", ink: "#111111", title: "#111111", meta: "#111111", chip: "#111111", chipInk: "#ffd60a", star: "#ffd60a", dot: "#ffffff", dotA: 0.42, tint: "#c4106a", sign: "#111111" },
+    navy: { label: "Navy", bg: "#10234a", ink: "#f4efe3", title: "#ffd60a", meta: "#9fd0ff", chip: "#ffd60a", chipInk: "#10234a", star: "#ff4d6d", dot: "#9fd0ff", dotA: 0.35, tint: "#4d7be0", sign: "#ffd60a" },
+    green: { label: "Forest", bg: "#0f5a3f", ink: "#f4efe3", title: "#ffe27a", meta: "#9be7c0", chip: "#ffe27a", chipInk: "#0f5a3f", star: "#ffe27a", dot: "#9be7c0", dotA: 0.3, tint: "#2fb37a", sign: "#ffe27a" },
+    lilac: { label: "Lilac", bg: "#cdb8ff", ink: "#1d1240", title: "#1d1240", meta: "#4a2fb0", chip: "#1d1240", chipInk: "#cdb8ff", star: "#ff2e93", dot: "#6b4fd6", dotA: 0.35, tint: "#7a55e0", sign: "#1d1240" }
   };
+
+  const HEX = /^#[0-9a-f]{6}$/i;
+  const luminance = (hex) => {
+    const n = parseInt(hex.slice(1), 16);
+    const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const autoText = (bg) => (luminance(bg) > 0.35 ? "#111111" : "#ffffff");
+
+  // preset + optional user colours (validated here, so a tampered value can only fall back to the preset)
+  function resolveTheme(opts) {
+    const p = PRESETS[opts.theme] || PRESETS.mustard;
+    const dc = p.dots ? (p.dots[opts.dot] || p.dots.yellow) : p.dot;
+    const t = {
+      bg: p.bg, ink: p.ink, title: p.title, meta: p.meta, chip: p.chip, chipInk: p.chipInk, sign: p.sign,
+      star: p.dots ? dc : p.star, tint: p.dots ? dc : p.tint, dot: rgba(dc, p.dotA), soft: rgba(p.ink, 0.76)
+    };
+    const bg = HEX.test(opts.bg || "") ? opts.bg.toLowerCase() : null;
+    let text = HEX.test(opts.text || "") ? opts.text.toLowerCase() : null;
+    if (bg) { t.bg = bg; if (!text) text = autoText(bg); }
+    if (text) {
+      t.ink = t.title = t.meta = t.sign = t.chip = text;
+      t.chipInk = t.bg;
+      t.soft = rgba(text, 0.76);
+      if (bg) { t.star = text; t.dot = rgba(text, 0.3); t.tint = text; }
+    }
+    return t;
+  }
 
   const DATE_FORMAT = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" });
   const formatDate = (value) => {
@@ -104,20 +132,6 @@
     const url = safeSrc(src);
     if (!url) return null;
     return (await loadImage(url)) || loadImage(`${url}${url.includes("?") ? "&" : "?"}card=1`);
-  }
-
-  function fileToImage(file) {
-    return new Promise((resolve, reject) => {
-      const fr = new FileReader();
-      fr.onerror = () => reject(new Error("Could not read that photo."));
-      fr.onload = () => {
-        const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = () => reject(new Error("Could not open that photo."));
-        img.src = fr.result;
-      };
-      fr.readAsDataURL(file);
-    });
   }
 
   /* ---------- drawing primitives ---------- */
@@ -245,46 +259,88 @@
     return String(name || "").trim().split(/\s+/)[0] || "Delegate";
   }
 
+  // "BE COLLEGE EX STUDENTS' CLUB" -> "Be College Ex Students' Club" (only when it was shouted)
+  function niceTitle(t) {
+    const text = String(t || "").trim();
+    if (!text) return "DebSoc event";
+    const letters = text.replace(/[^a-z]/gi, "");
+    if (letters.length > 3 && text === text.toUpperCase()) {
+      return text.toLowerCase().replace(/(^|[\s(\-])([a-z])/g, (m, a, b) => a + b.toUpperCase());
+    }
+    return text;
+  }
+
   function messageFor(d) {
     return {
       greeting: `Dear ${firstName(d.displayName)},`,
-      body: `Thank you for being part of ${d.eventTitle}. Congratulations on your ${d.award}: ` +
-        "you earned it on the floor, one point at a time. Keep reading, keep questioning, " +
-        "keep standing up to speak. We will be saving you a seat at the next session."
+      body: `Thank you for being part of ${niceTitle(d.eventTitle)}. Congratulations on your ${d.award}! ` +
+        "Keep reading, keep questioning, keep standing up to speak. " +
+        "We will be saving you a seat at the next session."
     };
   }
 
   /* ---------- text block: measured first, so the art gets whatever room is left ---------- */
-  function buildText(ctx, d, theme, big) {
-    const k = big ? 1.22 : 1;
+  function buildText(ctx, d, theme, big, st) {
+    const k = (big ? 1.18 : 1) * K;
     const rows = [];
 
-    const meta = [formatDate(d.eventDate), d.location].filter(Boolean).join(", ").toUpperCase();
-    if (meta) {
-      const size = Math.round(15 * k);
-      rows.push({
-        h: size * 1.6, gap: 18,
-        draw(y) {
-          ctx.font = `${size}px ${FONTS.pixel}`;
-          setSpacing(ctx, 1);
-          ctx.fillStyle = theme.meta;
-          ctx.fillText(fitText(ctx, meta, INNER), PAD, y + size);
-          setSpacing(ctx, 0);
-        }
-      });
+    // 1. the award is the headline: a big sticker above the event name, with a tiny pixel trophy on its corner
+    const trophy = sticker(st.award);
+    const award = String(d.award || "Recognition").toUpperCase();
+    const maxLabel = INNER - 200 - (trophy ? 44 : 0);
+    let aSize = Math.round(72 * k);
+    setSpacing(ctx, 1);
+    ctx.font = `${aSize}px ${FONTS.display}`;
+    while (aSize > 38 && ctx.measureText(award).width > maxLabel) {
+      aSize -= 2;
+      ctx.font = `${aSize}px ${FONTS.display}`;
     }
+    setSpacing(ctx, 0);
+    const chipH = aSize * 1.15 + 32;
+    rows.push({
+      h: chipH + 22, gap: 22,
+      draw(y) {
+        ctx.font = `${aSize}px ${FONTS.display}`;
+        setSpacing(ctx, 1);
+        const label = fitText(ctx, award, maxLabel);
+        const tw = ctx.measureText(label).width;
+        ctx.font = `15px ${FONTS.pixel}`;
+        const lw = ctx.measureText("AWARD").width;
+        const chipW = tw + lw + 84 + (trophy ? 40 : 0);
+        ctx.save();
+        ctx.translate(PAD + 10 + chipW / 2, y + 11 + chipH / 2);
+        ctx.rotate((-1.5 * Math.PI) / 180);
+        ctx.fillStyle = "rgba(0,0,0,.3)";
+        ctx.fillRect(-chipW / 2 + 9, -chipH / 2 + 9, chipW, chipH);
+        ctx.strokeStyle = theme.chip;
+        ctx.lineWidth = 3;
+        ctx.strokeRect(-chipW / 2 - 9, -chipH / 2 - 9, chipW + 18, chipH + 18);
+        ctx.fillStyle = theme.chip;
+        ctx.fillRect(-chipW / 2, -chipH / 2, chipW, chipH);
+        ctx.fillStyle = theme.chipInk;
+        ctx.textBaseline = "middle";
+        ctx.fillText("AWARD", -chipW / 2 + 26, 2);
+        ctx.font = `${aSize}px ${FONTS.display}`;
+        ctx.fillText(label, -chipW / 2 + 26 + lw + 30, 4);
+        ctx.restore();
+        setSpacing(ctx, 0);
+        ctx.textBaseline = "alphabetic";
+        if (trophy) drawSticker(ctx, trophy, PAD + 10 + chipW - 6, y + 14);
+      }
+    });
 
+    // 2. event name
     const title = String(d.eventTitle || "DebSoc event").toLowerCase();
-    let tSize = Math.round(86 * k), tLines;
+    let tSize = Math.round(76 * k), tLines;
     for (; ; tSize -= 4) {
       ctx.font = `700 ${tSize}px ${FONTS.serif}`;
       tLines = wrap(ctx, title, INNER);
-      if (tLines.length <= 2 || tSize <= 56) break;
+      if (tLines.length <= 2 || tSize <= 50) break;
     }
     tLines = clampLines(ctx, tLines, 2, INNER);
     const tLead = tSize * 0.98;
     rows.push({
-      h: tLead * tLines.length, gap: 26,
+      h: tLead * tLines.length, gap: 20,
       draw(y) {
         ctx.font = `700 ${tSize}px ${FONTS.serif}`;
         setSpacing(ctx, -1);
@@ -299,54 +355,35 @@
       }
     });
 
-    const award = String(d.award || "Recognition").toUpperCase();
-    let aSize = Math.round(46 * k);
-    ctx.font = `${aSize}px ${FONTS.display}`;
-    while (aSize > 30 && ctx.measureText(award).width > INNER - 150) {
-      aSize -= 2;
-      ctx.font = `${aSize}px ${FONTS.display}`;
+    // 3. date and place
+    const meta = [formatDate(d.eventDate), d.location].filter(Boolean).join(", ").toUpperCase();
+    if (meta) {
+      const size = Math.round(16 * k);
+      rows.push({
+        h: size * 1.5, gap: 28,
+        draw(y) {
+          ctx.font = `${size}px ${FONTS.pixel}`;
+          setSpacing(ctx, 1);
+          ctx.fillStyle = theme.meta;
+          ctx.fillText(fitText(ctx, meta, INNER), PAD, y + size);
+          setSpacing(ctx, 0);
+        }
+      });
     }
-    const chipH = aSize * 1.2 + 26;
-    rows.push({
-      h: chipH, gap: 28,
-      draw(y) {
-        ctx.font = `${aSize}px ${FONTS.display}`;
-        setSpacing(ctx, 1);
-        const label = fitText(ctx, award, INNER - 150);
-        const tw = ctx.measureText(label).width;
-        ctx.font = `13px ${FONTS.pixel}`;
-        const lw = ctx.measureText("AWARD").width;
-        const chipW = tw + lw + 72;
-        ctx.save();
-        ctx.translate(PAD + chipW / 2, y + chipH / 2);
-        ctx.rotate((-1.5 * Math.PI) / 180);
-        ctx.fillStyle = "rgba(0,0,0,.28)";
-        ctx.fillRect(-chipW / 2 + 7, -chipH / 2 + 7, chipW, chipH);
-        ctx.fillStyle = theme.awardBg;
-        ctx.fillRect(-chipW / 2, -chipH / 2, chipW, chipH);
-        ctx.fillStyle = theme.awardInk;
-        ctx.textBaseline = "middle";
-        ctx.fillText("AWARD", -chipW / 2 + 22, 1);
-        ctx.font = `${aSize}px ${FONTS.display}`;
-        ctx.fillText(label, -chipW / 2 + 22 + lw + 28, 2);
-        ctx.restore();
-        setSpacing(ctx, 0);
-        ctx.textBaseline = "alphabetic";
-      }
-    });
 
+    // 4. the note
     const msg = messageFor(d);
-    const gSize = Math.round(36 * k), mSize = Math.round(32 * k), mLead = mSize * 1.3;
+    const gSize = Math.round(36 * k), mSize = Math.round(31 * k), mLead = mSize * 1.32;
     ctx.font = `italic 500 ${mSize}px ${FONTS.serif}`;
-    const mLines = clampLines(ctx, wrap(ctx, msg.body, INNER), 6, INNER);
+    const mLines = clampLines(ctx, wrap(ctx, msg.body, INNER), 5, INNER);
     rows.push({
-      h: gSize * 1.25 + mLead * mLines.length, gap: 0,
+      h: gSize * 1.2 + mLead * mLines.length, gap: 0,
       draw(y) {
         ctx.fillStyle = theme.ink;
         ctx.font = `${gSize}px ${FONTS.hand}`;
         ctx.fillText(msg.greeting, PAD, y + gSize * 0.9);
         ctx.font = `italic 500 ${mSize}px ${FONTS.serif}`;
-        mLines.forEach((line, i) => ctx.fillText(line, PAD, y + gSize * 1.25 + mSize * 0.85 + i * mLead));
+        mLines.forEach((line, i) => ctx.fillText(line, PAD, y + gSize * 1.2 + mSize * 0.85 + i * mLead));
       }
     });
 
@@ -362,9 +399,9 @@
     setSpacing(ctx, 1);
     ctx.fillStyle = theme.soft;
     ctx.textAlign = "left";
-    ctx.fillText("DEBSOC IIEST SHIBPUR", PAD, PAD + 14);
+    ctx.fillText("DEBSOC IIEST SHIBPUR", PAD, TOP + 14);
     ctx.textAlign = "right";
-    ctx.fillText("VERIFIED ACHIEVEMENT", W - PAD, PAD + 14);
+    ctx.fillText("VERIFIED ACHIEVEMENT", W - PAD, TOP + 14);
     ctx.textAlign = "left";
     setSpacing(ctx, 0);
   }
@@ -423,9 +460,137 @@
     return tintCache.get(color);
   }
 
-  const FOOTER_H = 118;
-  function drawFooter(ctx, d, theme) {
-    const top = H - PAD - FOOTER_H;
+  /* ---------- tiny pixel stickers + the DebSoc seal ---------- */
+  const PIXEL_ART = {
+    star: {
+      pal: { o: "#111111", y: "#ffd60a", w: "#fffbe0" },
+      rows: [".....o.....", "....oyo....", "....oyo....", "oooo" + "yyy" + "oooo", "oywyyyyyyyo", ".oyyyyyyyo.",
+        "..oyyyyyo..", "..oyyoyyo..", ".oyyo.oyyo.", ".ooo...ooo."]
+    },
+    heart: {
+      pal: { o: "#111111", p: "#ff2e93", h: "#ff9cc8" },
+      rows: ["..ooo.ooo..", ".ohppopppo.", "ohhpppppppo", "opppppppppo", "opppppppppo", ".opppppppo.",
+        "..opppppo..", "...opppo...", "....opo....", ".....o....."]
+    }
+  };
+  // pixel art is drawn at a whole-number scale so every "pixel" stays the same size
+  const SPRITES = {
+    trophy: { src: "assets/images/share/trophy.png", scale: 3 },
+    cat: { src: "assets/images/share/cat.png", scale: 3 },
+    yay: { src: "assets/images/share/yay.png", height: 92, tilt: -6 },
+    star: { art: "star", scale: 5 },
+    heart: { art: "heart", scale: 5 }
+  };
+  const spriteImgs = {}, stickerCache = new Map();
+  let spritesLoad = null;
+
+  function pixelCanvas(art) {
+    const rows = art.rows, w = Math.max(...rows.map((r) => r.length)), c = document.createElement("canvas");
+    c.width = w;
+    c.height = rows.length;
+    const x = c.getContext("2d");
+    rows.forEach((row, ry) => [...row].forEach((ch, rx) => {
+      if (art.pal[ch]) { x.fillStyle = art.pal[ch]; x.fillRect(rx, ry, 1, 1); }
+    }));
+    return c;
+  }
+
+  function loadSprites() {
+    if (!spritesLoad) {
+      spritesLoad = Promise.all(Object.entries(SPRITES).map(async ([name, def]) => {
+        spriteImgs[name] = def.art ? pixelCanvas(PIXEL_ART[def.art]) : await loadImage(def.src);
+      })).then(() => null);
+    }
+    return spritesLoad;
+  }
+
+  // a die-cut sticker: the sprite with a cream outline, like the polaroid frames
+  function sticker(name) {
+    const def = SPRITES[name], img = spriteImgs[name];
+    if (!def || !img) return null;
+    if (stickerCache.has(name)) return stickerCache.get(name);
+    const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+    const pixel = Boolean(def.scale);
+    const h = pixel ? ih * def.scale : def.height;
+    const w = Math.round((iw * h) / ih);
+    const halo = pixel ? def.scale * 2 : 5;
+    const mk = (cw, ch) => { const c = document.createElement("canvas"); c.width = cw; c.height = ch; return c; };
+    const body = mk(w, h), b = body.getContext("2d");
+    b.imageSmoothingEnabled = !pixel;
+    b.imageSmoothingQuality = "high";
+    b.drawImage(img, 0, 0, w, h);
+    const cream = mk(w, h), c = cream.getContext("2d");
+    c.drawImage(body, 0, 0);
+    c.globalCompositeOperation = "source-in";
+    c.fillStyle = FRAME;
+    c.fillRect(0, 0, w, h);
+    const out = mk(w + halo * 2, h + halo * 2), o = out.getContext("2d");
+    for (let i = 0; i < 24; i++) {
+      const a = (i / 24) * Math.PI * 2;
+      o.drawImage(cream, halo + Math.cos(a) * halo, halo + Math.sin(a) * halo);
+    }
+    o.drawImage(body, halo, halo);
+    const made = { canvas: out, w: out.width, h: out.height, pixel, tilt: def.tilt || 0 };
+    stickerCache.set(name, made);
+    return made;
+  }
+
+  function drawSticker(ctx, s, cx, cy) {
+    ctx.save();
+    ctx.imageSmoothingEnabled = !s.pixel;
+    if (s.tilt) {
+      ctx.translate(cx, cy);
+      ctx.rotate((s.tilt * Math.PI) / 180);
+      ctx.drawImage(s.canvas, -s.w / 2, -s.h / 2);
+    } else {
+      ctx.drawImage(s.canvas, Math.round(cx - s.w / 2), Math.round(cy - s.h / 2));
+    }
+    ctx.restore();
+  }
+
+  let logo = null, logoLoad = null;
+  function loadLogo() {
+    if (!logoLoad) logoLoad = loadImage(LOGO_SRC).then((img) => { logo = img; return img; });
+    return logoLoad;
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  // The logo is a maroon crest on a white square, so it sits on a cream seal (like the polaroids);
+  // "multiply" turns its white into the seal's cream and leaves the crest untouched.
+  function drawSeal(ctx, x, y, size) {
+    if (!logo) return false;
+    const iw = logo.naturalWidth, ih = logo.naturalHeight;
+    ctx.save();
+    ctx.translate(x + size / 2, y + size / 2);
+    ctx.rotate((-3 * Math.PI) / 180);
+    const r = size * 0.16, half = size / 2;
+    ctx.fillStyle = "rgba(0,0,0,.3)";
+    roundRect(ctx, -half + 7, -half + 7, size, size, r);
+    ctx.fill();
+    ctx.fillStyle = FRAME;
+    roundRect(ctx, -half, -half, size, size, r);
+    ctx.fill();
+    roundRect(ctx, -half, -half, size, size, r);
+    ctx.clip();
+    ctx.globalCompositeOperation = "multiply";
+    const pad = size * 0.06;
+    ctx.drawImage(logo, iw * 0.0625, ih * 0.0625, iw * 0.875, ih * 0.875, -half + pad, -half + pad, size - pad * 2, size - pad * 2);
+    ctx.restore();
+    return true;
+  }
+
+  const FOOTER_H = 150, SEAL = 124;
+  function drawFooter(ctx, d, theme, st) {
+    const top = H - BOTTOM - FOOTER_H;
     ctx.save();
     ctx.strokeStyle = theme.soft;
     ctx.globalAlpha = 0.6;
@@ -437,108 +602,96 @@
     ctx.stroke();
     ctx.restore();
 
+    const l1 = top + FOOTER_H - 26, l2 = top + FOOTER_H;
+
+    // bottom left: the DebSoc seal, then the handle and site
+    const sealed = drawSeal(ctx, PAD + 4, l2 - SEAL + 2, SEAL);
+    const lx = PAD + (sealed ? SEAL + 34 : 0);
+
+    // a tiny pixel sticker sits on the baseline in the middle
+    const cute = sticker(st.cute);
+    const cuteX = W / 2 + 50;
+    if (cute) drawSticker(ctx, cute, cuteX, l2 + 4 - cute.h / 2 + 5);
+
     ctx.font = `13px ${FONTS.pixel}`;
     setSpacing(ctx, 1);
     ctx.fillStyle = theme.soft;
-    ctx.fillText(fitText(ctx, `@${d.username || "debsoc"}`.toUpperCase(), INNER / 2 - 20), PAD, top + 58);
-    ctx.fillText("DEBSOCIIESTS.IN", PAD, top + 88);
+    ctx.textAlign = "left";
+    const maxLeft = Math.max(120, (cute ? cuteX - cute.w / 2 - 18 : W / 2) - lx);
+    ctx.fillText(fitText(ctx, `@${d.username || "debsoc"}`.toUpperCase(), maxLeft), lx, l1);
+    ctx.fillText("DEBSOCIIESTS.IN", lx, l2);
 
-    // signature, right aligned: the real one when it loaded, a handwritten fallback otherwise
+    // signed off as "Karan, GS" with DEBSOC on the next line
     ctx.textAlign = "right";
-    ctx.fillText(SIGNER.role.toUpperCase(), W - PAD, top + FOOTER_H);
+    ctx.fillText(SIGNER.lines[0].toUpperCase(), W - PAD, l1);
+    ctx.fillText(SIGNER.lines[1].toUpperCase(), W - PAD, l2);
     setSpacing(ctx, 0);
     ctx.textAlign = "left";
+
     if (signature) {
       // the scan's pen line is thin, so lay it down three times a pixel apart for weight
       const ratio = signature.width / signature.height;
-      const sw = Math.min(INNER / 2, 136 * ratio), sh = sw / ratio;
-      const ink = tintedSignature(theme.sign), sx = W - PAD - sw, sy = top + FOOTER_H - 24 - sh;
+      const sw = Math.min(INNER / 2, 94 * ratio), sh = sw / ratio;
+      const ink = tintedSignature(theme.sign), sx = W - PAD - sw, sy = l1 - 30 - sh;
       [[0, 0], [1.4, 0], [0, 1.2]].forEach(([dx, dy]) => ctx.drawImage(ink, sx + dx, sy + dy, sw, sh));
       return;
     }
-    ctx.textAlign = "right";
+    // fallback: handwritten name
     ctx.save();
-    ctx.translate(W - PAD - 6, top + 58);
+    ctx.translate(W - PAD - 6, top + 74);
     ctx.rotate((-4 * Math.PI) / 180);
+    ctx.textAlign = "right";
     ctx.fillStyle = theme.sign;
-    ctx.font = `66px ${FONTS.hand}`;
+    ctx.font = `64px ${FONTS.hand}`;
     ctx.fillText(SIGNER.name, 0, 0);
-    const sw = ctx.measureText(SIGNER.name).width;
-    ctx.strokeStyle = theme.sign;
-    ctx.lineWidth = 3;
-    ctx.lineCap = "round";
-    ctx.beginPath();
-    ctx.moveTo(-sw - 10, 12);
-    ctx.bezierCurveTo(-sw * 0.6, 3, -sw * 0.3, 18, 12, 4);
-    ctx.stroke();
     ctx.restore();
-    ctx.textAlign = "left";
   }
 
   /* ---------- art layouts ---------- */
-  function drawArt(ctx, box, cover, photos, arrange, theme) {
+  function drawArt(ctx, box, cover, photos, theme) {
     const { x, y, w, h } = box;
     const n = photos.length;
-    const starSize = Math.min(210, Math.max(110, h * 0.36));
-    drawStar(ctx, x + w - starSize * 0.78, y - starSize * 0.22, starSize, theme.star);
+    const starSize = Math.min(200, Math.max(110, h * 0.34));
+    drawStar(ctx, x + w - starSize * 0.78, y - starSize * 0.1, starSize, theme.star);
 
     if (cover && !n) {
-      let cw = w, ch = cw * 0.62;
-      if (ch > h) { ch = h; cw = ch / 0.62; }
+      const ch = Math.min(h, w * 0.72), cw = Math.min(w, ch / 0.72);
       drawCoverPhoto(ctx, cover, x + (w - cw) / 2, y + (h - ch) / 2, cw, ch, theme);
-    } else if (cover && n === 1) {
-      const cw = w * 0.64, ch = Math.min(cw * 0.75, h * 0.86);
+    } else if (cover) {
+      const cw = w * 0.62, ch = Math.min(cw * 0.8, h * 0.94);
       drawCoverPhoto(ctx, cover, x, y + (h - ch) / 2, cw, ch, theme);
-      const p = polaroidSize(w * 0.44, h * 0.94);
+      const p = polaroidSize(w * 0.5, h);
       drawPolaroid(ctx, photos[0], x + w - p.w / 2 - 6, y + h / 2 + 6, p, 3.5, theme);
-    } else if (cover && n === 2 && arrange === "stacked") {
-      const cw = w * 0.6, ch = Math.min(cw * 0.75, h * 0.8);
-      drawCoverPhoto(ctx, cover, x, y + (h - ch) / 2, cw, ch, theme);
-      const p = polaroidSize(w * 0.36, h * 0.53);
-      const cx = x + w - p.w / 2 - 14;
-      drawPolaroid(ctx, photos[0], cx - 12, y + p.h / 2 + 2, p, -4, theme);
-      drawPolaroid(ctx, photos[1], cx + 4, y + h - p.h / 2 - 2, p, 3, theme);
-    } else if (cover && n === 2) {
-      drawCoverPhoto(ctx, cover, x, y, w, h * 0.56, theme);
-      const p = polaroidSize(w * 0.36, h * 0.6);
-      const cy = y + h - p.h / 2 - 6;
-      drawPolaroid(ctx, photos[0], x + w * 0.3, cy, p, -4, theme);
-      drawPolaroid(ctx, photos[1], x + w * 0.7, cy + 6, p, 3, theme);
-    } else if (n === 1) {
-      const p = polaroidSize(w * 0.62, h);
+    } else if (n) {
+      const p = polaroidSize(w * 0.72, h);
       drawPolaroid(ctx, photos[0], x + w / 2, y + h / 2, p, -2.5, theme);
-    } else if (n === 2 && arrange === "stacked") {
-      const p = polaroidSize(w * 0.5, h * 0.66);
-      drawPolaroid(ctx, photos[0], x + w * 0.36, y + p.h / 2 + 4, p, -4, theme);
-      drawPolaroid(ctx, photos[1], x + w * 0.64, y + h - p.h / 2 - 4, p, 3, theme);
-    } else if (n === 2) {
-      const p = polaroidSize(w * 0.46, h);
-      drawPolaroid(ctx, photos[0], x + w * 0.27, y + h / 2, p, -4, theme);
-      drawPolaroid(ctx, photos[1], x + w * 0.73, y + h / 2 + 10, p, 3, theme);
     }
   }
 
   /* ---------- the card ---------- */
   function renderCard(canvas, d, opts) {
+    const f = FORMATS[opts.format] || FORMATS.post;
+    H = f.h; TOP = f.top; BOTTOM = f.bottom; K = f.k;
     canvas.width = W;
     canvas.height = H;
     const ctx = canvas.getContext("2d");
     ctx.textBaseline = "alphabetic";
     ctx.imageSmoothingQuality = "high";
-    const theme = (THEMES[opts.theme] || THEMES.mustard)(opts.dot);
+    const theme = resolveTheme(opts);
+    const st = opts.stickers || {};
     const hasArt = Boolean(opts.cover || opts.photos.length);
 
     drawBackground(ctx, theme);
     drawTopBar(ctx, theme);
 
-    const footerTop = H - PAD - FOOTER_H;
-    const text = buildText(ctx, d, theme, !hasArt);
-    const artTop = PAD + 58;
+    const footerTop = H - BOTTOM - FOOTER_H;
+    const text = buildText(ctx, d, theme, !hasArt, st);
+    const artTop = TOP + 50;
 
     if (hasArt) {
-      const textTop = footerTop - 40 - text.height;
-      drawArt(ctx, { x: PAD, y: artTop, w: INNER, h: Math.max(220, textTop - 44 - artTop) },
-        opts.cover, opts.photos, opts.arrange, theme);
+      const textTop = footerTop - 34 - text.height;
+      drawArt(ctx, { x: PAD, y: artTop, w: INNER, h: Math.max(260, textTop - 58 - artTop) },
+        opts.cover, opts.photos, theme);
       drawRows(text.rows, textTop);
     } else {
       // text only: centre the block and let a big starburst hold the corner
@@ -546,16 +699,33 @@
       drawStar(ctx, W - PAD - 230, artTop - 10, 260, theme.star);
       drawRows(text.rows, textTop);
     }
-    drawFooter(ctx, d, theme);
+    drawFooter(ctx, d, theme, st);
   }
 
   /* ---------- modal controller ---------- */
   const $ = (id) => document.getElementById(id);
-  const state = {
-    data: null, theme: "mustard", dot: "yellow", arrange: "side",
-    usePfp: true, useCover: true, pfp: null, cover: null, upload: null, token: 0
+  const FORMAT_KEY = "debsoc_share_format";
+  const readFormat = () => {
+    try { const v = localStorage.getItem(FORMAT_KEY); if (FORMATS[v]) return v; } catch { /* private mode */ }
+    return "story";
   };
-  let bound = false, returnFocus = null, frame = 0;
+  const pick = (list) => list[Math.floor(Math.random() * list.length)];
+  const pickStickers = (prev) => {
+    let next;
+    for (let i = 0; i < 8; i++) {
+      next = { award: pick(["trophy", "yay"]), cute: pick(["cat", "star", "heart"]) };
+      if (!prev || next.award !== prev.award || next.cute !== prev.cute) break;
+    }
+    return next;
+  };
+
+  const state = {
+    data: null, theme: "mustard", dot: "yellow", bg: null, text: null,
+    usePfp: true, useCover: true, showStickers: true, format: readFormat(), stickers: pickStickers(),
+    pfp: null, cover: null, token: 0, rev: 0, blob: null, blobTimer: 0, ready: false,
+    canShare: false, canCopy: false
+  };
+  let bound = false, returnFocus = null, frame = 0, queued = false;
 
   const setStatus = (msg, isError = false) => {
     const el = $("share-status");
@@ -566,70 +736,90 @@
   function currentPhotos() {
     const list = [];
     if (state.usePfp && state.pfp) list.push({ img: state.pfp, caption: `@${state.data.username}` });
-    if (state.upload) list.push({ img: state.upload.img, caption: "on the floor" });
     return list;
   }
 
   function syncControls() {
-    const photos = currentPhotos();
     $("share-pfp-row").classList.toggle("hidden", !state.pfp);
     $("share-no-pfp").classList.toggle("hidden", Boolean(state.pfp) || !state.ready);
     $("share-cover-row").classList.toggle("hidden", !state.cover);
-    $("share-layout-row").classList.toggle("hidden", photos.length !== 2);
-    $("share-dots").classList.toggle("hidden", state.theme !== "black");
-    $("share-photo-add").textContent = state.upload ? "Replace photo" : "Add my event photo";
-    $("share-photo-edit").classList.toggle("hidden", !state.upload);
-    $("share-photo-remove").classList.toggle("hidden", !state.upload);
+    $("share-dots").classList.toggle("hidden", !(PRESETS[state.theme] || {}).dots);
+    const t = resolveTheme(state);
+    $("share-bg-color").value = t.bg;
+    $("share-text-color").value = t.title;
+    $("share-colors-reset").classList.toggle("hidden", !state.bg && !state.text);
+    $("share-stickers-shuffle").classList.toggle("hidden", !state.showStickers);
+    // the quickest route differs by device: native share sheet on phones, copy / download on desktop
+    $("share-native").classList.toggle("hidden", !state.canShare);
+    $("share-native").classList.toggle("share-go", state.canShare);
+    $("share-copy").classList.toggle("hidden", state.canShare || !state.canCopy);
+    $("share-download").classList.toggle("share-go", !state.canShare);
+    $("share-hint").textContent = state.canShare
+      ? "Tap Share, then pick Instagram or WhatsApp."
+      : "Download it, or copy it and paste straight into WhatsApp Web or Instagram.";
   }
 
-  function scheduleRender() {
-    syncControls();
-    cancelAnimationFrame(frame);
-    frame = requestAnimationFrame(() => {
-      if (!state.data) return;
-      renderCard($("share-canvas"), state.data, {
-        theme: state.theme, dot: state.dot, arrange: state.arrange,
-        cover: state.useCover ? state.cover : null, photos: currentPhotos()
-      });
+  function draw() {
+    queued = false;
+    if (!state.data) return;
+    renderCard($("share-canvas"), state.data, {
+      theme: state.theme, dot: state.dot, bg: state.bg, text: state.text, format: state.format,
+      stickers: state.showStickers ? state.stickers : null,
+      cover: state.useCover ? state.cover : null, photos: currentPhotos()
     });
   }
 
-  async function takeUpload(file, original) {
-    if (!OK_TYPES.includes(file.type)) throw new Error("Use a JPEG, PNG or WebP photo.");
-    if (file.size > MAX_UPLOAD) throw new Error("That photo is over 15MB.");
-    let edited = file;
-    if (window.DebSocEditor) {
-      const out = await window.DebSocEditor.edit([file]);
-      if (out === null) return;               // cancelled: keep whatever was there
-      edited = out[0] || file;
-    }
-    const img = await fileToImage(edited);
-    state.upload = { original: original || file, img };
-    setStatus("Photo added. It stays on your device.");
-    scheduleRender();
-  }
-
-  function cardBlob() {
+  function canvasBlob() {
     return new Promise((resolve, reject) => {
       try {
         $("share-canvas").toBlob((b) => (b ? resolve(b) : reject(new Error("Could not create the image."))), "image/png");
       } catch {
-        reject(new Error("Could not create the image. Try removing the cover photo."));
+        reject(new Error("Could not create the image. Try turning off the cover photo."));
       }
     });
   }
 
+  function flush() {
+    if (queued) { cancelAnimationFrame(frame); draw(); }
+  }
+
+  // The PNG is prepared in the background after each change, so a tap on Share can open the
+  // share sheet at once (browsers only allow it right after a tap).
+  function prepareBlob() {
+    if (!state.data) return;
+    flush();
+    const rev = state.rev;
+    canvasBlob().then((b) => { if (rev === state.rev) state.blob = b; }).catch(() => {});
+  }
+
+  async function getBlob() {
+    flush();
+    return state.blob || canvasBlob();
+  }
+
+  function scheduleRender() {
+    syncControls();
+    state.rev++;
+    state.blob = null;
+    clearTimeout(state.blobTimer);
+    cancelAnimationFrame(frame);
+    queued = true;
+    frame = requestAnimationFrame(draw);
+    state.blobTimer = setTimeout(prepareBlob, 400);
+  }
+
   const fileName = () => `debsoc-${String(state.data.eventTitle || "award").toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "award"}.png`;
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "award"}-${state.format}.png`;
 
   function close() {
     const modal = $("share-modal");
     if (modal.classList.contains("hidden")) return;
     modal.classList.add("hidden");
     document.documentElement.classList.remove("share-open");
+    clearTimeout(state.blobTimer);
     state.token++;
     state.data = null;
-    state.upload = null;
+    state.blob = null;
     if (returnFocus && returnFocus.isConnected) returnFocus.focus();
   }
 
@@ -643,36 +833,51 @@
       if (e.key === "Escape" && !modal.classList.contains("hidden")) close();
     });
 
-    modal.querySelectorAll('input[name="share-theme"]').forEach((r) =>
-      r.addEventListener("change", () => { state.theme = r.value; scheduleRender(); }));
-    modal.querySelectorAll('input[name="share-dot"]').forEach((r) =>
-      r.addEventListener("change", () => { state.dot = r.value; scheduleRender(); }));
-    modal.querySelectorAll('input[name="share-arrange"]').forEach((r) =>
-      r.addEventListener("change", () => { state.arrange = r.value; scheduleRender(); }));
-    $("share-use-pfp").addEventListener("change", (e) => { state.usePfp = e.target.checked; scheduleRender(); });
-    $("share-use-cover").addEventListener("change", (e) => { state.useCover = e.target.checked; scheduleRender(); });
-
-    const input = $("share-photo-input");
-    $("share-photo-add").addEventListener("click", () => input.click());
-    input.addEventListener("change", async () => {
-      const file = input.files && input.files[0];
-      input.value = "";
-      if (!file) return;
-      try { await takeUpload(file); } catch (err) { setStatus(err.message, true); }
+    const swatches = $("share-swatches");
+    Object.entries(PRESETS).forEach(([id, p]) => {
+      const label = document.createElement("label");
+      label.className = "sw";
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = "share-theme";
+      input.value = id;
+      input.checked = id === state.theme;
+      const chip = document.createElement("span");
+      chip.className = "sw-chip";
+      chip.setAttribute("aria-hidden", "true");
+      chip.textContent = "Aa";
+      const dc = p.dots ? p.dots.yellow : p.dot;
+      chip.style.backgroundColor = p.bg;
+      chip.style.backgroundImage = `radial-gradient(${rgba(dc, Math.max(0.6, p.dotA))} 1.2px, transparent 1.4px)`;
+      chip.style.color = p.title;
+      label.append(input, chip, document.createTextNode(p.label));
+      swatches.appendChild(label);
     });
-    $("share-photo-edit").addEventListener("click", async () => {
-      if (!state.upload) return;
-      try { await takeUpload(state.upload.original, state.upload.original); } catch (err) { setStatus(err.message, true); }
-    });
-    $("share-photo-remove").addEventListener("click", () => {
-      state.upload = null;
-      setStatus("");
+    swatches.addEventListener("change", (e) => {
+      if (e.target.name !== "share-theme") return;
+      state.theme = e.target.value;
+      state.bg = state.text = null;
       scheduleRender();
     });
+    $("share-bg-color").addEventListener("input", (e) => { state.bg = e.target.value; scheduleRender(); });
+    $("share-text-color").addEventListener("input", (e) => { state.text = e.target.value; scheduleRender(); });
+    $("share-colors-reset").addEventListener("click", () => { state.bg = state.text = null; scheduleRender(); });
+    modal.querySelectorAll('input[name="share-dot"]').forEach((r) =>
+      r.addEventListener("change", () => { state.dot = r.value; scheduleRender(); }));
+    modal.querySelectorAll('input[name="share-format"]').forEach((r) =>
+      r.addEventListener("change", () => {
+        state.format = r.value;
+        try { localStorage.setItem(FORMAT_KEY, r.value); } catch { /* optional */ }
+        scheduleRender();
+      }));
+    $("share-use-pfp").addEventListener("change", (e) => { state.usePfp = e.target.checked; scheduleRender(); });
+    $("share-use-cover").addEventListener("change", (e) => { state.useCover = e.target.checked; scheduleRender(); });
+    $("share-use-stickers").addEventListener("change", (e) => { state.showStickers = e.target.checked; scheduleRender(); });
+    $("share-stickers-shuffle").addEventListener("click", () => { state.stickers = pickStickers(state.stickers); scheduleRender(); });
 
     $("share-download").addEventListener("click", async () => {
       try {
-        const blob = await cardBlob();
+        const blob = await getBlob();
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
         a.download = fileName();
@@ -684,10 +889,20 @@
       } catch (err) { setStatus(err.message, true); }
     });
 
+    $("share-copy").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.write([new ClipboardItem({ "image/png": getBlob() })]);
+        setStatus("Copied. Paste it into your story or chat.");
+      } catch { setStatus("Could not copy here. Use Download instead.", true); }
+    });
+
     $("share-native").addEventListener("click", async () => {
       try {
-        const blob = await cardBlob();
+        const blob = await getBlob();
         const file = new File([blob], fileName(), { type: "image/png" });
+        if (navigator.canShare && !navigator.canShare({ files: [file] })) {
+          throw new Error("This browser cannot share the image. Use Download instead.");
+        }
         await navigator.share({
           files: [file],
           title: `${state.data.award} at ${state.data.eventTitle}`,
@@ -711,11 +926,16 @@
     returnFocus = focusBack || document.activeElement;
     const token = ++state.token;
     Object.assign(state, {
-      data, usePfp: true, useCover: true, pfp: null, cover: null, upload: null, ready: false
+      data, usePfp: true, useCover: true, showStickers: true, stickers: pickStickers(state.stickers),
+      pfp: null, cover: null, ready: false, bg: null, text: null, format: readFormat(), blob: null,
+      canShare: canShareFiles(),
+      canCopy: Boolean(window.ClipboardItem && navigator.clipboard && navigator.clipboard.write)
     });
     $("share-use-pfp").checked = true;
     $("share-use-cover").checked = true;
-    $("share-native").classList.toggle("hidden", !canShareFiles());
+    $("share-use-stickers").checked = true;
+    const formatRadio = $("share-modal").querySelector(`input[name="share-format"][value="${state.format}"]`);
+    if (formatRadio) formatRadio.checked = true;
     $("share-modal").classList.remove("hidden");
     document.documentElement.classList.add("share-open");
     $("share-modal").querySelector("[data-share-close]").focus();
@@ -724,7 +944,8 @@
     $("share-busy").classList.remove("hidden");
 
     const [pfp, cover] = await Promise.all([
-      loadRemote(data.profileImage), loadRemote(data.coverImage), loadFonts(), loadSignature()
+      loadRemote(data.profileImage), loadRemote(data.coverImage),
+      loadFonts(), loadSignature(), loadSprites(), loadLogo()
     ]);
     if (token !== state.token) return;          // closed or reopened meanwhile
     state.pfp = pfp;
@@ -738,5 +959,5 @@
     scheduleRender();
   }
 
-  window.DebSocShareCard = { open, close, render: renderCard, ready: () => Promise.all([loadFonts(), loadSignature()]) };
+  window.DebSocShareCard = { open, close };
 })();
