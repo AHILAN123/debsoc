@@ -395,7 +395,7 @@
     rows.forEach((r) => { r.draw(y); y += r.h + r.gap; });
   }
 
-  const TOPBAR_SEAL = 74;
+  const TOPBAR_SEAL = 92;
   function drawTopBar(ctx, theme) {
     const sy = TOP - 8, cy = sy + TOPBAR_SEAL / 2;
     const sealed = drawSeal(ctx, iiestLogo, PAD + 2, sy, TOPBAR_SEAL, { rot: 3, pad: 0.09 });
@@ -404,7 +404,7 @@
     ctx.font = `24px ${FONTS.pixel}`;
     setSpacing(ctx, 2);
     ctx.fillStyle = theme.ink;
-    ctx.fillText("DEBSOC", PAD + (sealed ? TOPBAR_SEAL + 28 : 0), cy + 9);
+    ctx.fillText("IIEST, SHIBPUR", PAD + (sealed ? TOPBAR_SEAL + 28 : 0), cy + 9);
     ctx.font = `14px ${FONTS.pixel}`;
     setSpacing(ctx, 1);
     ctx.fillStyle = theme.soft;
@@ -700,7 +700,7 @@
 
     const footerTop = H - BOTTOM - FOOTER_H;
     const text = buildText(ctx, d, theme, !hasArt, st);
-    const artTop = TOP + 84;
+    const artTop = TOP + 102;
 
     if (hasArt) {
       const textTop = footerTop - 34 - text.height;
