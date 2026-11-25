@@ -18,7 +18,7 @@
   // ~250px are kept clear of anything important because the apps draw their own bars there.
   const FORMATS = {
     post: { h: 1350, top: 72, bottom: 56, k: 1 },
-    story: { h: 1920, top: 250, bottom: 250, k: 1.18 }
+    story: { h: 1920, top: 250, bottom: 250, k: 1.06 }
   };
   let H = 1350, TOP = 72, BOTTOM = 56, K = 1;      // set per render from the chosen format
   const SIGNER = { name: "Karan", lines: ["Karan,", "Secretary, DebSoc"], image: "assets/images/karan_sign.png" };
@@ -299,7 +299,7 @@
     setSpacing(ctx, 0);
     const chipH = aSize * 1.15 + 32;
     rows.push({
-      h: chipH + 22, gap: Math.round(24 * K),
+      h: chipH + 22, gap: 22,
       draw(y) {
         ctx.font = `${aSize}px ${FONTS.display}`;
         setSpacing(ctx, 1);
@@ -341,7 +341,7 @@
     tLines = clampLines(ctx, tLines, 2, INNER);
     const tLead = tSize * 0.98;
     rows.push({
-      h: tLead * tLines.length, gap: Math.round(20 * K),
+      h: tLead * tLines.length, gap: 20,
       draw(y) {
         ctx.font = `700 ${tSize}px ${FONTS.serif}`;
         setSpacing(ctx, -1);
@@ -361,7 +361,7 @@
     if (meta) {
       const size = Math.round(16 * k);
       rows.push({
-        h: size * 1.5, gap: Math.round(30 * K),
+        h: size * 1.5, gap: 28,
         draw(y) {
           ctx.font = `${size}px ${FONTS.pixel}`;
           setSpacing(ctx, 1);
@@ -393,31 +393,6 @@
 
   function drawRows(rows, y) {
     rows.forEach((r) => { r.draw(y); y += r.h + r.gap; });
-  }
-
-  // Story only: solid bands along the top and bottom edges, so the margins the apps cover with
-  // their own bars still look designed rather than empty.
-  function drawBands(ctx, theme) {
-    const bandH = 54, items = ["DEBSOC", "IIEST SHIBPUR", "VERIFIED ACHIEVEMENT"];
-    [[64, 28], [H - 64 - bandH, -90]].forEach(([y, startX]) => {
-      ctx.fillStyle = theme.chip;
-      ctx.fillRect(0, y, W, bandH);
-      ctx.font = `15px ${FONTS.pixel}`;
-      setSpacing(ctx, 2);
-      ctx.textAlign = "left";
-      ctx.textBaseline = "middle";
-      let x = startX, i = 0;
-      while (x < W) {
-        const label = items[i++ % items.length];
-        ctx.fillStyle = theme.chipInk;
-        ctx.fillText(label, x, y + bandH / 2 + 2);
-        x += ctx.measureText(label).width + 30;
-        drawStar(ctx, x, y + bandH / 2 - 10, 20, theme.chipInk);
-        x += 50;
-      }
-    });
-    ctx.textBaseline = "alphabetic";
-    setSpacing(ctx, 0);
   }
 
   const TOPBAR_SEAL = 92;
@@ -721,7 +696,6 @@
     const hasArt = Boolean(opts.cover || opts.photos.length);
 
     drawBackground(ctx, theme);
-    if (opts.format === "story") drawBands(ctx, theme);
     drawTopBar(ctx, theme);
 
     const footerTop = H - BOTTOM - FOOTER_H;
@@ -736,8 +710,7 @@
     } else {
       // text only: centre the block and let a big starburst hold the corner
       const textTop = Math.max(artTop + 60, artTop + (footerTop - artTop - text.height) / 2);
-      const sz = H > 1500 ? 190 : 260;
-      drawStar(ctx, W - PAD - (H > 1500 ? 175 : 230), artTop - (H > 1500 ? 34 : 10), sz, theme.star);
+      drawStar(ctx, W - PAD - 230, artTop - 10, 260, theme.star);
       drawRows(text.rows, textTop);
     }
     drawFooter(ctx, d, theme, st);
